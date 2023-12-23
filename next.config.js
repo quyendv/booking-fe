@@ -1,4 +1,6 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {}
+const nextConfig = {
+  distDir: '.next', // default
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;
