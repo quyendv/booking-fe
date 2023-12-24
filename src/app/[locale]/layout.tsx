@@ -1,8 +1,10 @@
 import type { Metadata } from 'next';
 import { NextIntlClientProvider, useMessages } from 'next-intl';
 import { notFound } from 'next/navigation';
+import { ThemeProvider } from '~/components/common/ThemeProvider';
 import { inter } from '~/configs/font.config';
 import { LocaleConfig } from '~/configs/locale.config';
+import { themesConfig } from '~/configs/theme.config';
 import '~/styles/globals.css';
 
 export const metadata: Metadata = {
@@ -28,9 +30,12 @@ export default function RootLayout({ children, params: { locale } }: LayoutProps
       suppressHydrationWarning={true} // https://github.com/vercel/next.js/discussions/22388
     >
       <body className={inter.className}>
-        <NextIntlClientProvider locale={locale} messages={messages}>
+        <ThemeProvider attribute="class" defaultTheme={themesConfig.SYSTEM} enableSystem disableTransitionOnChange>
           {children}
-        </NextIntlClientProvider>
+          <NextIntlClientProvider locale={locale} messages={messages}>
+            {children}
+          </NextIntlClientProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
