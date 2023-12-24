@@ -23,11 +23,11 @@ export default function RootLayout({ children, params: { locale } }: LayoutProps
   const messages = useMessages();
 
   return (
-    <html lang={locale}>
-      <body
-        className={inter.className}
-        suppressHydrationWarning={true} // https://github.com/vercel/next.js/discussions/22388
-      >
+    <html
+      lang={locale}
+      suppressHydrationWarning={true} // https://github.com/vercel/next.js/discussions/22388
+    >
+      <body className={inter.className}>
         <NextIntlClientProvider locale={locale} messages={messages}>
           {children}
         </NextIntlClientProvider>
