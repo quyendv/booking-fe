@@ -1,11 +1,9 @@
 import type { Metadata } from 'next';
 import { NextIntlClientProvider, useMessages } from 'next-intl';
-import { Inter } from 'next/font/google';
 import { notFound } from 'next/navigation';
+import { inter } from '~/configs/font.config';
 import { LocaleConfig } from '~/configs/locale.config';
 import '~/styles/globals.css';
-
-const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'Create Next App',
