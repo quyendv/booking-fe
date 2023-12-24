@@ -1,4 +1,6 @@
 import { useTranslations } from 'next-intl';
+import LocaleSwitcher from '~/components/common/LocaleSwitcher';
+import NavLink from '~/components/common/NavLink';
 import { ThemeToggle } from '~/components/common/ThemeToggle';
 
 export default function Home() {
@@ -8,6 +10,11 @@ export default function Home() {
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <h1>{t('title')}</h1>
       <ThemeToggle />
+      <LocaleSwitcher />
+      <ul className="flex gap-2">
+        <NavLink href={`/`}>Home</NavLink>
+        <NavLink href={`/about`}>About</NavLink>
+      </ul>
     </main>
   );
 }
