@@ -30,12 +30,11 @@ export default function RootLayout({ children, params: { locale } }: LayoutProps
       suppressHydrationWarning={true} // https://github.com/vercel/next.js/discussions/22388
     >
       <body className={inter.className}>
-        <ThemeProvider attribute="class" defaultTheme={themesConfig.SYSTEM} enableSystem disableTransitionOnChange>
-          {children}
-          <NextIntlClientProvider locale={locale} messages={messages}>
+        <NextIntlClientProvider locale={locale} messages={messages}>
+          <ThemeProvider attribute="class" defaultTheme={themesConfig.SYSTEM} enableSystem disableTransitionOnChange>
             {children}
-          </NextIntlClientProvider>
-        </ThemeProvider>
+          </ThemeProvider>
+        </NextIntlClientProvider>
       </body>
     </html>
   );
