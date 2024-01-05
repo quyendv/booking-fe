@@ -4,7 +4,7 @@ import { UserCredential, signInWithEmailAndPassword, signInWithPopup } from 'fir
 import { useEffect, useState } from 'react';
 import { auth, googleProvider } from '~/configs/firebase.config';
 
-function App() {
+export default function App() {
   const [loginForm, setLoginForm] = useState({
     email: '',
     password: '',
@@ -121,5 +121,3 @@ function App() {
     </div>
   );
 }
-
-export default App;
