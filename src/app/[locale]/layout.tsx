@@ -5,6 +5,7 @@ import { ThemeProvider } from '~/components/common/ThemeProvider';
 import { inter } from '~/configs/font.config';
 import { LocaleConfig } from '~/configs/locale.config';
 import { themesConfig } from '~/configs/theme.config';
+import { AuthContextProvider } from '~/contexts/auth.context';
 import '~/styles/globals.css';
 
 export const metadata: Metadata = {
@@ -32,7 +33,7 @@ export default function RootLayout({ children, params: { locale } }: LayoutProps
       <body className={inter.className}>
         <NextIntlClientProvider locale={locale} messages={messages}>
           <ThemeProvider attribute="class" defaultTheme={themesConfig.SYSTEM} enableSystem disableTransitionOnChange>
-            {children}
+            <AuthContextProvider>{children}</AuthContextProvider>
           </ThemeProvider>
         </NextIntlClientProvider>
       </body>

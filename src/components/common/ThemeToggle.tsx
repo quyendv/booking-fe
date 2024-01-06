@@ -1,6 +1,5 @@
 'use client';
 
-import * as React from 'react';
 import { MoonIcon, SunIcon } from '@radix-ui/react-icons';
 import { useTheme } from 'next-themes';
 
@@ -11,6 +10,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '~/components/ui/dropdown-menu';
+import { themesConfig } from '~/configs/theme.config';
 
 export function ThemeToggle() {
   const { setTheme } = useTheme();
@@ -25,9 +25,9 @@ export function ThemeToggle() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => setTheme('light')}>Light</DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme('dark')}>Dark</DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme('system')}>System</DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setTheme(themesConfig.LIGHT)}>Light</DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setTheme(themesConfig.DARK)}>Dark</DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setTheme(themesConfig.SYSTEM)}>System</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

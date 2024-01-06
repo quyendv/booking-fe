@@ -5,8 +5,11 @@ import { Button } from '~/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '~/components/ui/card';
 import { Input } from '~/components/ui/input';
 import { Label } from '~/components/ui/label';
+import { useAuth } from '~/contexts/auth.context';
 
 export default function SignUp() {
+  const { loginWithGoogle } = useAuth();
+
   return (
     <div className="flex h-screen items-center justify-center">
       <Card>
@@ -20,7 +23,7 @@ export default function SignUp() {
               <Icons.gitHub className="mr-2 h-6 w-6" />
               Github
             </Button>
-            <Button variant="outline">
+            <Button variant="outline" onClick={loginWithGoogle}>
               <Icons.google className="mr-2 h-6 w-6" />
               Google
             </Button>
