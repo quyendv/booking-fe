@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  app:
+    image: bookingcare-fe
+    container_name: bookingcare-fe
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    ports:
+      - '3000:3000'
+    restart: unless-stopped
+    networks:
+      - bookingcare-fe
+
+networks:
+  bookingcare-fe:
+    driver: bridge
