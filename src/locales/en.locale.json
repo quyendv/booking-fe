@@ -1,5 +1,33 @@
 {
   "Index": {
     "title": "Hello world!"
+  },
+  "SignIn": {
+    "title": "Sign in",
+    "description": "Enter your email and password below to sign in",
+    "otherSignIn": "Or continue with",
+    "email": "Email",
+    "invalidEmail": "Invalid email address",
+    "password": "Password",
+    "invalidPassword": "Password must be not empty",
+    "submit": "Submit",
+    "invalidCredentials": "Invalid credentials. Please try again.",
+    "unknownError": "Unknown error. Please contact system administrator",
+    "signUpLink": "Don't have an account? Sign up"
+  },
+  "SignUp": {
+    "title": "Create an account",
+    "description": "Enter your email below to create your account",
+    "otherSignUp": "Or continue with",
+    "email": "Email",
+    "invalidEmail": "Invalid email address",
+    "password": "Password",
+    "invalidPassword": "Password must contain at least 8 characters",
+    "confirmPassword": "Confirm Password",
+    "invalidConfirmPassword": "Passwords do not match",
+    "submit": "Submit",
+    "existingMessage": "Email already exists",
+    "unknownError": "Unknown error. Please contact system administrator",
+    "signInLink": "Already have an account? Sign in"
   }
 }

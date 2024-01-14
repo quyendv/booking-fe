@@ -1,17 +1,26 @@
 'use client';
 
 import { deleteCookie, setCookie } from 'cookies-next';
-import { User, UserCredential, signInWithPopup } from 'firebase/auth';
+import {
+  User,
+  UserCredential,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+} from 'firebase/auth';
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import { auth, googleProvider } from '~/configs/firebase.config';
-import { useIRouter } from '~/locales/i18nNavigation';
 
 interface AuthContextProps {
   isAuthenticated: boolean;
   isLoading: boolean;
   user: User | null;
-  loginWithGoogle: () => Promise<UserCredential>;
-  logout: () => Promise<void>;
+  signInWithGoogle: () => Promise<UserCredential>;
+  // eslint-disable-next-line no-unused-vars
+  signInWithPassword: (email: string, password: string) => Promise<UserCredential>;
+  // eslint-disable-next-line no-unused-vars
+  signUpWithPassword: (email: string, password: string) => Promise<UserCredential>;
+  signOut: () => Promise<void>;
 }
 
 interface AuthContextProviderProps {
@@ -22,8 +31,10 @@ const AuthContext = createContext<AuthContextProps>({
   isAuthenticated: false,
   isLoading: false,
   user: null,
-  loginWithGoogle: async () => Promise.resolve({} as UserCredential),
-  logout: async () => Promise.resolve(),
+  signInWithGoogle: async () => Promise.resolve({} as UserCredential),
+  signInWithPassword: async () => Promise.resolve({} as UserCredential),
+  signUpWithPassword: async () => Promise.resolve({} as UserCredential),
+  signOut: async () => Promise.resolve(),
 });
 
 const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
@@ -31,7 +42,7 @@ const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
-  const router = useIRouter();
+  // const router = useIRouter();
   // const pathname = useIPathname();
 
   useEffect(() => {
@@ -62,16 +73,42 @@ const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
       }
       setIsLoading(false);
     });
-  }, [router]);
+  }, []);
 
-  async function loginWithGoogle() {
+  async function signInWithGoogle() {
     const data = await signInWithPopup(auth, googleProvider);
     setIsLoading(true); // Loading to check user in database
     // router.push(RoutePath.HOME);
     return data;
   }
 
-  async function logout() {
+  async function signInWithPassword(email: string, password: string) {
+    const data = await signInWithEmailAndPassword(auth, email, password);
+    setIsLoading(true); // Loading to check user in database
+    return data;
+
+    // try {
+    // } catch (error: any) {
+    //   console.log(error?.message); // Firebase: Error (auth/invalid-credential).
+    //   console.log(error?.code); // auth/invalid-credential
+    //   throw new Error(error);
+    // }
+  }
+
+  async function signUpWithPassword(email: string, password: string) {
+    const data = await createUserWithEmailAndPassword(auth, email, password);
+    setIsLoading(true); // Loading to create user in database
+    return data;
+
+    // try {
+    // } catch (error: any) {
+    //   console.log(error?.message); // Firebase: Error (auth/email-already-in-use).
+    //   console.log(error?.code); // auth/email-already-in-use
+    //   throw new Error(error);
+    // }
+  }
+
+  async function signOut() {
     await auth.signOut();
     setUser(null);
     deleteCookie('token'); // if not use deleteCookie, expired token still in browser & get 401 error
@@ -83,8 +120,10 @@ const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
       isAuthenticated,
       isLoading,
       user,
-      loginWithGoogle,
-      logout,
+      signInWithGoogle,
+      signInWithPassword,
+      signUpWithPassword,
+      signOut,
     }),
     [isAuthenticated, isLoading, user],
   );

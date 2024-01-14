@@ -1,123 +1,128 @@
 'use client';
 
-import { UserCredential, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
-import { useEffect, useState } from 'react';
-import { auth, googleProvider } from '~/configs/firebase.config';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useTranslations } from 'next-intl';
+import { useMemo } from 'react';
+import { useForm } from 'react-hook-form';
+import * as z from 'zod';
+import { Icons } from '~/components/common/Icons';
+import { Button } from '~/components/ui/button';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '~/components/ui/card';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '~/components/ui/form';
+import { Input } from '~/components/ui/input';
+import { routeConfig } from '~/configs/route.config';
+import { useAuth } from '~/contexts/auth.context';
+import { ILink } from '~/locales/i18nNavigation';
 
-export default function App() {
-  const [loginForm, setLoginForm] = useState({
-    email: '',
-    password: '',
+export default function SignIn() {
+  const { signInWithGoogle, signInWithPassword } = useAuth();
+  const t = useTranslations('SignIn');
+
+  // TODO: place in ReactComponent to use intl -> refactor to use https://github.com/aiji42/zod-i18n
+  const formSchema = useMemo(
+    () =>
+      z.object({
+        email: z.string().email({ message: t('invalidEmail') }),
+        password: z.string().min(1, { message: t('invalidPassword') }),
+      }),
+    [t],
+  );
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: { email: '', password: '' },
   });
 
-  const [toast, setToast] = useState<string>('');
-
-  const login = () => {
-    signInWithEmailAndPassword(auth, loginForm.email, loginForm.password).then((fbUser: UserCredential) => {
-      console.log(fbUser);
-    });
-  };
-
-  const accessToken = async () => {
-    const token = await auth.currentUser?.getIdToken();
-    console.log(token);
-
-    // Copy token
-    if (token) {
-      const textArea = document.createElement('textarea');
-      textArea.value = token;
-      document.body.appendChild(textArea);
-      textArea.select();
-      document.execCommand('copy');
-      document.body.removeChild(textArea);
-
-      showToast('Copied token to clipboard');
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    // Do something with the form values.
+    // ✅ This will be type-safe and validated.
+    // console.log(values);
+    try {
+      await signInWithPassword(values.email, values.password);
+      // show toast
+    } catch (error: any) {
+      const { code, message } = error;
+      if (code === 'auth/invalid-credential') {
+        // invalid provider, or correct provider but wrong email/password. If signUpWithPassword and signInWithGoogle before, can't signInWithPassword (wrong credentials with this provider)
+        form.setError('email', { message: t('invalidCredentials') });
+      } else {
+        form.setError('email', message ?? t('unknownError'));
+      }
     }
-  };
-
-  const showToast = (message: string) => {
-    document.querySelector('.toast')?.classList.add('active');
-    setToast(message);
-  };
-
-  const clearToast = () => {
-    document.querySelector('.toast')?.classList.remove('active');
-    setToast('');
-  };
-
-  const signInWithGoogle = () => {
-    signInWithPopup(auth, googleProvider)
-      .then(async (result: UserCredential) => {
-        const token = await result.user.getIdToken();
-        console.log('Google access token:', token);
-
-        const user = result.user;
-        console.log(user.refreshToken);
-        console.log('Google user:', user);
-      })
-      .catch((error) => {
-        console.error('Error signing in with Google:', error);
-      });
-  };
-
-  useEffect(() => {
-    const id = setTimeout(clearToast, 1000);
-    return () => clearTimeout(id);
-  }, [toast]);
+  }
 
   return (
     <div className="flex h-screen items-center justify-center">
-      <div className="w-full max-w-xs rounded-md bg-gray-100 p-6 shadow-md">
-        <h2 className="mb-4 text-lg font-medium">Login</h2>
+      <Card>
+        <CardHeader className="space-y-1">
+          <CardTitle className="text-2xl">{t('title')}</CardTitle>
+          <CardDescription>{t('description')}</CardDescription>
+        </CardHeader>
+        <CardContent className="grid gap-4">
+          {/* OAuth2 */}
+          <div className="grid grid-cols-2 gap-6">
+            <Button variant="outline" disabled>
+              <Icons.gitHub className="mr-2 h-6 w-6" />
+              Github
+            </Button>
+            <Button variant="outline" onClick={signInWithGoogle}>
+              <Icons.google className="mr-2 h-6 w-6" />
+              Google
+            </Button>
+          </div>
 
-        <div className="mb-4">
-          <input
-            type="text"
-            className="w-full rounded border border-gray-400 p-2"
-            value={loginForm.email}
-            onChange={(e) => setLoginForm({ ...loginForm, email: e.target.value })}
-            placeholder="Email"
-          />
-        </div>
+          {/* Separate */}
+          <div className="relative">
+            <div className="absolute inset-0 flex items-center">
+              <span className="w-full border-t" />
+            </div>
+            <div className="relative flex justify-center text-xs uppercase">
+              <span className="bg-background px-2 text-muted-foreground">{t('otherSignIn')}</span>
+            </div>
+          </div>
 
-        <div className="mb-4">
-          <input
-            type="password"
-            className="w-full rounded border border-gray-400 p-2"
-            value={loginForm.password}
-            onChange={(e) => setLoginForm({ ...loginForm, password: e.target.value })}
-            placeholder="Password"
-          />
-        </div>
-
-        <div className="mb-4 flex justify-between gap-2">
-          <button className="flex-1 rounded-md bg-green-500 px-2 py-1.5 text-white" onClick={login}>
-            Login
-          </button>
-
-          <button className="flex-1 rounded-md bg-green-500 px-2 py-1.5 text-white" onClick={accessToken}>
-            Access Token
-          </button>
-        </div>
-
-        <button
-          className="flex w-full items-center justify-center rounded-md bg-blue-500 px-4 py-2 text-white"
-          onClick={signInWithGoogle}
-        >
-          <span className="mr-2">
-            <i className="fab fa-google"></i>
-          </span>
-          Sign in with Google
-        </button>
-
-        <div
-          className={`fixed bottom-5 left-1/2 -translate-x-1/2 rounded-md bg-white p-2 text-red-500 shadow-md ${
-            toast ? 'opacity-100' : 'opacity-0'
-          } transition-all`}
-        >
-          {toast}
-        </div>
-      </div>
+          {/* Email & Password */}
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>{t('email')}</FormLabel>
+                    <FormControl>
+                      <Input placeholder="m@example.com" {...field} />
+                    </FormControl>
+                    {/* <FormDescription>This is your public display name.</FormDescription> */}
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>{t('password')}</FormLabel>
+                    <FormControl>
+                      <Input {...field} type="password" />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <Button className="w-full" type="submit">
+                {t('submit')}
+              </Button>
+            </form>
+          </Form>
+        </CardContent>
+        <CardFooter>
+          <Button asChild variant="link" className="flex-1">
+            <ILink href={routeConfig.SIGN_UP}>{t('signUpLink')}</ILink>
+          </Button>
+        </CardFooter>
+      </Card>
     </div>
   );
 }

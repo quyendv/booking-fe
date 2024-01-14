@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { routeConfig } from '~/configs/route.config';
 import { useAuth } from '~/contexts/auth.context';
 import { useIRouter } from '~/locales/i18nNavigation';
@@ -11,7 +12,14 @@ export default function GuestGuard({ children }: GuestGuardProps) {
   const router = useIRouter();
 
   // if (isLoading) return <div>loading...</div>;
-  if (isAuthenticated) router.push(routeConfig.HOME);
+  // if (isAuthenticated) router.push(routeConfig.HOME);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.push(routeConfig.HOME);
+    }
+  }, [isAuthenticated, router]);
+
   return <>{children}</>;
 }
 

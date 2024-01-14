@@ -10,7 +10,7 @@ import { useAuth } from '~/contexts/auth.context';
 
 export default function Home() {
   const t = useTranslations('Index');
-  const { isAuthenticated, logout } = useAuth();
+  const { isAuthenticated, signOut } = useAuth();
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
@@ -19,9 +19,9 @@ export default function Home() {
           <NavLink href={routeConfig.HOME}>Home</NavLink>
           <NavLink href={routeConfig.ABOUT}>About</NavLink>
           {isAuthenticated ? (
-            <Button onClick={logout}>Logout</Button>
+            <Button onClick={signOut}>Logout</Button>
           ) : (
-            <NavLink href={routeConfig.SIGN_UP}>Sign Up</NavLink>
+            <NavLink href={routeConfig.SIGN_IN}>Sign In</NavLink>
           )}
         </ul>
 
