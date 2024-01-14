@@ -1,32 +1,43 @@
 'use client';
 
 import { useLocale } from 'next-intl';
-import type { ChangeEventHandler } from 'react';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '~/components/ui/dropdown-menu';
 
 import { LocaleConfig } from '~/configs/locale.config';
 import { useIPathname, useIRouter } from '~/locales/i18nNavigation';
+import { Button } from '../ui/button';
 
 export default function LocaleSwitcher() {
   const router = useIRouter();
   const pathname = useIPathname();
   const locale = useLocale();
 
-  const handleChange: ChangeEventHandler<HTMLSelectElement> = (event) => {
-    router.push(pathname, { locale: event.target.value });
+  const handleChange = (locale: string) => {
+    router.push(pathname, { locale });
     router.refresh();
   };
 
   return (
-    <select
-      defaultValue={locale}
-      onChange={handleChange}
-      className="border border-muted bg-background font-medium focus:outline-none focus-visible:ring"
-    >
-      {LocaleConfig.locales.map((elt) => (
-        <option key={elt} value={elt}>
-          {elt.toUpperCase()}
-        </option>
-      ))}
-    </select>
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="outline" size="icon">
+          {locale.toUpperCase()}
+          <span className="sr-only">Toggle Locale</span>
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="w-max min-w-fit" align="end">
+        {LocaleConfig.localeFlags.map((locale) => (
+          <DropdownMenuItem key={locale.code} onClick={() => handleChange(locale.code)} className="gap-1">
+            <locale.flag className="h-4 w-4" />
+            {locale.code.toLocaleUpperCase()}
+          </DropdownMenuItem>
+        ))}
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }
