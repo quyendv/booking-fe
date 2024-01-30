@@ -13,7 +13,9 @@
     "submit": "Xác nhận",
     "invalidCredentials": "Email hoặc mật khẩu không đúng",
     "unknownError": "Lỗi không xác định. Liên hệ với quản trị viên",
-    "signUpLink": "Chưa có tài khoản? Đăng ký"
+    "signUpLink": "Chưa có tài khoản? Đăng ký",
+    "success": "Đăng nhập thành công",
+    "failed": "Đăng nhập thất bại"
   },
   "SignUp": {
     "title": "Tạo tài khoản",
@@ -28,6 +30,21 @@
     "submit": "Xác nhận",
     "existingMessage": "Tài khoản email đã được sử dụng.",
     "unknownError": "Lỗi không xác định. Liên hệ với quản trị viên",
-    "signInLink": "Đã có tài khoản? Đăng nhập"
+    "signInLink": "Đã có tài khoản? Đăng nhập",
+    "success": "Đăng ký thành công",
+    "failed": "Đăng ký thất bại",
+    "verifyEmail": "Vui lòng kiểm tra email của bạn để xác nhận tài khoản"
+  },
+  "VerifyEmail": {
+    "title": "Kiểm tra hòm thư",
+    "emailSent": "Link xác thực đã được gửi tới email của bạn",
+    "emailSentTo": "Link xác thực đã được gửi tới email <bold>{email}</bold>.",
+    "success": "Bạn đã hoàn tất!",
+    "successDescription": "Cảm ơn bạn đã xác thực email.",
+    "successNextStep": "Đăng nhập",
+    "verifying": "Đang xác thực...",
+    "verifyingDescription": "Việc này sẽ không mất nhiều thời gian.",
+    "failed": "Có lỗi xảy ra",
+    "failedDescription": "Mã thông báo này không hợp lệ hoặc có thể đã hết hạn. Vui lòng thử lại"
   }
 }

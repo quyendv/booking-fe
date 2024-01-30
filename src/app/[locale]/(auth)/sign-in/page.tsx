@@ -1,6 +1,7 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { ReloadIcon } from '@radix-ui/react-icons';
 import { useTranslations } from 'next-intl';
 import { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
@@ -10,15 +11,17 @@ import { Button } from '~/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '~/components/ui/card';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '~/components/ui/form';
 import { Input } from '~/components/ui/input';
+import { useToast } from '~/components/ui/use-toast';
 import { routeConfig } from '~/configs/route.config';
 import { useAuth } from '~/contexts/auth.context';
 import { ILink } from '~/locales/i18nNavigation';
 
-export default function SignIn() {
-  const { signInWithGoogle, signInWithPassword } = useAuth();
+export default function SignInPage() {
+  const { isLoading, signInWithGoogle, signInWithPassword } = useAuth();
+  const { toast } = useToast();
   const t = useTranslations('SignIn');
 
-  // TODO: place in ReactComponent to use intl -> refactor to use https://github.com/aiji42/zod-i18n
+  // NOTE: place in ReactComponent to use intl -> refactor to use https://github.com/aiji42/zod-i18n
   const formSchema = useMemo(
     () =>
       z.object({
@@ -34,20 +37,29 @@ export default function SignIn() {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    // console.log(values);
-    try {
-      await signInWithPassword(values.email, values.password);
-      // show toast
-    } catch (error: any) {
-      const { code, message } = error;
-      if (code === 'auth/invalid-credential') {
-        // invalid provider, or correct provider but wrong email/password. If signUpWithPassword and signInWithGoogle before, can't signInWithPassword (wrong credentials with this provider)
-        form.setError('email', { message: t('invalidCredentials') });
-      } else {
-        form.setError('email', message ?? t('unknownError'));
+    const { isSuccess, type, message } = await signInWithPassword(values.email, values.password);
+    if (!isSuccess) {
+      if (type === 'form') {
+        form.setError('email', { message });
+      } else if (type === 'toast') {
+        toast({ title: t('failed'), description: message }); // TODO: localize msg
       }
+    } else {
+      // show toast, redirect (with delay)
+      toast({ title: message });
+    }
+  }
+
+  async function handleSignInWithGoogle() {
+    const { isSuccess, type, message } = await signInWithGoogle();
+    if (!isSuccess) {
+      if (type === 'form') {
+        form.setError('email', { message });
+      } else if (type === 'toast') {
+        toast({ title: t('failed'), description: message }); // TODO: localize msg
+      }
+    } else {
+      toast({ title: message });
     }
   }
 
@@ -65,7 +77,7 @@ export default function SignIn() {
               <Icons.gitHub className="mr-2 h-6 w-6" />
               Github
             </Button>
-            <Button variant="outline" onClick={signInWithGoogle}>
+            <Button variant="outline" onClick={handleSignInWithGoogle} disabled={isLoading}>
               <Icons.google className="mr-2 h-6 w-6" />
               Google
             </Button>
@@ -91,7 +103,7 @@ export default function SignIn() {
                   <FormItem>
                     <FormLabel>{t('email')}</FormLabel>
                     <FormControl>
-                      <Input placeholder="m@example.com" {...field} />
+                      <Input placeholder="m@example.com" {...field} disabled={isLoading} />
                     </FormControl>
                     {/* <FormDescription>This is your public display name.</FormDescription> */}
                     <FormMessage />
@@ -105,13 +117,14 @@ export default function SignIn() {
                   <FormItem>
                     <FormLabel>{t('password')}</FormLabel>
                     <FormControl>
-                      <Input {...field} type="password" />
+                      <Input {...field} type="password" disabled={isLoading} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-              <Button className="w-full" type="submit">
+              <Button className="w-full" type="submit" disabled={isLoading}>
+                {isLoading && <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />}
                 {t('submit')}
               </Button>
             </form>

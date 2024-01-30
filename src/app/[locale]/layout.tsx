@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { NextIntlClientProvider, useMessages } from 'next-intl';
 import { notFound } from 'next/navigation';
 import { ThemeProvider } from '~/components/common/ThemeProvider';
+import { Toaster } from '~/components/ui/toaster';
 import { inter } from '~/configs/font.config';
 import { LocaleConfig } from '~/configs/locale.config';
 import { themesConfig } from '~/configs/theme.config';
@@ -36,6 +37,7 @@ export default function RootLayout({ children, params: { locale } }: LayoutProps
             <AuthContextProvider>{children}</AuthContextProvider>
           </ThemeProvider>
         </NextIntlClientProvider>
+        <Toaster />
       </body>
     </html>
   );

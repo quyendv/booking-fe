@@ -1,25 +1,22 @@
 'use client';
 
 import { deleteCookie, setCookie } from 'cookies-next';
-import {
-  User,
-  UserCredential,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  signInWithPopup,
-} from 'firebase/auth';
-import { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import { User, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
+import { useTranslations } from 'next-intl';
+import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import { AuthApi } from '~/apis/auth.api';
 import { auth, googleProvider } from '~/configs/firebase.config';
 
 interface AuthContextProps {
   isAuthenticated: boolean;
-  isLoading: boolean;
+  isLoading: boolean; // both reload (refresh token) & sign in/up -> render loading screen
   user: User | null;
-  signInWithGoogle: () => Promise<UserCredential>;
+  signInWithGoogle: () => Promise<AuthFunctionType>;
   // eslint-disable-next-line no-unused-vars
-  signInWithPassword: (email: string, password: string) => Promise<UserCredential>;
+  signInWithPassword: (email: string, password: string) => Promise<AuthFunctionType>;
   // eslint-disable-next-line no-unused-vars
-  signUpWithPassword: (email: string, password: string) => Promise<UserCredential>;
+  signUpWithPassword: (email: string, password: string) => Promise<AuthFunctionType>;
+  signUpWithGoogle: () => Promise<AuthFunctionType>;
   signOut: () => Promise<void>;
 }
 
@@ -27,13 +24,20 @@ interface AuthContextProviderProps {
   children: React.ReactNode;
 }
 
+interface AuthFunctionType {
+  isSuccess: boolean;
+  type: 'toast' | 'form';
+  message: string;
+}
+
 const AuthContext = createContext<AuthContextProps>({
   isAuthenticated: false,
   isLoading: false,
   user: null,
-  signInWithGoogle: async () => Promise.resolve({} as UserCredential),
-  signInWithPassword: async () => Promise.resolve({} as UserCredential),
-  signUpWithPassword: async () => Promise.resolve({} as UserCredential),
+  signInWithGoogle: async () => Promise.resolve({} as AuthFunctionType),
+  signInWithPassword: async () => Promise.resolve({} as AuthFunctionType),
+  signUpWithPassword: async () => Promise.resolve({} as AuthFunctionType),
+  signUpWithGoogle: async () => Promise.resolve({} as AuthFunctionType),
   signOut: async () => Promise.resolve(),
 });
 
@@ -42,27 +46,24 @@ const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
-  // const router = useIRouter();
-  // const pathname = useIPathname();
+  const t = useTranslations();
 
+  /**
+   * For auto refresh firebase token -> duplicate calling sign in api
+   * Should add state to detect when user sign in or refresh token
+   */
   useEffect(() => {
     setIsLoading(true);
-
     auth.onIdTokenChanged(async (user) => {
       if (!user) {
         setUser(null);
         setIsAuthenticated(false);
       } else {
+        // Firebase
         const token = await user.getIdToken();
         setUser(user);
-        // if (pathname === RoutePath.INDEX) {
-        //   router.push(RoutePath.HOME);
-        // }
 
-        // Check user in database: Handle data & error (try-catch). Here is moke
-        // const response = await new Promise((resolve, reject) => resolve('ok'));
-        // const response = await new Promise((resolve, reject) => reject('error'));
-        const { data, error } = { data: 'ok', error: null };
+        const { error } = await AuthApi.signIn(token);
         if (error) {
           setIsAuthenticated(false);
           // throw new Error(error);
@@ -75,47 +76,138 @@ const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
     });
   }, []);
 
-  async function signInWithGoogle() {
-    const data = await signInWithPopup(auth, googleProvider);
-    setIsLoading(true); // Loading to check user in database
-    // router.push(RoutePath.HOME);
-    return data;
-  }
+  const signInWithGoogle = useCallback(async (): Promise<AuthFunctionType> => {
+    try {
+      // Firebase
+      const data = await signInWithPopup(auth, googleProvider);
 
-  async function signInWithPassword(email: string, password: string) {
-    const data = await signInWithEmailAndPassword(auth, email, password);
-    setIsLoading(true); // Loading to check user in database
-    return data;
+      // Server
+      const { error } = await AuthApi.signIn(await data.user.getIdToken());
+      if (error) {
+        setIsAuthenticated(false);
+        return { isSuccess: false, type: 'toast', message: error?.message }; // TODO: localize error msg from server
+      } else {
+        setIsAuthenticated(true);
+        // setUser(...dataWithRole)
+      }
 
-    // try {
-    // } catch (error: any) {
-    //   console.log(error?.message); // Firebase: Error (auth/invalid-credential).
-    //   console.log(error?.code); // auth/invalid-credential
-    //   throw new Error(error);
-    // }
-  }
+      return { isSuccess: true, type: 'toast', message: t('SignIn.success') };
+    } catch (error: any) {
+      setIsAuthenticated(false);
+      return { isSuccess: false, type: 'form', message: error?.message ?? t('SignIn.unknownError') };
+    } finally {
+      setIsLoading(false);
+    }
+  }, [t]);
 
-  async function signUpWithPassword(email: string, password: string) {
-    const data = await createUserWithEmailAndPassword(auth, email, password);
-    setIsLoading(true); // Loading to create user in database
-    return data;
+  const signInWithPassword = useCallback(
+    async (email: string, password: string): Promise<AuthFunctionType> => {
+      try {
+        setIsLoading(true);
+        // Firebase
+        const data = await signInWithEmailAndPassword(auth, email, password);
 
-    // try {
-    // } catch (error: any) {
-    //   console.log(error?.message); // Firebase: Error (auth/email-already-in-use).
-    //   console.log(error?.code); // auth/email-already-in-use
-    //   throw new Error(error);
-    // }
-  }
+        // Server
+        const { error } = await AuthApi.signIn(await data.user.getIdToken());
+        if (error) {
+          setIsAuthenticated(false);
+          return { isSuccess: false, type: 'toast', message: error?.message };
+        } else {
+          setIsAuthenticated(true);
+          // setUser(...dataWithRole)
+        }
 
-  async function signOut() {
+        return { isSuccess: true, type: 'toast', message: t('SignIn.success') };
+      } catch (error: any) {
+        setIsAuthenticated(false);
+        const { code, message } = error;
+        if (code === 'auth/invalid-credential') {
+          // Firebase error: invalid provider, or correct provider but wrong email/password. If signUpWithPassword and signInWithGoogle before, can't signInWithPassword (wrong credentials with this provider)
+          return { isSuccess: false, type: 'form', message: t('SignIn.invalidCredentials') };
+        } else {
+          return { isSuccess: false, type: 'form', message: message ?? t('SignIn.unknownError') };
+        }
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [t],
+  );
+
+  const signUpWithPassword = useCallback(
+    async (email: string, password: string): Promise<AuthFunctionType> => {
+      try {
+        setIsLoading(true);
+        // Firebase
+        const data = await createUserWithEmailAndPassword(auth, email, password);
+
+        const { error } = await AuthApi.signUp(await data.user.getIdToken());
+        if (error) {
+          // setIsAuthenticated(false);
+          return { isSuccess: false, type: 'toast', message: error?.message };
+        } else {
+          // setIsAuthenticated(true);
+          // setUser(...dataWithRole)
+        }
+
+        return {
+          isSuccess: true,
+          type: 'toast',
+          // message: signUpResponse.message, // TODO: localize
+          message: t('SignUp.verifyEmail'),
+        };
+      } catch (error: any) {
+        // setIsAuthenticated(false);
+        const { code, message } = error;
+        if (code === 'auth/email-already-in-use') {
+          // Firebase error: email already exists
+          return { isSuccess: false, type: 'form', message: t('SignUp.existingMessage') };
+        } else {
+          return { isSuccess: false, type: 'form', message: message ?? t('unknownError') };
+        }
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [t],
+  );
+
+  const signUpWithGoogle = useCallback(async (): Promise<AuthFunctionType> => {
+    try {
+      setIsLoading(true);
+      // Firebase
+      const data = await signInWithPopup(auth, googleProvider);
+
+      const { error } = await AuthApi.signUp(await data.user.getIdToken());
+      if (error) {
+        // setIsAuthenticated(false);
+        return { isSuccess: false, type: 'toast', message: error?.message };
+      } else {
+        // setIsAuthenticated(true);
+        // setUser(...dataWithRole)
+      }
+
+      return {
+        isSuccess: true,
+        type: 'toast',
+        // message: signUpResponse.message, // TODO: localize
+        message: t('SignUp.verifyEmail'),
+      };
+    } catch (error: any) {
+      // setIsAuthenticated(false);
+      return { isSuccess: false, type: 'form', message: error?.message ?? t('unknownError') };
+    } finally {
+      setIsLoading(false);
+    }
+  }, [t]);
+
+  const signOut = useCallback(async () => {
     await auth.signOut();
     setUser(null);
     deleteCookie('token'); // if not use deleteCookie, expired token still in browser & get 401 error
-    // router.push(RoutePath.INDEX);
-  }
+  }, []);
 
-  const authProviderValue = useMemo(
+  const authProviderValue: AuthContextProps = useMemo(
     () => ({
       isAuthenticated,
       isLoading,
@@ -123,9 +215,19 @@ const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
       signInWithGoogle,
       signInWithPassword,
       signUpWithPassword,
+      signUpWithGoogle,
       signOut,
     }),
-    [isAuthenticated, isLoading, user],
+    [
+      isAuthenticated,
+      isLoading,
+      user,
+      signInWithGoogle,
+      signInWithPassword,
+      signUpWithPassword,
+      signUpWithGoogle,
+      signOut,
+    ],
   );
 
   return <AuthContext.Provider value={authProviderValue}>{children}</AuthContext.Provider>;

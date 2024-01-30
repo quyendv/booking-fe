@@ -13,7 +13,9 @@
     "submit": "Submit",
     "invalidCredentials": "Invalid credentials. Please try again.",
     "unknownError": "Unknown error. Please contact system administrator",
-    "signUpLink": "Don't have an account? Sign up"
+    "signUpLink": "Don't have an account? Sign up",
+    "success": "Sign in successful",
+    "failed": "Sign in failed"
   },
   "SignUp": {
     "title": "Create an account",
@@ -28,6 +30,21 @@
     "submit": "Submit",
     "existingMessage": "Email already exists",
     "unknownError": "Unknown error. Please contact system administrator",
-    "signInLink": "Already have an account? Sign in"
+    "signInLink": "Already have an account? Sign in",
+    "success": "Sign up successful",
+    "failed": "Sign up failed",
+    "verifyEmail": "Verify email sent. Please check your inbox."
+  },
+  "VerifyEmail": {
+    "title": "Check your email",
+    "emailSent": "We've sent a verification link to your email.",
+    "emailSentTo": "We've sent a verification link to email <bold>{email}</bold>.",
+    "success": "You're all set!",
+    "successDescription": "Thank you for verifying your email.",
+    "successNextStep": "Sign in",
+    "verifying": "Verifying...",
+    "verifyingDescription": "This won't take long.",
+    "failed": "There was a problem",
+    "failedDescription": "This token is not valid or might be expired. Please try again."
   }
 }

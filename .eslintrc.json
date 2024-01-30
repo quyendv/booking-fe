@@ -11,5 +11,14 @@
     "no-unused-vars": ["warn", { "args": "after-used", "argsIgnorePattern": "^_" }],
     "no-console": "warn",
     "prettier/prettier": "warn"
-  }
+  },
+  "overrides": [
+    {
+      "files": ["./src/components/ui/**"],
+      "rules": {
+        // disable rules (or using .eslintignore for exclude all rules)
+        "no-unused-vars": "off"
+      }
+    }
+  ]
 }

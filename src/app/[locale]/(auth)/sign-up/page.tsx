@@ -1,6 +1,7 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { ReloadIcon } from '@radix-ui/react-icons';
 import { useTranslations } from 'next-intl';
 import { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
@@ -10,26 +11,18 @@ import { Button } from '~/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '~/components/ui/card';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '~/components/ui/form';
 import { Input } from '~/components/ui/input';
+import { useToast } from '~/components/ui/use-toast';
 import { routeConfig } from '~/configs/route.config';
 import { useAuth } from '~/contexts/auth.context';
-import { ILink } from '~/locales/i18nNavigation';
+import { ILink, useIRouter } from '~/locales/i18nNavigation';
 
-// const formSchema = z
-//   .object({
-//     email: z.string().email({ message: t('email') }),
-//     password: z.string().min(8), // TODO: regex for strong password
-//     confirmPassword: z.string(),
-//   })
-//   .refine((data) => data.password === data.confirmPassword, {
-//     message: "Passwords don't match",
-//     path: ['confirmPassword'],
-//   });
-
-export default function SignUp() {
-  const { signInWithGoogle, signUpWithPassword } = useAuth();
+export default function SignUpPage() {
+  const { isLoading, signUpWithGoogle, signUpWithPassword } = useAuth();
+  const { toast } = useToast();
+  const router = useIRouter();
   const t = useTranslations('SignUp');
 
-  // TODO: place in ReactComponent to use intl -> refactor to use https://github.com/aiji42/zod-i18n
+  // NOTE: place in ReactComponent to use intl -> refactor to use https://github.com/aiji42/zod-i18n
   const formSchema = useMemo(
     () =>
       z
@@ -51,19 +44,30 @@ export default function SignUp() {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    // console.log(values);
-    try {
-      await signUpWithPassword(values.email, values.password);
-      // show toast
-    } catch (error: any) {
-      const { code, message } = error;
-      if (code === 'auth/email-already-in-use') {
-        form.setError('email', { message: 'Email already exists' });
-      } else {
-        form.setError('email', message ?? t('unknownError'));
+    const { isSuccess, type, message } = await signUpWithPassword(values.email, values.password);
+    if (!isSuccess) {
+      if (type === 'form') {
+        form.setError('email', { message });
+      } else if (type === 'toast') {
+        toast({ title: t('failed'), description: message }); // TODO: localize msg
       }
+    } else {
+      toast({ title: message });
+      router.push(`${routeConfig.VERIFY_EMAIL}?to=${values.email}`);
+    }
+  }
+
+  async function handleSignUpWithGoogle() {
+    const { isSuccess, type, message } = await signUpWithGoogle();
+    if (!isSuccess) {
+      if (type === 'form') {
+        form.setError('email', { message });
+      } else if (type === 'toast') {
+        toast({ title: t('failed'), description: message }); // TODO: localize msg
+      }
+    } else {
+      toast({ title: t('success'), description: message });
+      router.push(routeConfig.VERIFY_EMAIL);
     }
   }
 
@@ -81,7 +85,7 @@ export default function SignUp() {
               <Icons.gitHub className="mr-2 h-6 w-6" />
               Github
             </Button>
-            <Button variant="outline" onClick={signInWithGoogle}>
+            <Button variant="outline" onClick={handleSignUpWithGoogle} disabled={isLoading}>
               <Icons.google className="mr-2 h-6 w-6" />
               Google
             </Button>
@@ -107,7 +111,7 @@ export default function SignUp() {
                   <FormItem>
                     <FormLabel>{t('email')}</FormLabel>
                     <FormControl>
-                      <Input placeholder="m@example.com" {...field} />
+                      <Input placeholder="m@example.com" {...field} disabled={isLoading} />
                     </FormControl>
                     {/* <FormDescription>This is your public display name.</FormDescription> */}
                     <FormMessage />
@@ -121,7 +125,7 @@ export default function SignUp() {
                   <FormItem>
                     <FormLabel>{t('password')}</FormLabel>
                     <FormControl>
-                      <Input {...field} type="password" />
+                      <Input {...field} type="password" disabled={isLoading} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -140,7 +144,8 @@ export default function SignUp() {
                   </FormItem>
                 )}
               />
-              <Button className="w-full" type="submit">
+              <Button className="w-full" type="submit" disabled={isLoading}>
+                {isLoading && <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />}
                 {t('submit')}
               </Button>
             </form>
