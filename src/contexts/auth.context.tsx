@@ -78,6 +78,7 @@ const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
 
   const signInWithGoogle = useCallback(async (): Promise<AuthFunctionType> => {
     try {
+      setIsLoading(true);
       // Firebase
       const data = await signInWithPopup(auth, googleProvider);
 
