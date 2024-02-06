@@ -29,6 +29,10 @@ export default function AuthGuard({ children }: AuthGuardProps) {
 
 export function withAuthGuard(Component: React.ComponentType) {
   return function WithRoleGuardWrapper(props: any) {
-    return <Component {...props} />;
+    return (
+      <AuthGuard>
+        <Component {...props} />
+      </AuthGuard>
+    );
   };
 }
