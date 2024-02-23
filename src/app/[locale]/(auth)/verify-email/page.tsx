@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
-import VerifyEmail from '~/components/layouts/auth/verify-email';
+import VerifyEmail from '~/components/layouts/auth/VerifyEmail';
 
 interface VerifyEmailProps {
   searchParams: {
