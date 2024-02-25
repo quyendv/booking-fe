@@ -1,6 +1,14 @@
 {
   "Index": {
-    "title": "Xin chào thế giới!"
+    "title": "Xin chào thế giới!",
+    "signIn": "Đăng nhập",
+    "signUp": "Đăng ký"
+  },
+  "Header": {
+    "manageAccount": "Quản lý tài khoản",
+    "myBookings": "Đặt chỗ & chuyến đi",
+    "saved": "Đã lưu",
+    "signOut": "Sign out"
   },
   "SignIn": {
     "title": "Đăng nhập",

@@ -14,9 +14,15 @@ type VerifyEmailResponse = {
   error: any;
 };
 
+export type SignInResponse = {
+  id: string; // email
+  isVerified: boolean;
+  roleName: string;
+};
+
 export const AuthApi = {
   async signIn(token: string) {
-    return await new FetchInstance().post(AuthApiEndPoint.SIGN_IN, {
+    return await new FetchInstance<SignInResponse>().post(AuthApiEndPoint.SIGN_IN, {
       headers: { Authorization: `Bearer ${token}` },
       next: { revalidate: false },
     });

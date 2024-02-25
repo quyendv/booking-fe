@@ -1,6 +1,9 @@
 import { getCookie } from 'cookies-next';
 
-export type ApiResponse<T = any> = { data: T; error?: never } | { data?: never; error: any };
+type SuccessResponse<T> = { isSuccess: true; data: T; error?: never };
+type ErrorResponse = { isSuccess: false; error: any; data?: never };
+export type ApiResponse<T = any> = SuccessResponse<T> | ErrorResponse;
+
 type FetcherMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 
 export class FetchInstance<T = any> {
@@ -17,9 +20,9 @@ export class FetchInstance<T = any> {
   private async execute(url: string, method: FetcherMethod, init?: RequestInit): Promise<ApiResponse<T>> {
     try {
       const response = await this.fetcher(url, method, init);
-      return { data: response };
+      return { isSuccess: true, data: response };
     } catch (error) {
-      return { error };
+      return { isSuccess: false, error };
     }
   }
 

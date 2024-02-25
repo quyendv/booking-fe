@@ -1,6 +1,14 @@
 {
   "Index": {
-    "title": "Hello world!"
+    "title": "Hello world!",
+    "signIn": "Sign In",
+    "signUp": "Sign Up"
+  },
+  "Header": {
+    "manageAccount": "Manage account",
+    "myBookings": "Bookings & Trips",
+    "saved": "Saved",
+    "signOut": "Sign out"
   },
   "SignIn": {
     "title": "Sign in",
