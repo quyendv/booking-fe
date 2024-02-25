@@ -18,6 +18,7 @@ import { UserRole } from '~/configs/role.config';
 import { routeConfig } from '~/configs/route.config';
 import { useAuth } from '~/contexts/auth.context';
 import { ILink } from '~/locales/i18nNavigation';
+import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar';
 
 const customerMenuItems = [
   { label: 'manageAccount', href: routeConfig.MANAGE_ACCOUNT, icon: PersonIcon },
@@ -51,13 +52,17 @@ export function UserMenu({}: UserMenuProps) {
   return isAuthenticated ? (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        {user.avatar ? (
-          <Image src={user.avatar} alt="avatar" width={32} height={32} className="size-8 cursor-pointer rounded-full" />
-        ) : (
-          <div className="flex size-8 cursor-pointer items-center justify-center rounded-full bg-primary/10">
-            {user.name[0]}
-          </div>
-        )}
+        <Avatar className="size-8 cursor-pointer rounded-full">
+          {user.avatar ? (
+            <>
+              <AvatarImage src={user.avatar} alt="avatar" />
+              <AvatarFallback>{user.name[0].toUpperCase()}</AvatarFallback>
+            </>
+          ) : (
+            <AvatarFallback>{user.name[0].toUpperCase()}</AvatarFallback>
+            // <div className="flex-center size-8 rounded-full bg-primary/10">{user.name[0].toUpperCase()}</div>
+          )}
+        </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="[&>*]:cursor-pointer">
         <DropdownMenuLabel>Hi, {user.name.split(' ')[0]}</DropdownMenuLabel>
@@ -78,7 +83,7 @@ export function UserMenu({}: UserMenuProps) {
       </DropdownMenuContent>
     </DropdownMenu>
   ) : (
-    <div>
+    <div className="space-x-3">
       <ILink className={buttonVariants({ variant: 'outline' })} href={routeConfig.SIGN_IN}>
         {t('signIn')}
       </ILink>

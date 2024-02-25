@@ -99,7 +99,14 @@
     "desc": {
       "name": "Nhập tên khách sạn của bạn",
       "description": "Nhập mô tả khách sạn của bạn",
-      "amenities": "Chọn các tiện nghi phổ biến trong khách sạn của bạn"
+      "amenities": "Chọn các tiện nghi phổ biến trong khách sạn của bạn",
+      "image": "Chọn một hình ảnh để trưng bày khách sạn của bạn!"
+    },
+    "toast": {
+      "uploadSuccess": "🎉 Tải lên thành công!",
+      "uploadFailure": "Tải lên thất bại!",
+      "removeSuccess": "Hình ảnh đã được xóa",
+      "removeFailure": "Xóa hình ảnh thất bại!"
     }
   }
 }

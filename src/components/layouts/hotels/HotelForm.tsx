@@ -8,13 +8,24 @@ import { Checkbox } from '~/components/ui/checkbox';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '~/components/ui/form';
 import { Input } from '~/components/ui/input';
 import { Textarea } from '~/components/ui/textarea';
+import UploadFile, { StorageResult } from '../form/UploadFile';
+import { useState } from 'react';
+import { useToast } from '~/components/ui/use-toast';
+import Image from 'next/image';
+import { Button } from '~/components/ui/button';
+import { Loader2Icon, XCircleIcon } from 'lucide-react';
+import { StorageApi } from '~/apis/storage.api';
 
 interface HotelFormProps {
   title: string; // locale key
 }
 
 export default function HotelForm({ title }: HotelFormProps) {
+  const [preview, setPreview] = useState<StorageResult | null>(null);
+  const [previewIsDeleting, setPreviewIsDeleting] = useState<boolean>(false);
+
   const t = useTranslations();
+  const { toast } = useToast();
 
   const gallerySchema = z.object({
     url: z.string().url({ message: t('HotelForm.error.galleryUrl') }),
@@ -76,6 +87,18 @@ export default function HotelForm({ title }: HotelFormProps) {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
+  }
+
+  async function handleDeleteImage() {
+    setPreviewIsDeleting(true);
+    const { isSuccess } = await StorageApi.deleteFile(preview!.key);
+    setPreviewIsDeleting(false);
+    if (isSuccess) {
+      setPreview(null);
+      toast({ variant: 'success', description: t('HotelForm.toast.removeSuccess') });
+    } else {
+      toast({ variant: 'destructive', description: t('HotelForm.toast.removeFailure') });
+    }
   }
 
   return (
@@ -252,6 +275,47 @@ export default function HotelForm({ title }: HotelFormProps) {
                   />
                 </div>
               </div>
+
+              <FormField
+                control={form.control}
+                name="imageUrl"
+                render={({ field }) => (
+                  <FormItem className="flex flex-col space-y-3">
+                    <FormLabel>{t('HotelForm.label.image')}</FormLabel>
+                    <FormDescription>{t('HotelForm.desc.image')}</FormDescription>
+                    <FormControl>
+                      {preview ? (
+                        <div className="relative mt-4 max-h-[400px] min-h-[400px] min-w-[200px] max-w-[400px]">
+                          <Image fill src={preview.url} alt="Hotel image" className="object-contain" />
+                          <Button
+                            type="button"
+                            size="icon"
+                            variant="ghost"
+                            className="absolute -right-3 top-0"
+                            onClick={handleDeleteImage}
+                          >
+                            {previewIsDeleting ? <Loader2Icon /> : <XCircleIcon />}
+                          </Button>
+                        </div>
+                      ) : (
+                        <div className="mt-4 flex max-w-[400px] flex-col items-center rounded border-2 border-dashed border-primary/50 p-12">
+                          <UploadFile
+                            folder="hotels"
+                            onUploadComplete={(res) => {
+                              setPreview(res);
+                              toast({ variant: 'success', description: t('HotelForm.toast.uploadSuccess') });
+                            }}
+                            onUploadError={() => {
+                              toast({ variant: 'destructive', description: t('HotelForm.toast.uploadFailed') });
+                            }}
+                          />
+                        </div>
+                      )}
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
             </div>
             <div className="flex flex-1 flex-col gap-6">part 2</div>
           </div>

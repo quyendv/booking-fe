@@ -94,12 +94,20 @@
       "laundry": "Laundry Facilities",
       "shopping": "Shopping",
       "bikeRental": "Bike Rental",
-      "swimmingPool": "Swimming Pool"
+      "swimmingPool": "Swimming Pool",
+      "image": "Upload an image"
     },
     "desc": {
       "name": "Provide your hotel name",
       "description": "Provide your hotel description",
-      "amenities": "Choose Amenities popular in your hotel"
+      "amenities": "Choose Amenities popular in your hotel",
+      "image": "Choose an image that will show-case your hotel nicely!"
+    },
+    "toast": {
+      "uploadSuccess": "🎉 Upload Completed!",
+      "uploadFailure": "Upload failed!",
+      "removeSuccess": "Image removed",
+      "removeFailure": "Remove image failed!"
     }
   }
 }
