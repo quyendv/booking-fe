@@ -9,19 +9,15 @@ import {
   DropdownMenuTrigger,
 } from '~/components/ui/dropdown-menu';
 
-import Image from 'next/image';
-import { UserInfo } from '~/contexts/auth.context';
-import { useTranslations } from 'next-intl';
-import { routeConfig } from '~/configs/route.config';
 import { PersonIcon } from '@radix-ui/react-icons';
-import { Luggage, Heart, LogOutIcon, LayoutDashboardIcon, UsersIcon, HotelIcon } from 'lucide-react';
-import { ILink } from '~/locales/i18nNavigation';
+import { Heart, HotelIcon, LayoutDashboardIcon, LogOutIcon, Luggage, UsersIcon } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+import Image from 'next/image';
+import { buttonVariants } from '~/components/ui/button';
 import { UserRole } from '~/configs/role.config';
-
-interface UserMenuProps {
-  user: UserInfo;
-  signOut: () => Promise<void>;
-}
+import { routeConfig } from '~/configs/route.config';
+import { useAuth } from '~/contexts/auth.context';
+import { ILink } from '~/locales/i18nNavigation';
 
 const customerMenuItems = [
   { label: 'manageAccount', href: routeConfig.MANAGE_ACCOUNT, icon: PersonIcon },
@@ -38,16 +34,21 @@ const adminMenuItems = [
 
 const hotelMenuItems = [{ label: 'myHotel', href: routeConfig.MY_HOTEL, icon: HotelIcon }];
 
-export function UserMenu({ user, signOut }: UserMenuProps) {
+interface UserMenuProps {}
+
+export function UserMenu({}: UserMenuProps) {
+  const { isAuthenticated, user, signOut } = useAuth();
   const t = useTranslations('Header');
-  const menuItems =
-    user.role === UserRole.CUSTOMER
+
+  const menuItems = isAuthenticated
+    ? user.role === UserRole.CUSTOMER
       ? customerMenuItems
       : user.role === UserRole.ADMIN
         ? adminMenuItems
-        : hotelMenuItems;
+        : hotelMenuItems
+    : [];
 
-  return (
+  return isAuthenticated ? (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         {user.avatar ? (
@@ -76,5 +77,14 @@ export function UserMenu({ user, signOut }: UserMenuProps) {
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
+  ) : (
+    <div>
+      <ILink className={buttonVariants({ variant: 'outline' })} href={routeConfig.SIGN_IN}>
+        {t('signIn')}
+      </ILink>
+      <ILink className={buttonVariants()} href={routeConfig.SIGN_UP}>
+        {t('signUp')}
+      </ILink>
+    </div>
   );
 }

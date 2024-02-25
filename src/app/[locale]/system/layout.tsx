@@ -1,11 +1,11 @@
 import Container from '~/components/layouts/Container';
 import Header from '~/components/layouts/header/Header';
 
-interface MainLayoutProps {
+interface SystemLayoutProps {
   children: React.ReactNode;
 }
 
-function MainLayout({ children }: MainLayoutProps) {
+export default function SystemLayout({ children }: SystemLayoutProps) {
   return (
     <main className="flex min-h-screen flex-col">
       <Header />
@@ -15,5 +15,3 @@ function MainLayout({ children }: MainLayoutProps) {
     </main>
   );
 }
-
-export default MainLayout;

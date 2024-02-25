@@ -12,6 +12,8 @@
     "manageCustomers": "Manage Customers",
     "manageHotels": "Manage Hotels",
     "myHotel": "My Hotel",
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
     "signOut": "Sign out"
   },
   "SignIn": {
@@ -58,5 +60,46 @@
     "verifyingDescription": "This won't take long.",
     "failed": "There was a problem",
     "failedDescription": "This token is not valid or might be expired. Please try again."
+  },
+  "HotelForm": {
+    "title": {
+      "create": "Describe new hotel",
+      "edit": "Update your hotel"
+    },
+    "error": {
+      "email": "Invalid Email",
+      "name": "Name must be at least 3 characters long",
+      "description": "Description must be at least 10 characters long",
+      "imageUrl": "Image is required",
+      "country": "Country is required",
+      "province": "Province is required",
+      "address": "Address is required",
+      "galleryUrl": "Invalid url"
+    },
+    "placeholder": {
+      "name": "Beach Hotel",
+      "description": "Beach Hotel is parked with many awesome amenities!"
+    },
+    "label": {
+      "name": "Hotel Name",
+      "description": "Hotel Description",
+      "amenities": "Choose Amenities",
+      "gym": "Gym",
+      "bar": "Bar",
+      "restaurant": "Restaurant",
+      "freeParking": "Free Parking",
+      "movieNight": "Movie Night",
+      "coffeeShop": "Coffee Shop",
+      "spa": "Spa",
+      "laundry": "Laundry Facilities",
+      "shopping": "Shopping",
+      "bikeRental": "Bike Rental",
+      "swimmingPool": "Swimming Pool"
+    },
+    "desc": {
+      "name": "Provide your hotel name",
+      "description": "Provide your hotel description",
+      "amenities": "Choose Amenities popular in your hotel"
+    }
   }
 }

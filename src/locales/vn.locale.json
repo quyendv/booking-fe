@@ -12,7 +12,9 @@
     "manageCustomers": "Quản lý khách hàng",
     "manageHotels": "Quản lý khách sạn",
     "myHotel": "Khách sạn của tôi",
-    "signOut": "Sign out"
+    "signIn": "Đăng nhập",
+    "signUp": "Đăng ký",
+    "signOut": "Đăng xuất"
   },
   "SignIn": {
     "title": "Đăng nhập",
@@ -58,5 +60,46 @@
     "verifyingDescription": "Việc này sẽ không mất nhiều thời gian.",
     "failed": "Có lỗi xảy ra",
     "failedDescription": "Mã thông báo này không hợp lệ hoặc có thể đã hết hạn. Vui lòng thử lại"
+  },
+  "HotelForm": {
+    "title": {
+      "create": "Mô tả khách sạn mới",
+      "edit": "Cập nhật thông tin khách sạn"
+    },
+    "error": {
+      "email": "Email không hợp lệ",
+      "name": "Tên phải có ít nhất 3 ký tự",
+      "description": "Mô tả phải có ít nhất 10 ký tự",
+      "imageUrl": "Yêu cầu hình ảnh",
+      "country": "Yêu cầu quốc gia",
+      "province": "Yêu cầu tỉnh/thành phố",
+      "address": "Yêu cầu địa chỉ",
+      "galleryUrl": "Url không hợp lệ"
+    },
+    "placeholder": {
+      "name": "Beach Hotel",
+      "description": "Beach Hotel với nhiều tiện nghi tuyệt vời!"
+    },
+    "label": {
+      "name": "Tên khách sạn",
+      "description": "Mô tả khách sạn",
+      "amenities": "Chọn tiện nghi",
+      "gym": "Phòng tập gym",
+      "bar": "Quầy bar",
+      "restaurant": "Nhà hàng",
+      "freeParking": "Bãi đỗ xe miễn phí",
+      "movieNight": "Buổi chiếu phim",
+      "coffeeShop": "Quán cà phê",
+      "spa": "Spa",
+      "laundry": "Tiện nghi giặt là",
+      "shopping": "Mua sắm",
+      "bikeRental": "Cho thuê xe đạp",
+      "swimmingPool": "Bể bơi"
+    },
+    "desc": {
+      "name": "Nhập tên khách sạn của bạn",
+      "description": "Nhập mô tả khách sạn của bạn",
+      "amenities": "Chọn các tiện nghi phổ biến trong khách sạn của bạn"
+    }
   }
 }

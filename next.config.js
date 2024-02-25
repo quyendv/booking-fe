@@ -5,6 +5,14 @@ const nextConfig = withNextIntl({
   distDir: '.next', // default
   images: {
     domains: ['lh3.googleusercontent.com'],
+    // remotePatterns: [
+    //   {
+    //     protocol: 'https',
+    //     hostname: 'assets.example.com',
+    //     port: '',
+    //     pathname: '/account123/**',
+    //   },
+    // ],
   },
 });
 
