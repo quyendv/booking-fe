@@ -8,6 +8,10 @@
     "manageAccount": "Manage account",
     "myBookings": "Bookings & Trips",
     "saved": "Saved",
+    "dashboard": "Dashboard",
+    "manageCustomers": "Manage Customers",
+    "manageHotels": "Manage Hotels",
+    "myHotel": "My Hotel",
     "signOut": "Sign out"
   },
   "SignIn": {

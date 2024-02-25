@@ -8,6 +8,10 @@
     "manageAccount": "Quản lý tài khoản",
     "myBookings": "Đặt chỗ & chuyến đi",
     "saved": "Đã lưu",
+    "dashboard": "Quản lý chung",
+    "manageCustomers": "Quản lý khách hàng",
+    "manageHotels": "Quản lý khách sạn",
+    "myHotel": "Khách sạn của tôi",
     "signOut": "Sign out"
   },
   "SignIn": {
