@@ -6,7 +6,7 @@ import { useTranslations } from 'next-intl';
 import { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
-import { Icons } from '~/components/common/Icons';
+import OAuth2 from '~/components/layouts/auth/Oauth2';
 import { Button } from '~/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '~/components/ui/card';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '~/components/ui/form';
@@ -72,16 +72,7 @@ export default function SignInPage() {
         </CardHeader>
         <CardContent className="grid gap-4">
           {/* OAuth2 */}
-          <div className="grid grid-cols-2 gap-6">
-            <Button variant="outline" disabled>
-              <Icons.gitHub className="mr-2 h-6 w-6" />
-              Github
-            </Button>
-            <Button variant="outline" onClick={handleSignInWithGoogle} disabled={isLoading}>
-              <Icons.google className="mr-2 h-6 w-6" />
-              Google
-            </Button>
-          </div>
+          <OAuth2 authMethod={handleSignInWithGoogle} isLoading={isLoading} />
 
           {/* Separate */}
           <div className="relative">

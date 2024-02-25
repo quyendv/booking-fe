@@ -8,6 +8,7 @@ import {
   DropdownMenuTrigger,
 } from '~/components/ui/dropdown-menu';
 
+import { useState } from 'react';
 import { LocaleConfig } from '~/configs/locale.config';
 import { useIPathname, useIRouter } from '~/locales/i18nNavigation';
 import { Button } from '../ui/button';
@@ -16,6 +17,7 @@ export default function LocaleSwitcher() {
   const router = useIRouter();
   const pathname = useIPathname();
   const locale = useLocale();
+  const [flagElement] = useState(() => LocaleConfig.localeFlags.find((l) => l.code === locale));
 
   const handleChange = (locale: string) => {
     router.push(pathname, { locale });
@@ -26,7 +28,7 @@ export default function LocaleSwitcher() {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="outline" size="icon">
-          {locale.toUpperCase()}
+          {flagElement ? <flagElement.flag className="h-4 w-4" /> : locale.toUpperCase()}
           <span className="sr-only">Toggle Locale</span>
         </Button>
       </DropdownMenuTrigger>

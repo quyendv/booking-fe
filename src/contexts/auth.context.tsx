@@ -4,13 +4,21 @@ import { deleteCookie, setCookie } from 'cookies-next';
 import { User, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 import { useTranslations } from 'next-intl';
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
-import { AuthApi } from '~/apis/auth.api';
+import { AuthApi, SignInResponse } from '~/apis/auth.api';
 import { auth, googleProvider } from '~/configs/firebase.config';
 
-interface AuthContextProps {
-  isAuthenticated: boolean;
+export interface UserInfo {
+  email: string;
+  isVerified: boolean;
+  role: string;
+  name: string;
+  avatar?: string | null;
+}
+
+type AuthContextProps = {
   isLoading: boolean; // both reload (refresh token) & sign in/up -> render loading screen
-  user: User | null;
+  isAuthenticated: boolean;
+  // user: UserInfo | null;
   signInWithGoogle: () => Promise<AuthFunctionType>;
   // eslint-disable-next-line no-unused-vars
   signInWithPassword: (email: string, password: string) => Promise<AuthFunctionType>;
@@ -18,7 +26,7 @@ interface AuthContextProps {
   signUpWithPassword: (email: string, password: string) => Promise<AuthFunctionType>;
   signUpWithGoogle: () => Promise<AuthFunctionType>;
   signOut: () => Promise<void>;
-}
+} & ({ isAuthenticated: false; user: null } | { isAuthenticated: true; user: UserInfo });
 
 interface AuthContextProviderProps {
   children: React.ReactNode;
@@ -42,7 +50,7 @@ const AuthContext = createContext<AuthContextProps>({
 });
 
 const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<UserInfo | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
@@ -61,14 +69,14 @@ const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
       } else {
         // Firebase
         const token = await user.getIdToken();
-        setUser(user);
 
-        const { error } = await AuthApi.signIn(token);
-        if (error) {
+        const { isSuccess, data } = await AuthApi.signIn(token);
+        if (!isSuccess) {
           setIsAuthenticated(false);
           // throw new Error(error);
         } else {
           setIsAuthenticated(true);
+          setUserInfo(user, data);
           setCookie('token', token);
         }
       }
@@ -76,20 +84,30 @@ const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
     });
   }, []);
 
+  function setUserInfo(firebaseCredentials: User, serverData: SignInResponse) {
+    setUser({
+      email: serverData.id,
+      isVerified: serverData.isVerified,
+      role: serverData.roleName,
+      name: firebaseCredentials.displayName ?? serverData.id.split('@')[0],
+      avatar: firebaseCredentials.photoURL,
+    });
+  }
+
   const signInWithGoogle = useCallback(async (): Promise<AuthFunctionType> => {
     try {
       setIsLoading(true);
       // Firebase
-      const data = await signInWithPopup(auth, googleProvider);
+      const userCredentials = await signInWithPopup(auth, googleProvider);
 
       // Server
-      const { error } = await AuthApi.signIn(await data.user.getIdToken());
-      if (error) {
+      const { isSuccess, error, data } = await AuthApi.signIn(await userCredentials.user.getIdToken());
+      if (!isSuccess) {
         setIsAuthenticated(false);
         return { isSuccess: false, type: 'toast', message: error?.message }; // TODO: localize error msg from server
       } else {
         setIsAuthenticated(true);
-        // setUser(...dataWithRole)
+        setUserInfo(userCredentials.user, data);
       }
 
       return { isSuccess: true, type: 'toast', message: t('SignIn.success') };
@@ -106,16 +124,16 @@ const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
       try {
         setIsLoading(true);
         // Firebase
-        const data = await signInWithEmailAndPassword(auth, email, password);
+        const userCredentials = await signInWithEmailAndPassword(auth, email, password);
 
         // Server
-        const { error } = await AuthApi.signIn(await data.user.getIdToken());
-        if (error) {
+        const { isSuccess, error, data } = await AuthApi.signIn(await userCredentials.user.getIdToken());
+        if (!isSuccess) {
           setIsAuthenticated(false);
           return { isSuccess: false, type: 'toast', message: error?.message };
         } else {
           setIsAuthenticated(true);
-          // setUser(...dataWithRole)
+          setUserInfo(userCredentials.user, data);
         }
 
         return { isSuccess: true, type: 'toast', message: t('SignIn.success') };
@@ -140,10 +158,10 @@ const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
       try {
         setIsLoading(true);
         // Firebase
-        const data = await createUserWithEmailAndPassword(auth, email, password);
+        const userCredentials = await createUserWithEmailAndPassword(auth, email, password);
 
-        const { error } = await AuthApi.signUp(await data.user.getIdToken());
-        if (error) {
+        const { isSuccess, error } = await AuthApi.signUp(await userCredentials.user.getIdToken());
+        if (!isSuccess) {
           // setIsAuthenticated(false);
           return { isSuccess: false, type: 'toast', message: error?.message };
         } else {
@@ -209,16 +227,17 @@ const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
   }, []);
 
   const authProviderValue: AuthContextProps = useMemo(
-    () => ({
-      isAuthenticated,
-      isLoading,
-      user,
-      signInWithGoogle,
-      signInWithPassword,
-      signUpWithPassword,
-      signUpWithGoogle,
-      signOut,
-    }),
+    () =>
+      ({
+        isAuthenticated,
+        isLoading,
+        user,
+        signInWithGoogle,
+        signInWithPassword,
+        signUpWithPassword,
+        signUpWithGoogle,
+        signOut,
+      }) as any,
     [
       isAuthenticated,
       isLoading,
