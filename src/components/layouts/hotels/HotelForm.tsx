@@ -1,29 +1,31 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { getCookie } from 'cookies-next';
+import { Loader2Icon, XCircleIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import Image from 'next/image';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
+import { VnDistrict, VnProvince, VnWard } from '~/apis/location.api';
+import { StorageApi } from '~/apis/storage.api';
+import { Button } from '~/components/ui/button';
 import { Checkbox } from '~/components/ui/checkbox';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '~/components/ui/form';
 import { Input } from '~/components/ui/input';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '~/components/ui/select';
 import { Textarea } from '~/components/ui/textarea';
-import UploadFile, { StorageResult } from '../form/UploadFile';
-import { useState } from 'react';
 import { useToast } from '~/components/ui/use-toast';
-import Image from 'next/image';
-import { Button } from '~/components/ui/button';
-import { Loader2Icon, XCircleIcon } from 'lucide-react';
-import { StorageApi } from '~/apis/storage.api';
+import useVnLocation from '~/hooks/useVnLocation';
+import UploadFile, { StorageResult } from '../form/UploadFile';
 
 interface HotelFormProps {
-  title: string; // locale key
+  hotel?: any;
 }
 
-export default function HotelForm({ title }: HotelFormProps) {
-  const [preview, setPreview] = useState<StorageResult | null>(null);
-  const [previewIsDeleting, setPreviewIsDeleting] = useState<boolean>(false);
-
+export default function HotelForm({ hotel }: HotelFormProps) {
+  const locale = getCookie('NEXT_LOCALE')! as 'en' | 'vn';
   const t = useTranslations();
   const { toast } = useToast();
 
@@ -85,6 +87,36 @@ export default function HotelForm({ title }: HotelFormProps) {
     },
   });
 
+  const [preview, setPreview] = useState<StorageResult | null>(null);
+  const [previewIsDeleting, setPreviewIsDeleting] = useState<boolean>(false);
+
+  const [provinces, setProvinces] = useState<VnProvince[]>([]);
+  const [districts, setDistricts] = useState<VnDistrict[]>([]);
+  const [wards, setWards] = useState<VnWard[]>([]);
+
+  const { getProvinces, getProvinceByName, getDistrictByName, getVnLocationFieldName } = useVnLocation();
+
+  useEffect(() => {
+    const selectedCountry = form.watch('country');
+    if (selectedCountry) {
+      setProvinces(getProvinces());
+    }
+  }, [form.watch('country')]);
+
+  useEffect(() => {
+    const selectedProvince = form.watch('province');
+    if (selectedProvince) {
+      setDistricts(getProvinceByName(provinces, selectedProvince, locale).districts);
+    }
+  }, [form.watch('province')]);
+
+  useEffect(() => {
+    const selectedDistrict = form.watch('district');
+    if (selectedDistrict) {
+      setWards(getDistrictByName(districts, selectedDistrict, locale).wards);
+    }
+  }, [form.watch('district')]);
+
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
   }
@@ -103,10 +135,11 @@ export default function HotelForm({ title }: HotelFormProps) {
 
   return (
     <div className="space-y-6">
-      <h3 className="text-lg font-semibold">{t(title)}</h3>
+      <h3 className="text-lg font-semibold">{t(!hotel ? 'HotelForm.title.create' : 'HotelForm.title.edit')}</h3>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <div className="flex flex-col gap-6 md:flex-row">
+            {/* Part 1: left */}
             <div className="flex flex-1 flex-col gap-6">
               <FormField
                 control={form.control}
@@ -317,7 +350,138 @@ export default function HotelForm({ title }: HotelFormProps) {
                 )}
               />
             </div>
-            <div className="flex flex-1 flex-col gap-6">part 2</div>
+
+            {/* Part2: right */}
+            <div className="flex flex-1 flex-col gap-6">
+              {/* Grid 2 cols */}
+              <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+                <FormField
+                  control={form.control}
+                  name="country"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>{t('HotelForm.label.country')}</FormLabel>
+                      <FormDescription>{t('HotelForm.desc.country')}</FormDescription>
+                      <Select
+                        // disabled={isLoading}
+                        onValueChange={field.onChange}
+                        value={field.value}
+                        defaultValue={field.value}
+                      >
+                        <SelectTrigger>
+                          <SelectValue defaultValue={field.value} placeholder={t('HotelForm.placeholder.country')} />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value={t('HotelForm.label.vn')}>{t('HotelForm.label.vn')}</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="province"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>{t('HotelForm.label.province')}</FormLabel>
+                      <FormDescription>{t('HotelForm.desc.province')}</FormDescription>
+                      <Select
+                        // disabled={isLoading}
+                        // disabled={!form.watch('province')}
+                        disabled={provinces.length < 1}
+                        onValueChange={field.onChange}
+                        value={field.value}
+                        defaultValue={field.value}
+                      >
+                        <SelectTrigger>
+                          <SelectValue defaultValue={field.value} placeholder={t('HotelForm.placeholder.province')} />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {provinces.map((item) => (
+                            <SelectItem key={item.code} value={item[getVnLocationFieldName(locale)]}>
+                              {item[getVnLocationFieldName(locale)]}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="district"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>{t('HotelForm.label.district')}</FormLabel>
+                      <FormDescription>{t('HotelForm.desc.district')}</FormDescription>
+                      <Select
+                        // disabled={isLoading}
+                        // disabled={!form.watch('country')}
+                        disabled={districts.length < 1}
+                        onValueChange={field.onChange}
+                        value={field.value}
+                        defaultValue={field.value}
+                      >
+                        <SelectTrigger>
+                          <SelectValue defaultValue={field.value} placeholder={t('HotelForm.placeholder.district')} />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {districts.map((item) => (
+                            <SelectItem key={item.code} value={item[getVnLocationFieldName(locale)]}>
+                              {item[getVnLocationFieldName(locale)]}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="ward"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>{t('HotelForm.label.ward')}</FormLabel>
+                      <FormDescription>{t('HotelForm.desc.ward')}</FormDescription>
+                      <Select
+                        // disabled={isLoading}
+                        // disabled={!form.watch('country')}
+                        disabled={wards.length < 1}
+                        onValueChange={field.onChange}
+                        value={field.value}
+                        defaultValue={field.value}
+                      >
+                        <SelectTrigger>
+                          <SelectValue defaultValue={field.value} placeholder={t('HotelForm.placeholder.ward')} />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {wards.map((item) => (
+                            <SelectItem key={item.code} value={item[getVnLocationFieldName(locale)]}>
+                              {item[getVnLocationFieldName(locale)]}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </FormItem>
+                  )}
+                />
+              </div>
+
+              {/* Address */}
+              <FormField
+                control={form.control}
+                name="address"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>{t('HotelForm.label.address')}</FormLabel>
+                    <FormDescription>{t('HotelForm.desc.address')}</FormDescription>
+                    <FormControl>
+                      <Textarea placeholder={t('HotelForm.placeholder.address')} {...field} />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+            </div>
           </div>
         </form>
       </Form>

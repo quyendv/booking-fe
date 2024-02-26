@@ -78,7 +78,12 @@
     },
     "placeholder": {
       "name": "Beach Hotel",
-      "description": "Beach Hotel is parked with many awesome amenities!"
+      "description": "Beach Hotel is parked with many awesome amenities!",
+      "country": "Select a country",
+      "province": "Select a city",
+      "district": "Select a district",
+      "ward": "Select a ward",
+      "address": "Located at the very end of the beach road!"
     },
     "label": {
       "name": "Hotel Name",
@@ -95,13 +100,24 @@
       "shopping": "Shopping",
       "bikeRental": "Bike Rental",
       "swimmingPool": "Swimming Pool",
-      "image": "Upload an image"
+      "image": "Upload an image",
+      "country": "Select Country",
+      "province": "Select City",
+      "district": "Select District",
+      "ward": "Select Ward",
+      "address": "Location Description",
+      "vn": "Viet Nam"
     },
     "desc": {
       "name": "Provide your hotel name",
       "description": "Provide your hotel description",
       "amenities": "Choose Amenities popular in your hotel",
-      "image": "Choose an image that will show-case your hotel nicely!"
+      "image": "Choose an image that will show-case your hotel nicely!",
+      "country": "In which country is your property located?",
+      "province": "In which province/city is your property located?",
+      "district": "In which district is your property located?",
+      "ward": "In which ward is your property located?",
+      "address": "Provide a detailed location description of your hotel"
     },
     "toast": {
       "uploadSuccess": "🎉 Upload Completed!",

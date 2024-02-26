@@ -78,7 +78,12 @@
     },
     "placeholder": {
       "name": "Beach Hotel",
-      "description": "Beach Hotel với nhiều tiện nghi tuyệt vời!"
+      "description": "Khách sạn Biển với nhiều tiện nghi tuyệt vời!",
+      "country": "Chọn một quốc gia",
+      "province": "Chọn một thành phố",
+      "district": "Chọn một quận",
+      "ward": "Chọn một phường",
+      "address": "Nằm ở cuối con đường ven biển!"
     },
     "label": {
       "name": "Tên khách sạn",
@@ -94,13 +99,25 @@
       "laundry": "Tiện nghi giặt là",
       "shopping": "Mua sắm",
       "bikeRental": "Cho thuê xe đạp",
-      "swimmingPool": "Bể bơi"
+      "swimmingPool": "Bể bơi",
+      "image": "Tải lên hình ảnh",
+      "country": "Chọn quốc gia",
+      "province": "Chọn thành phố",
+      "district": "Chọn quận",
+      "ward": "Chọn phường",
+      "address": "Mô tả vị trí",
+      "vn": "Việt Nam"
     },
     "desc": {
       "name": "Nhập tên khách sạn của bạn",
       "description": "Nhập mô tả khách sạn của bạn",
       "amenities": "Chọn các tiện nghi phổ biến trong khách sạn của bạn",
-      "image": "Chọn một hình ảnh để trưng bày khách sạn của bạn!"
+      "image": "Chọn một hình ảnh để trưng bày khách sạn của bạn!",
+      "country": "khách sạn của bạn nằm ở quốc gia nào?",
+      "province": "khách sạn của bạn nằm ở tỉnh/thành phố nào?",
+      "district": "khách sạn của bạn nằm ở quận nào?",
+      "ward": "khách sạn của bạn nằm ở phường/xã nào?",
+      "address": "Cung cấp mô tả chi tiết vị trí của khách sạn của bạn"
     },
     "toast": {
       "uploadSuccess": "🎉 Tải lên thành công!",
