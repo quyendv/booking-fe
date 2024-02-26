@@ -34,12 +34,12 @@ const useVnLocation = () => {
 
   const getProvinceByName = (provinces: VnProvince[], provinceName: string, locale: 'en' | 'vn') => {
     const field = getVnLocationFieldName(locale);
-    return provinces.find((item) => item[field] === provinceName)!;
+    return provinces.find((item) => item[field] === provinceName);
   };
 
   const getDistrictByName = (districts: VnDistrict[], districtName: string, locale: 'en' | 'vn') => {
     const field = getVnLocationFieldName(locale);
-    return districts.find((item) => item[field] === districtName)!;
+    return districts.find((item) => item[field] === districtName);
   };
 
   return {

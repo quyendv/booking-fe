@@ -147,6 +147,15 @@ export class AxiosInstance {
     }
   }
 
+  async patch<T = any>(url: string, data?: any, config?: AxiosRequestConfig): Promise<ApiResponse<T>> {
+    try {
+      const response = (await this.instance.patch(this.transformUrl(url), data, config)) as T;
+      return { isSuccess: true, data: response };
+    } catch (error) {
+      return { isSuccess: false, error };
+    }
+  }
+
   async delete<T = any>(url: string, config?: AxiosRequestConfig): Promise<ApiResponse<T>> {
     try {
       const response = (await this.instance.delete(this.transformUrl(url), config)) as T;

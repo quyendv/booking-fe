@@ -1,9 +1,27 @@
+'use client';
+
+import { useEffect, useState } from 'react';
+import { HotelApi, HotelSchema } from '~/apis/hotel.api';
 import HotelForm from '~/components/layouts/hotels/HotelForm';
 
-interface PageProps {}
+interface EditHotelPageProps {
+  params: {
+    locale: string;
+    id: string;
+  };
+}
 
-const EditHotelPage = ({}: PageProps) => {
-  return <HotelForm />;
+// nextjs.org/docs/app/api-reference/functions/use-params
+// nextjs.org/docs/app/building-your-application/routing/dynamic-routes
+// use "fetch" instead of "axios" to get data from server
+
+const EditHotelPage = ({ params }: EditHotelPageProps) => {
+  const { isLoading, data, error } = HotelApi.useHotel(+params.id);
+  if (isLoading) return <div>Loading...</div>;
+
+  if (error) return <div>Hotel Not Found</div>;
+
+  return <HotelForm hotel={data} />;
 };
 
 export default EditHotelPage;

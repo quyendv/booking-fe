@@ -79,10 +79,11 @@
     "placeholder": {
       "name": "Beach Hotel",
       "description": "Khách sạn Biển với nhiều tiện nghi tuyệt vời!",
-      "country": "Chọn một quốc gia",
-      "province": "Chọn một thành phố",
-      "district": "Chọn một quận",
-      "ward": "Chọn một phường",
+      "email": "abc@gmail.com",
+      "country": "Điền quốc gia",
+      "province": "Điền thành phố/tỉnh",
+      "district": "Điền quận/huyện",
+      "ward": "Điền phường/xã",
       "address": "Nằm ở cuối con đường ven biển!"
     },
     "label": {
@@ -101,6 +102,7 @@
       "bikeRental": "Cho thuê xe đạp",
       "swimmingPool": "Bể bơi",
       "image": "Tải lên hình ảnh",
+      "email": "Email",
       "country": "Chọn quốc gia",
       "province": "Chọn thành phố",
       "district": "Chọn quận",
@@ -113,6 +115,7 @@
       "description": "Nhập mô tả khách sạn của bạn",
       "amenities": "Chọn các tiện nghi phổ biến trong khách sạn của bạn",
       "image": "Chọn một hình ảnh để trưng bày khách sạn của bạn!",
+      "email": "Vui lòng nhập email của bạn. Email này sẽ được sử dụng để đăng nhập và liên hệ với bạn",
       "country": "khách sạn của bạn nằm ở quốc gia nào?",
       "province": "khách sạn của bạn nằm ở tỉnh/thành phố nào?",
       "district": "khách sạn của bạn nằm ở quận nào?",
@@ -123,7 +126,17 @@
       "uploadSuccess": "🎉 Tải lên thành công!",
       "uploadFailure": "Tải lên thất bại!",
       "removeSuccess": "Hình ảnh đã được xóa",
-      "removeFailure": "Xóa hình ảnh thất bại!"
+      "removeFailure": "Xóa hình ảnh thất bại!",
+      "createSuccess": "🎉 Tạo khách sạn thành công",
+      "createFailure": "Tạo khách sạn thất bại!",
+      "updateSuccess": "🎉 Cập nhật khách sạn thành công",
+      "updateFailure": "Cập nhật thông tin khách sạn thất bại!"
+    },
+    "button": {
+      "updating": "Đang cập nhật...",
+      "update": "Cập nhật",
+      "creating": "Đang tạo mới...",
+      "create": "Tạo"
     }
   }
 }

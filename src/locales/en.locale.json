@@ -79,10 +79,11 @@
     "placeholder": {
       "name": "Beach Hotel",
       "description": "Beach Hotel is parked with many awesome amenities!",
-      "country": "Select a country",
-      "province": "Select a city",
-      "district": "Select a district",
-      "ward": "Select a ward",
+      "email": "abc@gmail.com",
+      "country": "Enter the country",
+      "province": "Enter the city",
+      "district": "Enter the district",
+      "ward": "Enter the ward",
       "address": "Located at the very end of the beach road!"
     },
     "label": {
@@ -101,10 +102,11 @@
       "bikeRental": "Bike Rental",
       "swimmingPool": "Swimming Pool",
       "image": "Upload an image",
-      "country": "Select Country",
-      "province": "Select City",
-      "district": "Select District",
-      "ward": "Select Ward",
+      "email": "Email",
+      "country": "Country",
+      "province": "City",
+      "district": "District",
+      "ward": "Ward",
       "address": "Location Description",
       "vn": "Viet Nam"
     },
@@ -113,6 +115,7 @@
       "description": "Provide your hotel description",
       "amenities": "Choose Amenities popular in your hotel",
       "image": "Choose an image that will show-case your hotel nicely!",
+      "email": "Please provide your hotel's email address. This will be used for communication with your customers.",
       "country": "In which country is your property located?",
       "province": "In which province/city is your property located?",
       "district": "In which district is your property located?",
@@ -123,7 +126,17 @@
       "uploadSuccess": "🎉 Upload Completed!",
       "uploadFailure": "Upload failed!",
       "removeSuccess": "Image removed",
-      "removeFailure": "Remove image failed!"
+      "removeFailure": "Remove image failed!",
+      "createSuccess": "🎉 Hotel created successfully",
+      "createFailure": "Hotel created failed!",
+      "updateSuccess": "🎉 Hotel updated successfully",
+      "updateFailure": "Hotel updated failed!"
+    },
+    "button": {
+      "updating": "Updating...",
+      "update": "Update",
+      "creating": "Creating...",
+      "create": "Create"
     }
   }
 }
