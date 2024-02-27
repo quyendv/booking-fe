@@ -13,6 +13,7 @@ export const routeConfig = {
   DASHBOARD: '/system/admin/dashboard',
   MANAGE_CUSTOMERS: '/system/admin/customers',
   MANAGE_HOTELS: '/system/admin/hotels',
+  SYSTEM_HOTEL_DETAILS: '/system/admin/hotel-details', // /:id
 
   MY_HOTEL: '/system/hotel',
 };

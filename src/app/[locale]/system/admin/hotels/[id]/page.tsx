@@ -1,7 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { HotelApi, HotelSchema } from '~/apis/hotel.api';
+import { HotelApi } from '~/apis/hotel.api';
 import HotelForm from '~/components/layouts/hotels/HotelForm';
 
 interface EditHotelPageProps {
@@ -17,9 +16,9 @@ interface EditHotelPageProps {
 
 const EditHotelPage = ({ params }: EditHotelPageProps) => {
   const { isLoading, data, error } = HotelApi.useHotel(+params.id);
-  if (isLoading) return <div>Loading...</div>;
 
-  if (error) return <div>Hotel Not Found</div>;
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Hotel not found</div>;
 
   return <HotelForm hotel={data} />;
 };

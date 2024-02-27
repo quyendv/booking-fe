@@ -136,6 +136,85 @@
       "updating": "Updating...",
       "update": "Update",
       "creating": "Creating...",
+      "create": "Create",
+      "view": "View"
+    },
+    "alert": {
+      "title": "One last step!",
+      "desc1": "Your hotel created successfully🔥",
+      "desc2": "Please add some rooms to complete your hotel setup!"
+    },
+    "dialog": {
+      "trigger": "Add Room",
+      "title": "Add a room",
+      "desc": "Add details about a room in your hotel."
+    }
+  },
+  "RoomForm": {
+    "error": {
+      "title": "Title must be at least 3 characters",
+      "description": "Description must be at least 10 characters",
+      "imageUrl": "Image URL is invalid",
+      "bedCount": "Bed count is required",
+      "bedCountExceed": "Bed count must be greater than or equal king bed count and queen bed count",
+      "guestCount": "Guest count is required",
+      "bathroomCount": "Bathroom count is required",
+      "roomPrice": "Room price is required"
+    },
+    "label": {
+      "title": "Room Title",
+      "description": "Room Description",
+      "amenities": "Choose Room Amenities",
+      "roomService": "24hrs Room Services",
+      "tv": "TV",
+      "balcony": "Balcony",
+      "freeWifi": "Free Wifi",
+      "cityView": "City View",
+      "oceanView": "Ocean View",
+      "forestView": "Ocean View",
+      "mountainView": "Mountain View",
+      "airCondition": "Ocean View",
+      "soundProofed": "Sound Proofed",
+      "image": "Upload an image",
+      "roomPrice": "Room price in VND",
+      "bedCount": "Bed Count",
+      "guestCount": "Guest Count",
+      "bathroomCount": "Bathroom Count",
+      "breakFastPrice": "Breakfast Price in VND",
+      "kingBed": "King Beds",
+      "queenBed": "Queen Beds"
+    },
+    "desc": {
+      "title": "Provide your room name",
+      "description": "Is there anything special about this room?",
+      "amenities": "What make this room a good choice?",
+      "image": "Choose an image that will show-case your room nicely!",
+      "roomPrice": "State the price for staying in this room for 24hrs",
+      "bedCount": "How many beds are available in this room",
+      "guestCount": "How many guests are allowed in this room",
+      "bathroomCount": "How many bathrooms are in this room",
+      "breakFastPrice": "State the price for breakfast in this room",
+      "kingBed": "How many king beds are available in this room",
+      "queenBed": "How many queen beds are available in this room"
+    },
+    "placeholder": {
+      "title": "Double Room",
+      "description": "Have a beautiful view of the ocean while in this room!"
+    },
+    "toast": {
+      "uploadSuccess": "🎉 Upload Completed!",
+      "uploadFailure": "Upload failed!",
+      "removeSuccess": "Image removed",
+      "removeFailure": "Remove image failed!",
+      "createSuccess": "🎉 Room created successfully",
+      "createFailure": "Room created failed!",
+      "updateSuccess": "🎉 Room updated successfully",
+      "updateFailure": "Room updated failed!"
+    },
+    "button": {
+      "updating": "Updating...",
+      "update": "Update",
+      "creating": "Creating...",
       "create": "Create"
     }
   }

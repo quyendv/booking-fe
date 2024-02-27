@@ -136,6 +136,85 @@
       "updating": "Đang cập nhật...",
       "update": "Cập nhật",
       "creating": "Đang tạo mới...",
+      "create": "Tạo",
+      "view": "Xem chi tiết"
+    },
+    "alert": {
+      "title": "Bước cuối cùng!",
+      "desc1": "Khách sạn của bạn đã được tạo thành công🔥",
+      "desc2": "Vui lòng thêm một số phòng để hoàn tất thiết lập khách sạn của bạn!"
+    },
+    "dialog": {
+      "trigger": "Tạo phòng",
+      "title": "Tạo phòng mới",
+      "desc": "Nhập chi tiết thông tin phòng trong khách sạn của bạn"
+    }
+  },
+  "RoomForm": {
+    "error": {
+      "title": "Tiêu đề phải có ít nhất 3 ký tự",
+      "description": "Mô tả phải có ít nhất 10 ký tự",
+      "imageUrl": "URL hình ảnh không hợp lệ",
+      "bedCount": "Yêu cầu số lượng giường",
+      "bedCountExceed": "Số lượng giường phải lớn hơn hoặc bằng số lượng giường king & queen",
+      "guestCount": "Yêu cầu số lượng khách",
+      "bathroomCount": "Yêu cầu số lượng phòng tắm",
+      "roomPrice": "Yêu cầu giá phòng"
+    },
+    "label": {
+      "title": "Tên Phòng",
+      "description": "Mô Tả Phòng",
+      "amenities": "Chọn Tiện Nghi Phòng",
+      "roomService": "Dịch Vụ Phòng 24 Giờ",
+      "tv": "TV",
+      "balcony": "Ban Công",
+      "freeWifi": "Wifi Miễn Phí",
+      "cityView": "View Thành Phố",
+      "oceanView": "View Biển",
+      "forestView": "View Rừng",
+      "mountainView": "View Đồi Núi",
+      "airCondition": "Điều Hòa",
+      "soundProofed": "Cách Âm",
+      "image": "Chọn hình ảnh",
+      "roomPrice": "Giá phòng (VND)",
+      "bedCount": "Số giường",
+      "guestCount": "Số khách",
+      "bathroomCount": "Số phòng tắm",
+      "breakFastPrice": "Giá bữa sáng (VND)",
+      "kingBed": "Giường King",
+      "queenBed": "Giường Queen"
+    },
+    "desc": {
+      "title": "Vui lòng nhập tên phòng",
+      "description": "Có điều gì đặc biệt về phòng này?",
+      "amenities": "Những tiện nghi nào làm cho phòng này trở thành lựa chọn tốt?",
+      "image": "Chọn một hình ảnh để trưng bày phòng của bạn!",
+      "roomPrice": "Giá phòng cho 24 giờ",
+      "bedCount": "Số lượng giường có sẵn trong phòng này",
+      "guestCount": "Số lượng khách được phép trong phòng này",
+      "bathroomCount": "Số lượng phòng tắm trong phòng này",
+      "breakFastPrice": "Giá bữa sáng trong phòng này",
+      "kingBed": "Số lượng giường King có sẵn trong phòng này",
+      "queenBed": "Số lượng giường Queen có sẵn trong phòng này"
+    },
+    "placeholder": {
+      "title": "Phòng đôi",
+      "description": "Có một view đẹp ra biển khi ở trong phòng này!"
+    },
+    "toast": {
+      "uploadSuccess": "🎉 Tải lên thành công!",
+      "uploadFailure": "Tải lên thất bại!",
+      "removeSuccess": "Hình ảnh đã được xóa",
+      "removeFailure": "Xóa hình ảnh thất bại!",
+      "createSuccess": "🎉 Tạo phòng thành công",
+      "createFailure": "Tạo phòng thất bại!",
+      "updateSuccess": "🎉 Cập nhật phòng thành công",
+      "updateFailure": "Cập nhật thông tin phòng thất bại!"
+    },
+    "button": {
+      "updating": "Đang cập nhật...",
+      "update": "Cập nhật",
+      "creating": "Đang tạo mới...",
       "create": "Tạo"
     }
   }

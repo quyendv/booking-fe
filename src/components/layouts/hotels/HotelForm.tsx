@@ -1,7 +1,7 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Loader2Icon, PencilLineIcon, XCircleIcon } from 'lucide-react';
+import { Eye, Loader2Icon, PencilLineIcon, Plus, Terminal, XCircleIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
@@ -9,15 +9,25 @@ import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 import { HotelApi, HotelSchema } from '~/apis/hotel.api';
 import { StorageApi } from '~/apis/storage.api';
-import { Button } from '~/components/ui/button';
+import { Alert, AlertDescription, AlertTitle } from '~/components/ui/alert';
+import { Button, buttonVariants } from '~/components/ui/button';
 import { Checkbox } from '~/components/ui/checkbox';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '~/components/ui/dialog';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '~/components/ui/form';
 import { Input } from '~/components/ui/input';
 import { Textarea } from '~/components/ui/textarea';
 import { useToast } from '~/components/ui/use-toast';
-import UploadFile, { StorageResult } from '../form/UploadFile';
-import { useIRouter } from '~/locales/i18nNavigation';
 import { routeConfig } from '~/configs/route.config';
+import { ILink, useIRouter } from '~/locales/i18nNavigation';
+import UploadFile from '../form/UploadFile';
+import RoomForm from '../rooms/RoomForm';
 
 interface HotelFormProps {
   hotel?: HotelSchema;
@@ -103,6 +113,7 @@ export default function HotelForm({ hotel }: HotelFormProps) {
   );
   const [previewIsDeleting, setPreviewIsDeleting] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [open, setOpen] = useState<boolean>(false);
 
   useEffect(() => {
     if (typeof preview?.url === 'string') {
@@ -120,7 +131,7 @@ export default function HotelForm({ hotel }: HotelFormProps) {
     setIsLoading(true);
     console.log(values);
     if (hotel) {
-      const { isSuccess, error } = await HotelApi.updateHotelById(hotel.id, {
+      const { isSuccess } = await HotelApi.updateHotelById(hotel.id, {
         ...values,
         address: {
           details: values.address,
@@ -139,7 +150,7 @@ export default function HotelForm({ hotel }: HotelFormProps) {
         setIsLoading(false);
       }
     } else {
-      const { isSuccess, data, error } = await HotelApi.createHotel({
+      const { isSuccess, data } = await HotelApi.createHotel({
         ...values,
         address: {
           details: values.address,
@@ -174,6 +185,10 @@ export default function HotelForm({ hotel }: HotelFormProps) {
     }
   }
 
+  function handleDialogOpen() {
+    setOpen((prev) => !prev);
+  }
+
   return (
     <div className="space-y-6">
       <h3 className="text-lg font-semibold">{t(!hotel ? 'HotelForm.title.create' : 'HotelForm.title.edit')}</h3>
@@ -191,7 +206,7 @@ export default function HotelForm({ hotel }: HotelFormProps) {
                     <FormLabel>{t('HotelForm.label.name')}</FormLabel>
                     <FormDescription>{t('HotelForm.desc.name')}</FormDescription>
                     <FormControl>
-                      <Input placeholder={t('HotelForm.placeholder.name')} {...field} />
+                      <Input placeholder={t('HotelForm.placeholder.name')} disabled={isLoading} {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -205,7 +220,7 @@ export default function HotelForm({ hotel }: HotelFormProps) {
                     <FormLabel>{t('HotelForm.label.description')}</FormLabel>
                     <FormDescription>{t('HotelForm.desc.description')}</FormDescription>
                     <FormControl>
-                      <Textarea placeholder={t('HotelForm.placeholder.description')} {...field} />
+                      <Textarea placeholder={t('HotelForm.placeholder.description')} disabled={isLoading} {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -223,7 +238,7 @@ export default function HotelForm({ hotel }: HotelFormProps) {
                     render={({ field }) => (
                       <FormItem className="flex flex-row items-end space-x-3 rounded-md border p-4">
                         <FormControl>
-                          <Checkbox checked={field.value} onCheckedChange={field.onChange} />
+                          <Checkbox checked={field.value} onCheckedChange={field.onChange} disabled={isLoading} />
                         </FormControl>
                         <FormLabel className="w-full cursor-pointer">{t('HotelForm.label.gym')}</FormLabel>
                       </FormItem>
@@ -235,7 +250,7 @@ export default function HotelForm({ hotel }: HotelFormProps) {
                     render={({ field }) => (
                       <FormItem className="flex flex-row items-end space-x-3 rounded-md border p-4">
                         <FormControl>
-                          <Checkbox checked={field.value} onCheckedChange={field.onChange} />
+                          <Checkbox checked={field.value} onCheckedChange={field.onChange} disabled={isLoading} />
                         </FormControl>
                         <FormLabel className="w-full cursor-pointer">{t('HotelForm.label.bar')}</FormLabel>
                       </FormItem>
@@ -247,7 +262,7 @@ export default function HotelForm({ hotel }: HotelFormProps) {
                     render={({ field }) => (
                       <FormItem className="flex flex-row items-end space-x-3 rounded-md border p-4">
                         <FormControl>
-                          <Checkbox checked={field.value} onCheckedChange={field.onChange} />
+                          <Checkbox checked={field.value} onCheckedChange={field.onChange} disabled={isLoading} />
                         </FormControl>
                         <FormLabel className="w-full cursor-pointer">{t('HotelForm.label.restaurant')}</FormLabel>
                       </FormItem>
@@ -259,7 +274,7 @@ export default function HotelForm({ hotel }: HotelFormProps) {
                     render={({ field }) => (
                       <FormItem className="flex flex-row items-end space-x-3 rounded-md border p-4">
                         <FormControl>
-                          <Checkbox checked={field.value} onCheckedChange={field.onChange} />
+                          <Checkbox checked={field.value} onCheckedChange={field.onChange} disabled={isLoading} />
                         </FormControl>
                         <FormLabel className="w-full cursor-pointer">{t('HotelForm.label.freeParking')}</FormLabel>
                       </FormItem>
@@ -271,7 +286,7 @@ export default function HotelForm({ hotel }: HotelFormProps) {
                     render={({ field }) => (
                       <FormItem className="flex flex-row items-end space-x-3 rounded-md border p-4">
                         <FormControl>
-                          <Checkbox checked={field.value} onCheckedChange={field.onChange} />
+                          <Checkbox checked={field.value} onCheckedChange={field.onChange} disabled={isLoading} />
                         </FormControl>
                         <FormLabel className="w-full cursor-pointer">{t('HotelForm.label.movieNight')}</FormLabel>
                       </FormItem>
@@ -283,7 +298,7 @@ export default function HotelForm({ hotel }: HotelFormProps) {
                     render={({ field }) => (
                       <FormItem className="flex flex-row items-end space-x-3 rounded-md border p-4">
                         <FormControl>
-                          <Checkbox checked={field.value} onCheckedChange={field.onChange} />
+                          <Checkbox checked={field.value} onCheckedChange={field.onChange} disabled={isLoading} />
                         </FormControl>
                         <FormLabel className="w-full cursor-pointer">{t('HotelForm.label.coffeeShop')}</FormLabel>
                       </FormItem>
@@ -295,7 +310,7 @@ export default function HotelForm({ hotel }: HotelFormProps) {
                     render={({ field }) => (
                       <FormItem className="flex flex-row items-end space-x-3 rounded-md border p-4">
                         <FormControl>
-                          <Checkbox checked={field.value} onCheckedChange={field.onChange} />
+                          <Checkbox checked={field.value} onCheckedChange={field.onChange} disabled={isLoading} />
                         </FormControl>
                         <FormLabel className="w-full cursor-pointer">{t('HotelForm.label.spa')}</FormLabel>
                       </FormItem>
@@ -307,7 +322,7 @@ export default function HotelForm({ hotel }: HotelFormProps) {
                     render={({ field }) => (
                       <FormItem className="flex flex-row items-end space-x-3 rounded-md border p-4">
                         <FormControl>
-                          <Checkbox checked={field.value} onCheckedChange={field.onChange} />
+                          <Checkbox checked={field.value} onCheckedChange={field.onChange} disabled={isLoading} />
                         </FormControl>
                         <FormLabel className="w-full cursor-pointer">{t('HotelForm.label.laundry')}</FormLabel>
                       </FormItem>
@@ -319,7 +334,7 @@ export default function HotelForm({ hotel }: HotelFormProps) {
                     render={({ field }) => (
                       <FormItem className="flex flex-row items-end space-x-3 rounded-md border p-4">
                         <FormControl>
-                          <Checkbox checked={field.value} onCheckedChange={field.onChange} />
+                          <Checkbox checked={field.value} onCheckedChange={field.onChange} disabled={isLoading} />
                         </FormControl>
                         <FormLabel className="w-full cursor-pointer">{t('HotelForm.label.shopping')}</FormLabel>
                       </FormItem>
@@ -331,7 +346,7 @@ export default function HotelForm({ hotel }: HotelFormProps) {
                     render={({ field }) => (
                       <FormItem className="flex flex-row items-end space-x-3 rounded-md border p-4">
                         <FormControl>
-                          <Checkbox checked={field.value} onCheckedChange={field.onChange} />
+                          <Checkbox checked={field.value} onCheckedChange={field.onChange} disabled={isLoading} />
                         </FormControl>
                         <FormLabel className="w-full cursor-pointer">{t('HotelForm.label.bikeRental')}</FormLabel>
                       </FormItem>
@@ -343,7 +358,7 @@ export default function HotelForm({ hotel }: HotelFormProps) {
                     render={({ field }) => (
                       <FormItem className="flex flex-row items-end space-x-3 rounded-md border p-4">
                         <FormControl>
-                          <Checkbox checked={field.value} onCheckedChange={field.onChange} />
+                          <Checkbox checked={field.value} onCheckedChange={field.onChange} disabled={isLoading} />
                         </FormControl>
                         <FormLabel className="w-full cursor-pointer">{t('HotelForm.label.swimmingPool')}</FormLabel>
                       </FormItem>
@@ -406,7 +421,11 @@ export default function HotelForm({ hotel }: HotelFormProps) {
                     <FormLabel>{t('HotelForm.label.email')}</FormLabel>
                     <FormDescription>{t('HotelForm.desc.email')}</FormDescription>
                     <FormControl>
-                      <Input disabled={!!hotel} placeholder={t('HotelForm.placeholder.email')} {...field} />
+                      <Input
+                        disabled={!!hotel || isLoading}
+                        placeholder={t('HotelForm.placeholder.email')}
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -423,7 +442,7 @@ export default function HotelForm({ hotel }: HotelFormProps) {
                       <FormLabel>{t('HotelForm.label.country')}</FormLabel>
                       <FormDescription>{t('HotelForm.desc.country')}</FormDescription>
                       <FormControl>
-                        <Input placeholder={t('HotelForm.placeholder.country')} {...field} />
+                        <Input placeholder={t('HotelForm.placeholder.country')} disabled={isLoading} {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -437,7 +456,7 @@ export default function HotelForm({ hotel }: HotelFormProps) {
                       <FormLabel>{t('HotelForm.label.province')}</FormLabel>
                       <FormDescription>{t('HotelForm.desc.province')}</FormDescription>
                       <FormControl>
-                        <Input placeholder={t('HotelForm.placeholder.province')} {...field} />
+                        <Input placeholder={t('HotelForm.placeholder.province')} disabled={isLoading} {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -451,7 +470,7 @@ export default function HotelForm({ hotel }: HotelFormProps) {
                       <FormLabel>{t('HotelForm.label.district')}</FormLabel>
                       <FormDescription>{t('HotelForm.desc.district')}</FormDescription>
                       <FormControl>
-                        <Input placeholder={t('HotelForm.placeholder.district')} {...field} />
+                        <Input placeholder={t('HotelForm.placeholder.district')} disabled={isLoading} {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -465,7 +484,7 @@ export default function HotelForm({ hotel }: HotelFormProps) {
                       <FormLabel>{t('HotelForm.label.ward')}</FormLabel>
                       <FormDescription>{t('HotelForm.desc.ward')}</FormDescription>
                       <FormControl>
-                        <Input placeholder={t('HotelForm.placeholder.ward')} {...field} />
+                        <Input placeholder={t('HotelForm.placeholder.ward')} disabled={isLoading} {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -482,14 +501,27 @@ export default function HotelForm({ hotel }: HotelFormProps) {
                     <FormLabel>{t('HotelForm.label.address')}</FormLabel>
                     <FormDescription>{t('HotelForm.desc.address')}</FormDescription>
                     <FormControl>
-                      <Textarea placeholder={t('HotelForm.placeholder.address')} {...field} />
+                      <Textarea placeholder={t('HotelForm.placeholder.address')} disabled={isLoading} {...field} />
                     </FormControl>
                   </FormItem>
                 )}
               />
 
+              {/* Rooms */}
+              {hotel && !hotel.rooms.length && (
+                <Alert className="bg-indigo-600 text-white">
+                  <Terminal className="size-4 stroke-white" />
+                  <AlertTitle>{t('HotelForm.alert.title')}</AlertTitle>
+                  <AlertDescription>
+                    {t('HotelForm.alert.desc1')}
+                    <div>{t('HotelForm.alert.desc2')}</div>
+                  </AlertDescription>
+                </Alert>
+              )}
+
               {/* Button */}
               <div className="flex flex-wrap justify-between gap-2">
+                {/* Action Form Button */}
                 <Button type="submit" className="max-w-[150px]" disabled={isLoading}>
                   {isLoading ? (
                     <>
@@ -503,6 +535,36 @@ export default function HotelForm({ hotel }: HotelFormProps) {
                     </>
                   )}
                 </Button>
+
+                {/* View Details */}
+                {hotel && (
+                  <ILink
+                    className={buttonVariants({ variant: 'outline' })}
+                    href={routeConfig.SYSTEM_HOTEL_DETAILS + '/' + hotel.id}
+                  >
+                    <Eye className="mr-2 size-4" />
+                    View
+                  </ILink>
+                )}
+
+                {/* Room Handle */}
+                {hotel && (
+                  <Dialog open={open} onOpenChange={setOpen}>
+                    <DialogTrigger asChild>
+                      <Button className="max-w-[150px]">
+                        <Plus className="mr-2 size-4" />
+                        {t('HotelForm.dialog.trigger')}
+                      </Button>
+                    </DialogTrigger>
+                    <DialogContent className="max-[900px] w-[90%]">
+                      <DialogHeader className="px-2">
+                        <DialogTitle>{t('HotelForm.dialog.title')}</DialogTitle>
+                        <DialogDescription>{t('HotelForm.dialog.desc')}</DialogDescription>
+                      </DialogHeader>
+                      <RoomForm hotel={hotel} handleDialogOpen={handleDialogOpen} />
+                    </DialogContent>
+                  </Dialog>
+                )}
               </div>
             </div>
           </div>

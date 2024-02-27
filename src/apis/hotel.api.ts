@@ -1,10 +1,9 @@
-import axios, { AxiosResponse } from 'axios';
-import useSWR from 'swr';
-import { StorageResult } from '~/components/layouts/form/UploadFile';
+import useSWRImmutable from 'swr/immutable';
 import { axiosPrivateInstance } from './instances/axios.instance';
 import { PrivateFetchInstance } from './instances/fetch.instance';
 
 export type AddressSchema = {
+  id: number;
   details: string;
   ward?: string;
   district?: string;
@@ -12,13 +11,17 @@ export type AddressSchema = {
   country: string;
 };
 
-export type GalleryItem = StorageResult;
+export type GalleryItem = {
+  url: string;
+  key?: string;
+};
 
 export type RoomSchema = {
+  id: number;
   title: string;
   description: string;
   imageUrl: string;
-  imageKey: string;
+  imageKey?: string;
   gallery: GalleryItem[];
   // hotel: HotelEntity;
   bedCount: number;
@@ -63,9 +66,13 @@ export type HotelSchema = {
   swimmingPool: boolean;
 };
 
-type CreateHotelDto = Omit<HotelSchema, 'rooms' | 'gallery'>;
+type CreateAddressDto = Omit<AddressSchema, 'id'>;
+type CreateHotelDto = Omit<HotelSchema, 'id' | 'rooms' | 'address'> & { address: CreateAddressDto };
 type UpdateHotelDto = Partial<Omit<CreateHotelDto, 'email' | 'id'>>;
-export type CreateHotelResponse = HotelSchema;
+
+type CreateRoomDto = Omit<RoomSchema, 'id'>;
+type UpdateRoomDto = Partial<CreateRoomDto>;
+
 const endpoints = {
   list: '/hotels',
   getById: (id: number) => `/hotels/${id}`,
@@ -74,8 +81,8 @@ const endpoints = {
   delete: (id: number) => `/hotels/${id}`,
   // getRooms: '/hotels/:id/rooms',
   // getRoom: '/hotels/:id/rooms/:id',
-  // createRoom: '/hotels/:id/rooms',
-  // updateRoom: '/hotels/:id/rooms/:id',
+  createRoom: (hotelId: number) => `/hotels/${hotelId}/rooms`,
+  updateRoom: (hotelId: number, roomId: number) => `/hotels/${hotelId}/rooms/${roomId}`,
   // deleteRoom: '/hotels/:id/rooms/:id',
   // getGallery: '/hotels/:id/gallery',
   // createGallery: '/hotels/:id/gallery',
@@ -84,7 +91,7 @@ const endpoints = {
 
 export const HotelApi = {
   async createHotel(data: CreateHotelDto) {
-    return await axiosPrivateInstance.post<CreateHotelResponse>(endpoints.create, data);
+    return await axiosPrivateInstance.post<HotelSchema>(endpoints.create, data);
   },
 
   async getHotelById(id: number) {
@@ -97,7 +104,16 @@ export const HotelApi = {
 
   useHotel(id: number) {
     const fetcher = (url: string) => new PrivateFetchInstance<HotelSchema>().fetcher(url, 'GET');
-    const { isLoading, data, error } = useSWR(endpoints.getById(id), fetcher);
+    // const { isLoading, data, error } = useSWR(endpoints.getById(id), fetcher);
+    const { isLoading, data, error } = useSWRImmutable(endpoints.getById(id), fetcher);
     return { isLoading, data, error };
+  },
+
+  async createRoom(hotelId: number, data: CreateRoomDto) {
+    return await axiosPrivateInstance.post<RoomSchema>(endpoints.createRoom(hotelId), data);
+  },
+
+  async updateRoom(hotelId: number, roomId: number, data: UpdateRoomDto) {
+    return await axiosPrivateInstance.patch<RoomSchema>(endpoints.updateRoom(hotelId, roomId), data);
   },
 };
