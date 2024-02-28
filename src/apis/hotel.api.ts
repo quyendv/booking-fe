@@ -1,6 +1,7 @@
 import useSWRImmutable from 'swr/immutable';
 import { axiosPrivateInstance } from './instances/axios.instance';
 import { PrivateFetchInstance } from './instances/fetch.instance';
+import useSWR from 'swr';
 
 export type AddressSchema = {
   id: number;
@@ -73,6 +74,8 @@ type UpdateHotelDto = Partial<Omit<CreateHotelDto, 'email' | 'id'>>;
 type CreateRoomDto = Omit<RoomSchema, 'id'>;
 type UpdateRoomDto = Partial<CreateRoomDto>;
 
+type DeleteResponse = { status: string; message: string };
+
 const endpoints = {
   list: '/hotels',
   getById: (id: number) => `/hotels/${id}`,
@@ -83,7 +86,7 @@ const endpoints = {
   // getRoom: '/hotels/:id/rooms/:id',
   createRoom: (hotelId: number) => `/hotels/${hotelId}/rooms`,
   updateRoom: (hotelId: number, roomId: number) => `/hotels/${hotelId}/rooms/${roomId}`,
-  // deleteRoom: '/hotels/:id/rooms/:id',
+  deleteRoom: (hotelId: number, roomId: number) => `/hotels/${hotelId}/rooms/${roomId}`,
   // getGallery: '/hotels/:id/gallery',
   // createGallery: '/hotels/:id/gallery',
   // deleteGallery: '/hotels/:id/gallery/:id',
@@ -104,8 +107,8 @@ export const HotelApi = {
 
   useHotel(id: number) {
     const fetcher = (url: string) => new PrivateFetchInstance<HotelSchema>().fetcher(url, 'GET');
-    // const { isLoading, data, error } = useSWR(endpoints.getById(id), fetcher);
-    const { isLoading, data, error } = useSWRImmutable(endpoints.getById(id), fetcher);
+    const { isLoading, data, error } = useSWR(endpoints.getById(id), fetcher);
+    // const { isLoading, data, error } = useSWRImmutable(endpoints.getById(id), fetcher);
     return { isLoading, data, error };
   },
 
@@ -115,5 +118,9 @@ export const HotelApi = {
 
   async updateRoom(hotelId: number, roomId: number, data: UpdateRoomDto) {
     return await axiosPrivateInstance.patch<RoomSchema>(endpoints.updateRoom(hotelId, roomId), data);
+  },
+
+  async deleteRoom(hotelId: number, roomId: number) {
+    return await axiosPrivateInstance.delete<DeleteResponse>(endpoints.deleteRoom(hotelId, roomId));
   },
 };

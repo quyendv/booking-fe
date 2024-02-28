@@ -28,6 +28,8 @@ import { routeConfig } from '~/configs/route.config';
 import { ILink, useIRouter } from '~/locales/i18nNavigation';
 import UploadFile from '../form/UploadFile';
 import RoomForm from '../rooms/RoomForm';
+import RoomCard from '../rooms/RoomCard';
+import { Separator } from '~/components/ui/separator';
 
 interface HotelFormProps {
   hotel?: HotelSchema;
@@ -127,9 +129,7 @@ export default function HotelForm({ hotel }: HotelFormProps) {
   }, [preview]);
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log('submit');
     setIsLoading(true);
-    console.log(values);
     if (hotel) {
       const { isSuccess } = await HotelApi.updateHotelById(hotel.id, {
         ...values,
@@ -507,7 +507,7 @@ export default function HotelForm({ hotel }: HotelFormProps) {
                 )}
               />
 
-              {/* Rooms */}
+              {/* Create Room Alert */}
               {hotel && !hotel.rooms.length && (
                 <Alert className="bg-indigo-600 text-white">
                   <Terminal className="size-4 stroke-white" />
@@ -547,7 +547,7 @@ export default function HotelForm({ hotel }: HotelFormProps) {
                   </ILink>
                 )}
 
-                {/* Room Handle */}
+                {/* Add Room */}
                 {hotel && (
                   <Dialog open={open} onOpenChange={setOpen}>
                     <DialogTrigger asChild>
@@ -556,7 +556,7 @@ export default function HotelForm({ hotel }: HotelFormProps) {
                         {t('HotelForm.dialog.trigger')}
                       </Button>
                     </DialogTrigger>
-                    <DialogContent className="max-[900px] w-[90%]">
+                    <DialogContent className="w-[90%] max-w-[900px]">
                       <DialogHeader className="px-2">
                         <DialogTitle>{t('HotelForm.dialog.title')}</DialogTitle>
                         <DialogDescription>{t('HotelForm.dialog.desc')}</DialogDescription>
@@ -566,6 +566,19 @@ export default function HotelForm({ hotel }: HotelFormProps) {
                   </Dialog>
                 )}
               </div>
+
+              {/* RoomCard */}
+              {hotel && hotel.rooms.length > 0 && (
+                <div>
+                  <Separator className="bg-primary/10" />
+                  <h3 className="my-4 text-lg font-semibold">Hotel Rooms</h3>
+                  <div className="grid grid-cols-1 gap-6 2xl:grid-cols-2">
+                    {hotel.rooms.map((room, index) => (
+                      <RoomCard key={index} room={room} hotel={hotel} />
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </form>

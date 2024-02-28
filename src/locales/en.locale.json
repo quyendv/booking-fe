@@ -171,9 +171,9 @@
       "freeWifi": "Free Wifi",
       "cityView": "City View",
       "oceanView": "Ocean View",
-      "forestView": "Ocean View",
+      "forestView": "Forest View",
       "mountainView": "Mountain View",
-      "airCondition": "Ocean View",
+      "airCondition": "Air Condition",
       "soundProofed": "Sound Proofed",
       "image": "Upload an image",
       "roomPrice": "Room price in VND",
@@ -216,6 +216,42 @@
       "update": "Update",
       "creating": "Creating...",
       "create": "Create"
+    }
+  },
+  "RoomCard": {
+    "amenities": {
+      "bed": "Bed(s)",
+      "guest": "Guest(s)",
+      "bathroom": "Bathroom(s)",
+      "kingBed": "King Bed(s)",
+      "queenBed": "Queen Bed(s)",
+      "roomService": "Room Services",
+      "tv": "TV",
+      "balcony": "Balcony",
+      "freeWifi": "Free Wifi",
+      "cityView": "City View",
+      "oceanView": "Ocean View",
+      "forestView": "Forest View",
+      "mountainView": "Mountain View",
+      "airCondition": "Air Condition",
+      "soundProofed": "Sound Proofed"
+    },
+    "price": {
+      "roomPrice": "Room Price",
+      "hour": "24hrs",
+      "breakFast": "Breakfast Price"
+    },
+    "footer": {
+      "detailPage": "Hotel Details Page",
+      "delete": "Delete",
+      "deleting": "Deleting...",
+      "editTrigger": "Edit Room",
+      "editTitle": "Edit Room",
+      "editDesc": "Make changes to this room."
+    },
+    "toast": {
+      "deleteSuccess": "Room removed",
+      "deleteFailure": "Remove room failed!"
     }
   }
 }

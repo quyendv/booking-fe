@@ -217,5 +217,41 @@
       "creating": "Đang tạo mới...",
       "create": "Tạo"
     }
+  },
+  "RoomCard": {
+    "amenities": {
+      "bed": "Giường",
+      "guest": "Khách",
+      "bathroom": "Phòng tắm",
+      "kingBed": "Giường King",
+      "queenBed": "Giường Queen",
+      "roomService": "Dịch vụ phòng",
+      "tv": "TV",
+      "balcony": "Ban công",
+      "freeWifi": "Wifi miễn phí",
+      "cityView": "View thành phố",
+      "oceanView": "View biển",
+      "forestView": "View rừng",
+      "mountainView": "View đồi núi",
+      "airCondition": "Điều hòa",
+      "soundProofed": "Cách âm"
+    },
+    "price": {
+      "roomPrice": "Giá phòng",
+      "hour": "24 giờ",
+      "breakFast": "Giá bữa sáng"
+    },
+    "footer": {
+      "detailPage": "Chi tiết khách sạn",
+      "delete": "Xóa",
+      "deleting": "Đang xóa...",
+      "editTrigger": "Chỉnh sửa phòng",
+      "editTitle": "Chỉnh sửa phòng",
+      "editDesc": "Thay đổi thông tin của phòng này."
+    },
+    "toast": {
+      "deleteSuccess": "Phòng đã được xóa",
+      "deleteFailure": "Xóa phòng thất bại!"
+    }
   }
 }

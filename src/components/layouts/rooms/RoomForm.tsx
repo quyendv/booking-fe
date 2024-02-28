@@ -122,6 +122,7 @@ function RoomForm({ hotel, room, handleDialogOpen }: RoomFormProps) {
         toast({ variant: 'success', description: t('RoomForm.toast.updateSuccess') });
         setIsLoading(false);
         router.refresh();
+        // handleDialogOpen();
       } else {
         toast({ variant: 'destructive', description: t('RoomForm.toast.updateFailure') });
         setIsLoading(false);
@@ -335,19 +336,19 @@ function RoomForm({ hotel, room, handleDialogOpen }: RoomFormProps) {
                         className="absolute -right-3 top-0"
                         onClick={handleDeleteImage}
                       >
-                        {previewIsDeleting ? <Loader2Icon /> : <XCircleIcon />}
+                        {previewIsDeleting ? <Loader2Icon className="size-4 animate-spin" /> : <XCircleIcon />}
                       </Button>
                     </div>
                   ) : (
                     <div className="mt-4 flex max-w-[400px] flex-col items-center rounded border-2 border-dashed border-primary/50 p-12">
                       <UploadFile
-                        folder="hotels"
+                        folder="rooms"
                         onUploadComplete={(res) => {
                           setPreview(res);
                           toast({ variant: 'success', description: t('RoomForm.toast.uploadSuccess') });
                         }}
                         onUploadError={() => {
-                          toast({ variant: 'destructive', description: t('RoomForm.toast.uploadFailed') });
+                          toast({ variant: 'destructive', description: t('RoomForm.toast.uploadFailure') });
                         }}
                       />
                     </div>
