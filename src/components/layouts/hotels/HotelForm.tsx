@@ -22,14 +22,14 @@ import {
 } from '~/components/ui/dialog';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '~/components/ui/form';
 import { Input } from '~/components/ui/input';
+import { Separator } from '~/components/ui/separator';
 import { Textarea } from '~/components/ui/textarea';
 import { useToast } from '~/components/ui/use-toast';
 import { routeConfig } from '~/configs/route.config';
 import { ILink, useIRouter } from '~/locales/i18nNavigation';
 import UploadFile from '../form/UploadFile';
-import RoomForm from '../rooms/RoomForm';
 import RoomCard from '../rooms/RoomCard';
-import { Separator } from '~/components/ui/separator';
+import RoomForm from '../rooms/RoomForm';
 
 interface HotelFormProps {
   hotel?: HotelSchema;
@@ -130,36 +130,28 @@ export default function HotelForm({ hotel }: HotelFormProps) {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
+    const newData = {
+      ...values,
+      address: {
+        details: values.address,
+        country: values.country,
+        province: values.province,
+        district: values.district,
+        ward: values.ward,
+      },
+    };
     if (hotel) {
-      const { isSuccess } = await HotelApi.updateHotelById(hotel.id, {
-        ...values,
-        address: {
-          details: values.address,
-          country: values.country,
-          province: values.province,
-          district: values.district,
-          ward: values.ward,
-        },
-      });
+      const { isSuccess } = await HotelApi.updateHotelById(hotel.id, newData);
       if (isSuccess) {
         toast({ variant: 'success', description: t('HotelForm.toast.updateSuccess') });
         setIsLoading(false);
-        router.push(routeConfig.MANAGE_HOTELS + '/' + hotel.id);
+        router.push(routeConfig.MANAGE_HOTELS + '/' + hotel.id); // can only mutate new data
       } else {
         toast({ variant: 'destructive', description: t('HotelForm.toast.updateFailure') });
         setIsLoading(false);
       }
     } else {
-      const { isSuccess, data } = await HotelApi.createHotel({
-        ...values,
-        address: {
-          details: values.address,
-          country: values.country,
-          province: values.province,
-          district: values.district,
-          ward: values.ward,
-        },
-      } as any);
+      const { isSuccess, data } = await HotelApi.createHotel(newData as any);
       if (isSuccess) {
         toast({ variant: 'success', description: t('HotelForm.toast.createSuccess') });
         setIsLoading(false);

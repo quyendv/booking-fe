@@ -4,8 +4,9 @@ import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { mutate } from 'swr';
 import * as z from 'zod';
-import { HotelApi, HotelSchema, RoomSchema } from '~/apis/hotel.api';
+import { HotelApi, HotelSchema, RoomSchema, hotelEndpoints } from '~/apis/hotel.api';
 import { StorageApi } from '~/apis/storage.api';
 import { Button } from '~/components/ui/button';
 import { Checkbox } from '~/components/ui/checkbox';
@@ -121,8 +122,10 @@ function RoomForm({ hotel, room, handleDialogOpen }: RoomFormProps) {
       if (isSuccess) {
         toast({ variant: 'success', description: t('RoomForm.toast.updateSuccess') });
         setIsLoading(false);
-        router.refresh();
-        // handleDialogOpen();
+        handleDialogOpen();
+        // router.refresh();
+        // router.push(routeConfig.MANAGE_HOTELS + `/${hotel.id}`);
+        mutate(hotelEndpoints.getById(hotel.id));
       } else {
         toast({ variant: 'destructive', description: t('RoomForm.toast.updateFailure') });
         setIsLoading(false);
@@ -131,9 +134,11 @@ function RoomForm({ hotel, room, handleDialogOpen }: RoomFormProps) {
       const { isSuccess } = await HotelApi.createRoom(hotel.id, values as any);
       if (isSuccess) {
         toast({ variant: 'success', description: t('RoomForm.toast.createSuccess') });
-        router.refresh();
         setIsLoading(false);
         handleDialogOpen();
+        // router.refresh();
+        // router.push(routeConfig.MANAGE_HOTELS + `/${hotel.id}`);
+        mutate(hotelEndpoints.getById(hotel.id));
       } else {
         toast({ variant: 'destructive', description: t('RoomForm.toast.createFailure') });
         setIsLoading(false);

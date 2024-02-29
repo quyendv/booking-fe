@@ -1,7 +1,6 @@
 import useSWRImmutable from 'swr/immutable';
 import { axiosPrivateInstance } from './instances/axios.instance';
 import { PrivateFetchInstance } from './instances/fetch.instance';
-import useSWR from 'swr';
 
 export type AddressSchema = {
   id: number;
@@ -76,7 +75,7 @@ type UpdateRoomDto = Partial<CreateRoomDto>;
 
 type DeleteResponse = { status: string; message: string };
 
-const endpoints = {
+export const hotelEndpoints = {
   list: '/hotels',
   getById: (id: number) => `/hotels/${id}`,
   create: '/hotels',
@@ -94,33 +93,33 @@ const endpoints = {
 
 export const HotelApi = {
   async createHotel(data: CreateHotelDto) {
-    return await axiosPrivateInstance.post<HotelSchema>(endpoints.create, data);
+    return await axiosPrivateInstance.post<HotelSchema>(hotelEndpoints.create, data);
   },
 
   async getHotelById(id: number) {
-    return await axiosPrivateInstance.get<HotelSchema>(endpoints.getById(id));
+    return await axiosPrivateInstance.get<HotelSchema>(hotelEndpoints.getById(id));
   },
 
   async updateHotelById(id: number, data: UpdateHotelDto) {
-    return await axiosPrivateInstance.patch<HotelSchema>(endpoints.updateById(id), data);
+    return await axiosPrivateInstance.patch<HotelSchema>(hotelEndpoints.updateById(id), data);
   },
 
   useHotel(id: number) {
     const fetcher = (url: string) => new PrivateFetchInstance<HotelSchema>().fetcher(url, 'GET');
-    const { isLoading, data, error } = useSWR(endpoints.getById(id), fetcher);
-    // const { isLoading, data, error } = useSWRImmutable(endpoints.getById(id), fetcher);
-    return { isLoading, data, error };
+    // const { isLoading, data, error } = useSWR(hotelEndpoints.getById(id), fetcher);
+    const { isLoading, data, error, mutate } = useSWRImmutable(hotelEndpoints.getById(id), fetcher);
+    return { isLoading, data, error, mutate };
   },
 
   async createRoom(hotelId: number, data: CreateRoomDto) {
-    return await axiosPrivateInstance.post<RoomSchema>(endpoints.createRoom(hotelId), data);
+    return await axiosPrivateInstance.post<RoomSchema>(hotelEndpoints.createRoom(hotelId), data);
   },
 
   async updateRoom(hotelId: number, roomId: number, data: UpdateRoomDto) {
-    return await axiosPrivateInstance.patch<RoomSchema>(endpoints.updateRoom(hotelId, roomId), data);
+    return await axiosPrivateInstance.patch<RoomSchema>(hotelEndpoints.updateRoom(hotelId, roomId), data);
   },
 
   async deleteRoom(hotelId: number, roomId: number) {
-    return await axiosPrivateInstance.delete<DeleteResponse>(endpoints.deleteRoom(hotelId, roomId));
+    return await axiosPrivateInstance.delete<DeleteResponse>(hotelEndpoints.deleteRoom(hotelId, roomId));
   },
 };

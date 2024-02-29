@@ -22,7 +22,8 @@ import {
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { useState } from 'react';
-import { HotelApi, HotelSchema, RoomSchema } from '~/apis/hotel.api';
+import { mutate } from 'swr';
+import { HotelApi, HotelSchema, RoomSchema, hotelEndpoints } from '~/apis/hotel.api';
 import { Button } from '~/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '~/components/ui/card';
 import {
@@ -34,11 +35,11 @@ import {
   DialogTrigger,
 } from '~/components/ui/dialog';
 import { Separator } from '~/components/ui/separator';
+import { useToast } from '~/components/ui/use-toast';
 import { useIPathname, useIRouter } from '~/locales/i18nNavigation';
 import { splitNumber } from '~/utils/common.util';
 import AmenityItem from '../amenities/AmenityItem';
 import RoomForm from './RoomForm';
-import { useToast } from '~/components/ui/use-toast';
 
 interface RoomCardProps {
   hotel: HotelSchema;
@@ -65,7 +66,9 @@ export default function RoomCard({ room, hotel }: RoomCardProps) {
     if (isSuccess) {
       toast({ variant: 'success', description: t('toast.deleteSuccess') });
       setIsLoading(false);
-      router.refresh();
+      // router.refresh();
+      // router.push(routeConfig.MANAGE_HOTELS + `/${hotel.id}`);
+      mutate(hotelEndpoints.getById(hotel.id));
     } else {
       toast({ variant: 'destructive', description: t('toast.deleteFailure') });
       setIsLoading(false);
