@@ -262,6 +262,13 @@
     },
     "footer": {
       "detailPage": "Hotel Details Page",
+      "selectDateDesc": "Select days that you will spend in this room",
+      "selectDateTitle": "Pick a date",
+      "includeBreakfastDesc": "Do you want to be served breakfast each day",
+      "includeBreakfastLabel": "Include Breakfast",
+      "totalPrice": "Total Price",
+      "priceFor": "for",
+      "days": "days",
       "delete": "Delete",
       "deleting": "Deleting...",
       "editTrigger": "Edit Room",

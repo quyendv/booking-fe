@@ -1,5 +1,6 @@
 'use client';
 
+import { differenceInCalendarDays } from 'date-fns';
 import {
   AirVent,
   Bath,
@@ -21,11 +22,13 @@ import {
 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { DateRange } from 'react-day-picker';
 import { KeyedMutator, mutate } from 'swr';
 import { HotelApi, HotelSchema, RoomSchema, hotelEndpoints } from '~/apis/hotel.api';
 import { Button } from '~/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '~/components/ui/card';
+import { Checkbox } from '~/components/ui/checkbox';
 import {
   Dialog,
   DialogContent,
@@ -36,26 +39,45 @@ import {
 } from '~/components/ui/dialog';
 import { Separator } from '~/components/ui/separator';
 import { useToast } from '~/components/ui/use-toast';
-import { useIPathname, useIRouter } from '~/locales/i18nNavigation';
-import { splitNumber } from '~/utils/common.util';
+import { convertPriceToString, splitNumber } from '~/utils/common.util';
 import AmenityItem from '../amenities/AmenityItem';
+import { DatePickerWithRange } from './DateRangePicker';
 import RoomForm from './RoomForm';
 
 interface RoomCardProps {
   hotel: HotelSchema;
   room: RoomSchema;
   mutateHotel?: KeyedMutator<HotelSchema>;
+  isHotelDetailsPage?: boolean;
 }
 
-export default function RoomCard({ room, hotel, mutateHotel }: RoomCardProps) {
+export default function RoomCard({ room, hotel, mutateHotel, isHotelDetailsPage = false }: RoomCardProps) {
   const t = useTranslations('RoomCard');
   const { toast } = useToast();
-  const router = useIRouter();
 
   const [isLoading, setIsLoading] = useState(false);
   const [open, setOpen] = useState(false);
-  const pathname = useIPathname();
-  const isHotelDetailsPage = pathname.includes('hotel-details'); // FIXME
+  const [date, setDate] = useState<DateRange | undefined>();
+  const [includeBreakfast, setIncludeBreakfast] = useState(false);
+  const [days, setDays] = useState(0);
+  const [totalPrice, setTotalPrice] = useState(0);
+
+  useEffect(() => {
+    if (date && date.from && date.to) {
+      const daysDiff = differenceInCalendarDays(date.to, date.from) + 1;
+      setDays(daysDiff);
+      if (daysDiff && room.roomPrice) {
+        if (includeBreakfast && room.breakFastPrice) {
+          setTotalPrice((room.roomPrice + room.breakFastPrice) * daysDiff);
+        } else {
+          setTotalPrice(room.roomPrice * daysDiff);
+        }
+      }
+    } else {
+      setDays(0);
+      setTotalPrice(0);
+    }
+  }, [date, room.roomPrice, includeBreakfast]);
 
   function handleToggleDialog() {
     setOpen((prev) => !prev);
@@ -85,7 +107,7 @@ export default function RoomCard({ room, hotel, mutateHotel }: RoomCardProps) {
       <CardContent className="flex flex-col gap-4">
         {/* Cover */}
         <div className="relative aspect-square h-[200px] overflow-hidden rounded-lg">
-          <Image fill src={room.imageUrl} alt="room" className="object-cover" /> {/* TODO: placeholder */}
+          <Image fill priority src={room.imageUrl} alt="room" className="object-cover" /> {/* TODO: placeholder */}
         </div>
 
         {/* Amenities */}
@@ -197,11 +219,34 @@ export default function RoomCard({ room, hotel, mutateHotel }: RoomCardProps) {
       </CardContent>
       <CardFooter>
         {isHotelDetailsPage ? (
-          <div>{t('footer.detailPage')}</div>
+          <div className="flex flex-col gap-6">
+            <div>
+              <div>{t('footer.selectDateDesc')}</div>
+              <DatePickerWithRange date={date} setDate={setDate} title={t('footer.selectDateTitle')} />
+            </div>
+            {room.breakFastPrice > 0 && (
+              <div>
+                <div className="mb-2">{t('footer.includeBreakfastDesc')}</div>
+                <div className="flex items-center space-x-2">
+                  <Checkbox id="breakfast" onCheckedChange={(value) => setIncludeBreakfast(!!value)} />
+                  <label htmlFor="breakfast" className="cursor-pointer text-sm">
+                    {t('footer.includeBreakfastLabel')}
+                  </label>
+                </div>
+              </div>
+            )}
+            <div>
+              {t('footer.totalPrice')}: <span className="font-bold">{convertPriceToString(totalPrice)} VND</span>{' '}
+              {t('footer.priceFor')}{' '}
+              <span className="font-bold">
+                {days} {t('footer.days')}
+              </span>
+            </div>
+          </div>
         ) : (
           mutateHotel && (
-            // Delete Button
             <div className="flex w-full justify-between">
+              {/* Delete Button */}
               <Button disabled={isLoading} type="button" variant="outline" onClick={handleDeleteRoom}>
                 {isLoading ? (
                   <>

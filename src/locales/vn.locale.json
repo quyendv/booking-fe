@@ -261,6 +261,13 @@
       "breakFast": "Giá bữa sáng"
     },
     "footer": {
+      "selectDateDesc": "Chọn thời gian bạn sẽ ở phòng này",
+      "selectDateTitle": "Chọn ngày",
+      "includeBreakfastDesc": "Bạn có muốn được phục vụ bữa sáng hàng ngày",
+      "includeBreakfastLabel": "Bao gồm bữa sáng",
+      "totalPrice": "Tổng giá",
+      "priceFor": "cho",
+      "days": "ngày",
       "detailPage": "Chi tiết khách sạn",
       "delete": "Xóa",
       "deleting": "Đang xóa...",

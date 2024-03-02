@@ -21,7 +21,7 @@ export default function HotelDetails({ hotel }: HotelDetailsProps) {
     <div className="flex flex-col gap-6 pb-2">
       {/* Image Cover */}
       <div className="relative aspect-square h-[200px] w-full overflow-hidden rounded-lg bg-red-200 md:h-[400px]">
-        <Image src={hotel.imageUrl} alt={hotel.name} fill objectFit="cover" />
+        <Image src={hotel.imageUrl} alt={hotel.name} fill priority objectFit="cover" />
       </div>
 
       {/* Hotel Info */}
@@ -111,7 +111,7 @@ export default function HotelDetails({ hotel }: HotelDetailsProps) {
             <h3 className="my-4 text-lg font-semibold">Hotel Rooms</h3>
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
               {hotel.rooms.map((room) => (
-                <RoomCard key={room.id} hotel={hotel} room={room} />
+                <RoomCard key={room.id} hotel={hotel} room={room} isHotelDetailsPage />
               ))}
             </div>
           </div>
