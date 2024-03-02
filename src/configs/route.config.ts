@@ -5,6 +5,9 @@ export const routeConfig = {
   SIGN_UP: '/sign-up',
   VERIFY_EMAIL: '/verify-email',
 
+  HOTELS: '/hotels',
+  HOTEL_DETAILS: (hotelId: number) => `/hotels/${hotelId}`,
+
   MANAGE_ACCOUNT: '/personal',
   MY_BOOKING: '/my-booking',
   MY_TRIPS: '/my-trips',
@@ -12,8 +15,8 @@ export const routeConfig = {
 
   DASHBOARD: '/system/admin/dashboard',
   MANAGE_CUSTOMERS: '/system/admin/customers',
-  MANAGE_HOTELS: '/system/admin/hotels',
-  SYSTEM_HOTEL_DETAILS: '/system/admin/hotel-details', // /:id
+  MANAGE_HOTELS: (hotelId: number) => `/system/admin/hotels/${hotelId}`,
+  SYSTEM_HOTEL_DETAILS: (hotelId: number) => `/system/admin/hotel-details/${hotelId}`,
 
   MY_HOTEL: '/system/hotel',
 };

@@ -30,12 +30,14 @@ import { ILink, useIRouter } from '~/locales/i18nNavigation';
 import UploadFile from '../form/UploadFile';
 import RoomCard from '../rooms/RoomCard';
 import RoomForm from '../rooms/RoomForm';
+import { KeyedMutator } from 'swr';
 
 interface HotelFormProps {
   hotel?: HotelSchema;
+  mutateHotel?: KeyedMutator<HotelSchema>;
 }
 
-export default function HotelForm({ hotel }: HotelFormProps) {
+export default function HotelForm({ hotel, mutateHotel }: HotelFormProps) {
   const t = useTranslations();
   const { toast } = useToast();
   const router = useIRouter();
@@ -131,6 +133,7 @@ export default function HotelForm({ hotel }: HotelFormProps) {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
     const newData = {
+      ...(hotel && hotel),
       ...values,
       address: {
         details: values.address,
@@ -145,7 +148,12 @@ export default function HotelForm({ hotel }: HotelFormProps) {
       if (isSuccess) {
         toast({ variant: 'success', description: t('HotelForm.toast.updateSuccess') });
         setIsLoading(false);
-        router.push(routeConfig.MANAGE_HOTELS + '/' + hotel.id); // can only mutate new data
+        // router.push(routeConfig.MANAGE_HOTELS(hotel.id)); // can only mutate new data
+        router.refresh();
+        // if (mutateHotel) {
+        //   mutateHotel();
+        //   // mutateHotel(newData as any)
+        // }
       } else {
         toast({ variant: 'destructive', description: t('HotelForm.toast.updateFailure') });
         setIsLoading(false);
@@ -155,7 +163,7 @@ export default function HotelForm({ hotel }: HotelFormProps) {
       if (isSuccess) {
         toast({ variant: 'success', description: t('HotelForm.toast.createSuccess') });
         setIsLoading(false);
-        router.push(routeConfig.MANAGE_HOTELS + '/' + data.id);
+        router.push(routeConfig.MANAGE_HOTELS(data.id));
       } else {
         toast({ variant: 'destructive', description: t('HotelForm.toast.createFailure') });
         setIsLoading(false);
@@ -177,7 +185,7 @@ export default function HotelForm({ hotel }: HotelFormProps) {
     }
   }
 
-  function handleDialogOpen() {
+  function handleToggleDialog() {
     setOpen((prev) => !prev);
   }
 
@@ -378,7 +386,7 @@ export default function HotelForm({ hotel }: HotelFormProps) {
                             className="absolute -right-3 top-0"
                             onClick={handleDeleteImage}
                           >
-                            {previewIsDeleting ? <Loader2Icon /> : <XCircleIcon />}
+                            {previewIsDeleting ? <Loader2Icon className="animate-spin" /> : <XCircleIcon />}
                           </Button>
                         </div>
                       ) : (
@@ -517,7 +525,7 @@ export default function HotelForm({ hotel }: HotelFormProps) {
                 <Button type="submit" className="max-w-[150px]" disabled={isLoading}>
                   {isLoading ? (
                     <>
-                      <Loader2Icon className="mr-2 size-4" />
+                      <Loader2Icon className="mr-2 size-4 animate-spin" />
                       {t(`HotelForm.button.${hotel ? 'updating' : 'creating'}`)}
                     </>
                   ) : (
@@ -532,7 +540,7 @@ export default function HotelForm({ hotel }: HotelFormProps) {
                 {hotel && (
                   <ILink
                     className={buttonVariants({ variant: 'outline' })}
-                    href={routeConfig.SYSTEM_HOTEL_DETAILS + '/' + hotel.id}
+                    href={routeConfig.SYSTEM_HOTEL_DETAILS(hotel.id)}
                   >
                     <Eye className="mr-2 size-4" />
                     View
@@ -540,7 +548,7 @@ export default function HotelForm({ hotel }: HotelFormProps) {
                 )}
 
                 {/* Add Room */}
-                {hotel && (
+                {hotel && mutateHotel && (
                   <Dialog open={open} onOpenChange={setOpen}>
                     <DialogTrigger asChild>
                       <Button className="max-w-[150px]">
@@ -553,20 +561,20 @@ export default function HotelForm({ hotel }: HotelFormProps) {
                         <DialogTitle>{t('HotelForm.dialog.title')}</DialogTitle>
                         <DialogDescription>{t('HotelForm.dialog.desc')}</DialogDescription>
                       </DialogHeader>
-                      <RoomForm hotel={hotel} handleDialogOpen={handleDialogOpen} />
+                      <RoomForm hotel={hotel} handleToggleDialog={handleToggleDialog} mutateHotel={mutateHotel} />
                     </DialogContent>
                   </Dialog>
                 )}
               </div>
 
               {/* RoomCard */}
-              {hotel && hotel.rooms.length > 0 && (
+              {hotel && hotel.rooms.length > 0 && mutateHotel && (
                 <div>
                   <Separator className="bg-primary/10" />
                   <h3 className="my-4 text-lg font-semibold">Hotel Rooms</h3>
                   <div className="grid grid-cols-1 gap-6 2xl:grid-cols-2">
                     {hotel.rooms.map((room, index) => (
-                      <RoomCard key={index} room={room} hotel={hotel} />
+                      <RoomCard key={index} room={room} hotel={hotel} mutateHotel={mutateHotel} />
                     ))}
                   </div>
                 </div>

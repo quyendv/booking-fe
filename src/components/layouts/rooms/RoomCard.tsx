@@ -22,7 +22,7 @@ import {
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { useState } from 'react';
-import { mutate } from 'swr';
+import { KeyedMutator, mutate } from 'swr';
 import { HotelApi, HotelSchema, RoomSchema, hotelEndpoints } from '~/apis/hotel.api';
 import { Button } from '~/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '~/components/ui/card';
@@ -44,9 +44,10 @@ import RoomForm from './RoomForm';
 interface RoomCardProps {
   hotel: HotelSchema;
   room: RoomSchema;
+  mutateHotel: KeyedMutator<HotelSchema>;
 }
 
-export default function RoomCard({ room, hotel }: RoomCardProps) {
+export default function RoomCard({ room, hotel, mutateHotel }: RoomCardProps) {
   const t = useTranslations('RoomCard');
   const { toast } = useToast();
   const router = useIRouter();
@@ -56,7 +57,7 @@ export default function RoomCard({ room, hotel }: RoomCardProps) {
   const pathname = useIPathname();
   const isHotelDetailsPage = pathname.includes('hotel-details');
 
-  function handleDialogOpen() {
+  function handleToggleDialog() {
     setOpen((prev) => !prev);
   }
 
@@ -227,7 +228,7 @@ export default function RoomCard({ room, hotel }: RoomCardProps) {
                   <DialogTitle>{t('footer.editTitle')}</DialogTitle>
                   <DialogDescription>{t('footer.editDesc')}</DialogDescription>
                 </DialogHeader>
-                <RoomForm hotel={hotel} room={room} handleDialogOpen={handleDialogOpen} />
+                <RoomForm hotel={hotel} room={room} handleToggleDialog={handleToggleDialog} mutateHotel={mutateHotel} />
               </DialogContent>
             </Dialog>
           </div>

@@ -1,6 +1,6 @@
 import useSWRImmutable from 'swr/immutable';
-import { axiosPrivateInstance } from './instances/axios.instance';
-import { PrivateFetchInstance } from './instances/fetch.instance';
+import { axiosPrivateInstance, axiosPublicInstance } from './instances/axios.instance';
+import { FetchInstance, PrivateFetchInstance } from './instances/fetch.instance';
 
 export type AddressSchema = {
   id: number;
@@ -78,6 +78,7 @@ type DeleteResponse = { status: string; message: string };
 export const hotelEndpoints = {
   list: '/hotels',
   getById: (id: number) => `/hotels/${id}`,
+  myHotel: '/hotels/me',
   create: '/hotels',
   updateById: (id: number) => `/hotels/${id}`,
   delete: (id: number) => `/hotels/${id}`,
@@ -96,19 +97,22 @@ export const HotelApi = {
     return await axiosPrivateInstance.post<HotelSchema>(hotelEndpoints.create, data);
   },
 
+  async listHotels() {
+    return await new FetchInstance<HotelSchema[]>().get(hotelEndpoints.list);
+    // return await axiosPublicInstance.get<HotelSchema[]>(hotelEndpoints.list);
+  },
+
   async getHotelById(id: number) {
     return await axiosPrivateInstance.get<HotelSchema>(hotelEndpoints.getById(id));
   },
 
-  async updateHotelById(id: number, data: UpdateHotelDto) {
-    return await axiosPrivateInstance.patch<HotelSchema>(hotelEndpoints.updateById(id), data);
+  async getMyHotel() {
+    return new PrivateFetchInstance<HotelSchema>().get(hotelEndpoints.myHotel);
+    // return await axiosPrivateInstance.get<HotelSchema>(hotelEndpoints.myHotel);
   },
 
-  useHotel(id: number) {
-    const fetcher = (url: string) => new PrivateFetchInstance<HotelSchema>().fetcher(url, 'GET');
-    // const { isLoading, data, error } = useSWR(hotelEndpoints.getById(id), fetcher);
-    const { isLoading, data, error, mutate } = useSWRImmutable(hotelEndpoints.getById(id), fetcher);
-    return { isLoading, data, error, mutate };
+  async updateHotelById(id: number, data: UpdateHotelDto) {
+    return await axiosPrivateInstance.patch<HotelSchema>(hotelEndpoints.updateById(id), data);
   },
 
   async createRoom(hotelId: number, data: CreateRoomDto) {

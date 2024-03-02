@@ -4,7 +4,7 @@ import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { mutate } from 'swr';
+import { KeyedMutator, mutate } from 'swr';
 import * as z from 'zod';
 import { HotelApi, HotelSchema, RoomSchema, hotelEndpoints } from '~/apis/hotel.api';
 import { StorageApi } from '~/apis/storage.api';
@@ -19,10 +19,11 @@ import UploadFile from '../form/UploadFile';
 interface RoomFormProps {
   hotel: HotelSchema;
   room?: RoomSchema;
-  handleDialogOpen: () => void;
+  mutateHotel: KeyedMutator<HotelSchema>;
+  handleToggleDialog: () => void;
 }
 
-function RoomForm({ hotel, room, handleDialogOpen }: RoomFormProps) {
+function RoomForm({ hotel, room, handleToggleDialog, mutateHotel }: RoomFormProps) {
   const t = useTranslations();
   const { toast } = useToast();
   const router = useIRouter();
@@ -122,10 +123,10 @@ function RoomForm({ hotel, room, handleDialogOpen }: RoomFormProps) {
       if (isSuccess) {
         toast({ variant: 'success', description: t('RoomForm.toast.updateSuccess') });
         setIsLoading(false);
-        handleDialogOpen();
+        handleToggleDialog();
         // router.refresh();
         // router.push(routeConfig.MANAGE_HOTELS + `/${hotel.id}`);
-        mutate(hotelEndpoints.getById(hotel.id));
+        mutateHotel(); // mutate(hotelEndpoints.getById(hotel.id));
       } else {
         toast({ variant: 'destructive', description: t('RoomForm.toast.updateFailure') });
         setIsLoading(false);
@@ -135,10 +136,10 @@ function RoomForm({ hotel, room, handleDialogOpen }: RoomFormProps) {
       if (isSuccess) {
         toast({ variant: 'success', description: t('RoomForm.toast.createSuccess') });
         setIsLoading(false);
-        handleDialogOpen();
+        handleToggleDialog();
         // router.refresh();
         // router.push(routeConfig.MANAGE_HOTELS + `/${hotel.id}`);
-        mutate(hotelEndpoints.getById(hotel.id));
+        mutateHotel(); // mutate(hotelEndpoints.getById(hotel.id));
       } else {
         toast({ variant: 'destructive', description: t('RoomForm.toast.createFailure') });
         setIsLoading(false);
@@ -341,7 +342,7 @@ function RoomForm({ hotel, room, handleDialogOpen }: RoomFormProps) {
                         className="absolute -right-3 top-0"
                         onClick={handleDeleteImage}
                       >
-                        {previewIsDeleting ? <Loader2Icon className="size-4 animate-spin" /> : <XCircleIcon />}
+                        {previewIsDeleting ? <Loader2Icon className="animate-spin" /> : <XCircleIcon />}
                       </Button>
                     </div>
                   ) : (
@@ -480,7 +481,7 @@ function RoomForm({ hotel, room, handleDialogOpen }: RoomFormProps) {
             >
               {isLoading ? (
                 <>
-                  <Loader2Icon className="mr-2 size-4" />
+                  <Loader2Icon className="mr-2 size-4 animate-spin" />
                   {t(`RoomForm.button.${room ? 'updating' : 'creating'}`)}
                 </>
               ) : (

@@ -1,7 +1,7 @@
 'use client';
 
-import { HotelApi } from '~/apis/hotel.api';
 import HotelForm from '~/components/layouts/hotels/HotelForm';
+import useHotel from '~/hooks/useHotel';
 
 interface EditHotelPageProps {
   params: {
@@ -15,10 +15,10 @@ interface EditHotelPageProps {
 // use "fetch" instead of "axios" to get data from server
 
 const EditHotelPage = ({ params }: EditHotelPageProps) => {
-  const { isLoading, data, error } = HotelApi.useHotel(+params.id);
+  const { isLoading, data, error, mutate } = useHotel(+params.id);
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Hotel not found</div>;
-  return <HotelForm hotel={data} />;
+  return <HotelForm hotel={data} mutateHotel={mutate} />;
 };
 
 // const EditHotelPage = ({ params }: EditHotelPageProps) => {

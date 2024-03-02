@@ -46,7 +46,8 @@ export class FetchInstance<T = any> {
     });
     const data = await response.json();
     if (!response.ok || response.status >= 400) {
-      throw new Error(data.message || response.statusText || response.status.toString());
+      // throw new Error(data.message || response.statusText || response.status.toString());
+      throw { statusCode: response.status, message: data.message || response.statusText || response.status.toString() };
     }
     return data;
   }
