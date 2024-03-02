@@ -44,7 +44,7 @@ import RoomForm from './RoomForm';
 interface RoomCardProps {
   hotel: HotelSchema;
   room: RoomSchema;
-  mutateHotel: KeyedMutator<HotelSchema>;
+  mutateHotel?: KeyedMutator<HotelSchema>;
 }
 
 export default function RoomCard({ room, hotel, mutateHotel }: RoomCardProps) {
@@ -55,7 +55,7 @@ export default function RoomCard({ room, hotel, mutateHotel }: RoomCardProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const pathname = useIPathname();
-  const isHotelDetailsPage = pathname.includes('hotel-details');
+  const isHotelDetailsPage = pathname.includes('hotel-details'); // FIXME
 
   function handleToggleDialog() {
     setOpen((prev) => !prev);
@@ -77,7 +77,7 @@ export default function RoomCard({ room, hotel, mutateHotel }: RoomCardProps) {
   }
 
   return (
-    <Card>
+    <Card className="h-fit">
       <CardHeader>
         <CardTitle>{room.title}</CardTitle>
         <CardDescription>{room.description}</CardDescription>
@@ -199,39 +199,46 @@ export default function RoomCard({ room, hotel, mutateHotel }: RoomCardProps) {
         {isHotelDetailsPage ? (
           <div>{t('footer.detailPage')}</div>
         ) : (
-          // Delete Button
-          <div className="flex w-full justify-between">
-            <Button disabled={isLoading} type="button" variant="outline" onClick={handleDeleteRoom}>
-              {isLoading ? (
-                <>
-                  <Loader2 className="mr-2 size-4" />
-                  {t('footer.deleting')}
-                </>
-              ) : (
-                <>
-                  <Trash className="mr-2 size-4" />
-                  {t('footer.delete')}
-                </>
-              )}
-            </Button>
+          mutateHotel && (
+            // Delete Button
+            <div className="flex w-full justify-between">
+              <Button disabled={isLoading} type="button" variant="outline" onClick={handleDeleteRoom}>
+                {isLoading ? (
+                  <>
+                    <Loader2 className="mr-2 size-4" />
+                    {t('footer.deleting')}
+                  </>
+                ) : (
+                  <>
+                    <Trash className="mr-2 size-4" />
+                    {t('footer.delete')}
+                  </>
+                )}
+              </Button>
 
-            {/* Edit Dialog */}
-            <Dialog open={open} onOpenChange={setOpen}>
-              <DialogTrigger asChild>
-                <Button className="max-w-[150px]">
-                  <Pencil className="mr-2 size-4" />
-                  {t('footer.editTrigger')}
-                </Button>
-              </DialogTrigger>
-              <DialogContent className="max-[900px] w-[90%]">
-                <DialogHeader className="px-2">
-                  <DialogTitle>{t('footer.editTitle')}</DialogTitle>
-                  <DialogDescription>{t('footer.editDesc')}</DialogDescription>
-                </DialogHeader>
-                <RoomForm hotel={hotel} room={room} handleToggleDialog={handleToggleDialog} mutateHotel={mutateHotel} />
-              </DialogContent>
-            </Dialog>
-          </div>
+              {/* Edit Dialog */}
+              <Dialog open={open} onOpenChange={setOpen}>
+                <DialogTrigger asChild>
+                  <Button className="max-w-[150px]">
+                    <Pencil className="mr-2 size-4" />
+                    {t('footer.editTrigger')}
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="max-[900px] w-[90%]">
+                  <DialogHeader className="px-2">
+                    <DialogTitle>{t('footer.editTitle')}</DialogTitle>
+                    <DialogDescription>{t('footer.editDesc')}</DialogDescription>
+                  </DialogHeader>
+                  <RoomForm
+                    hotel={hotel}
+                    room={room}
+                    handleToggleDialog={handleToggleDialog}
+                    mutateHotel={mutateHotel}
+                  />
+                </DialogContent>
+              </Dialog>
+            </div>
+          )
         )}
       </CardFooter>
     </Card>

@@ -150,6 +150,25 @@
       "desc": "Add details about a room in your hotel."
     }
   },
+  "HotelDetails": {
+    "heading": {
+      "location": "Location Details",
+      "about": "About this hotel",
+      "amenities": "Popular Amenities"
+    },
+    "info": {
+      "swimmingPool": "Pool",
+      "gym": "Gym",
+      "spa": "Spa",
+      "bar": "Bar",
+      "laundry": "Laundry Facilities",
+      "restaurant": "Restaurant",
+      "shopping": "Shopping",
+      "freeParking": "Free Parking",
+      "movieNight": "Movie Night",
+      "coffeeShop": "Coffee Shop"
+    }
+  },
   "RoomForm": {
     "error": {
       "title": "Title must be at least 3 characters",

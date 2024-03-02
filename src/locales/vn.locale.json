@@ -150,6 +150,25 @@
       "desc": "Nhập chi tiết thông tin phòng trong khách sạn của bạn"
     }
   },
+  "HotelDetails": {
+    "heading": {
+      "location": "Thông tin vị trí",
+      "about": "Về khách sạn này",
+      "amenities": "Tiện nghi phổ biến"
+    },
+    "info": {
+      "swimmingPool": "Bể bơi",
+      "gym": "Phòng gym",
+      "spa": "Spa",
+      "bar": "Quầy bar",
+      "laundry": "Giặt là",
+      "restaurant": "Nhà hàng",
+      "shopping": "Mua sắm",
+      "freeParking": "Bãi đỗ xe miễn phí",
+      "movieNight": "Buổi chiếu phim",
+      "coffeeShop": "Quán cà phê"
+    }
+  },
   "RoomForm": {
     "error": {
       "title": "Tiêu đề phải có ít nhất 3 ký tự",

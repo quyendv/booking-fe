@@ -10,6 +10,7 @@ import { convertPriceToString } from '~/utils/common.util';
 import { cn } from '~/utils/ui.util';
 import AmenityItem from '../amenities/AmenityItem';
 import { useTranslations } from 'next-intl';
+import { FaSwimmer } from 'react-icons/fa';
 
 interface HotelCardProps {
   hotel: HotelSchema;
@@ -46,7 +47,7 @@ export default function HotelCard({ hotel }: HotelCardProps) {
             </AmenityItem>
             {hotel.swimmingPool && (
               <AmenityItem>
-                <Waves className="size-4" />
+                <FaSwimmer size={18} />
                 {t('HotelForm.label.swimmingPool')}
               </AmenityItem>
             )}
