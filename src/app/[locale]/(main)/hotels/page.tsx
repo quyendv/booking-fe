@@ -1,5 +1,7 @@
-import { HotelApi } from '~/apis/hotel.api';
+'use client';
+
 import HotelList from '~/components/layouts/hotels/HotelList';
+import useHotels from '~/hooks/useHotels';
 
 interface HotelPageProps {
   searchParams: {
@@ -10,9 +12,10 @@ interface HotelPageProps {
   };
 }
 
-async function HotelPage({}: HotelPageProps) {
-  const { isSuccess, data } = await HotelApi.listHotels(); // TODO: filter search params
-  if (!isSuccess) return <div>Error when fetch hotels</div>;
+function HotelPage({}: HotelPageProps) {
+  const { isLoading, data, error } = useHotels(); // filter search params
+  if (isLoading) return <div>Loading...</div>;
+  if (error || !data) return <div>Oops! No hotels found</div>;
 
   return <HotelList hotels={data} />;
 }
