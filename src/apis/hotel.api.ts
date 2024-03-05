@@ -1,6 +1,7 @@
 import useSWRImmutable from 'swr/immutable';
 import { axiosPrivateInstance, axiosPublicInstance } from './instances/axios.instance';
 import { FetchInstance, PrivateFetchInstance } from './instances/fetch.instance';
+import { BookingSchema } from './booking.api';
 
 export type AddressSchema = {
   id: number;
@@ -66,6 +67,8 @@ export type HotelSchema = {
   swimmingPool: boolean;
 };
 
+export type HotelSchemaWithBookings = HotelSchema & { bookings: BookingSchema[] };
+
 type CreateAddressDto = Omit<AddressSchema, 'id'>;
 type CreateHotelDto = Omit<HotelSchema, 'id' | 'rooms' | 'address'> & { address: CreateAddressDto };
 type UpdateHotelDto = Partial<Omit<CreateHotelDto, 'email' | 'id'>>;
@@ -103,7 +106,7 @@ export const HotelApi = {
   },
 
   async getHotelById(id: number) {
-    return await axiosPrivateInstance.get<HotelSchema>(hotelEndpoints.getById(id));
+    return await axiosPrivateInstance.get<HotelSchemaWithBookings>(hotelEndpoints.getById(id));
   },
 
   async getMyHotel() {

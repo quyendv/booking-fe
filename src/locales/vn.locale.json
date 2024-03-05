@@ -268,6 +268,12 @@
       "totalPrice": "Tổng giá",
       "priceFor": "cho",
       "days": "ngày",
+      "book": "Đặt phòng",
+      "loading": "Đang xử lý...",
+      "bookingDialogTitle": "Xác nhận đặt phòng",
+      "bookingDialogDesc": "Bạn muốn đặt phòng này cho các ngày đã chọn?",
+      "bookingDialogCancel": "Hủy",
+      "bookingDialogAction": "Tiếp tục",
       "detailPage": "Chi tiết khách sạn",
       "delete": "Xóa",
       "deleting": "Đang xóa...",
@@ -277,7 +283,12 @@
     },
     "toast": {
       "deleteSuccess": "Phòng đã được xóa",
-      "deleteFailure": "Xóa phòng thất bại!"
+      "deleteFailure": "Xóa phòng thất bại!",
+      "loginRequired": "Bạn cần đăng nhập để đặt phòng",
+      "verifyRequired": "Bạn cần xác minh email để đặt phòng",
+      "dateRequired": "Vui lòng chọn ngày",
+      "bookingSuccess": "🎉 Đặt phòng thành công",
+      "bookingFailure": "Đặt phòng thất bại!"
     }
   }
 }

@@ -7,6 +7,7 @@ export const routeConfig = {
 
   HOTELS: '/hotels',
   HOTEL_DETAILS: (hotelId: number) => `/hotels/${hotelId}`,
+  BOOK_ROOM: '/book-room',
 
   MANAGE_ACCOUNT: '/personal',
   MY_BOOKING: '/my-booking',

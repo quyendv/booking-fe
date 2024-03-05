@@ -1,17 +1,16 @@
 'use client';
 
 import { Car, Clapperboard, Dumbbell, MapPin, ShoppingBasket, Utensils, Wine } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { FaSpa, FaSwimmer } from 'react-icons/fa';
 import { MdDryCleaning } from 'react-icons/md';
-import { HotelSchema } from '~/apis/hotel.api';
+import { HotelSchemaWithBookings } from '~/apis/hotel.api';
 import AmenityItem from '../amenities/AmenityItem';
 import RoomCard from '../rooms/RoomCard';
-import { useTranslations } from 'next-intl';
 
 interface HotelDetailsProps {
-  hotel: HotelSchema;
-  booking?: any[];
+  hotel: HotelSchemaWithBookings;
 }
 
 export default function HotelDetails({ hotel }: HotelDetailsProps) {
@@ -21,7 +20,7 @@ export default function HotelDetails({ hotel }: HotelDetailsProps) {
     <div className="flex flex-col gap-6 pb-2">
       {/* Image Cover */}
       <div className="relative aspect-square h-[200px] w-full overflow-hidden rounded-lg bg-red-200 md:h-[400px]">
-        <Image src={hotel.imageUrl} alt={hotel.name} fill priority objectFit="cover" />
+        <Image src={hotel.imageUrl} alt={hotel.name} fill priority className="object-cover" />
       </div>
 
       {/* Hotel Info */}
@@ -111,7 +110,7 @@ export default function HotelDetails({ hotel }: HotelDetailsProps) {
             <h3 className="my-4 text-lg font-semibold">Hotel Rooms</h3>
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
               {hotel.rooms.map((room) => (
-                <RoomCard key={room.id} hotel={hotel} room={room} isHotelDetailsPage />
+                <RoomCard key={room.id} hotel={hotel} room={room} isHotelDetailsPage bookings={hotel.bookings} />
               ))}
             </div>
           </div>

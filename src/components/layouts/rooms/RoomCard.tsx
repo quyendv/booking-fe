@@ -1,6 +1,6 @@
 'use client';
 
-import { differenceInCalendarDays } from 'date-fns';
+import { differenceInCalendarDays, eachDayOfInterval, format } from 'date-fns';
 import {
   AirVent,
   Bath,
@@ -18,14 +18,27 @@ import {
   Users,
   UtensilsCrossed,
   VolumeX,
+  Wand2,
   Wifi,
 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { DateRange } from 'react-day-picker';
 import { KeyedMutator, mutate } from 'swr';
+import { BookingApi, BookingSchema, CreateBookingDto } from '~/apis/booking.api';
 import { HotelApi, HotelSchema, RoomSchema, hotelEndpoints } from '~/apis/hotel.api';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '~/components/ui/alert-dialog';
 import { Button } from '~/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '~/components/ui/card';
 import { Checkbox } from '~/components/ui/checkbox';
@@ -39,6 +52,10 @@ import {
 } from '~/components/ui/dialog';
 import { Separator } from '~/components/ui/separator';
 import { useToast } from '~/components/ui/use-toast';
+import { routeConfig } from '~/configs/route.config';
+import { useAuth } from '~/contexts/auth.context';
+import useBookRoom from '~/hooks/useBookRoom';
+import { useIRouter } from '~/locales/i18nNavigation';
 import { convertPriceToString, splitNumber } from '~/utils/common.util';
 import AmenityItem from '../amenities/AmenityItem';
 import { DatePickerWithRange } from './DateRangePicker';
@@ -47,20 +64,39 @@ import RoomForm from './RoomForm';
 interface RoomCardProps {
   hotel: HotelSchema;
   room: RoomSchema;
+  bookings?: BookingSchema[];
   mutateHotel?: KeyedMutator<HotelSchema>;
   isHotelDetailsPage?: boolean;
 }
 
-export default function RoomCard({ room, hotel, mutateHotel, isHotelDetailsPage = false }: RoomCardProps) {
+export default function RoomCard({
+  room,
+  hotel,
+  mutateHotel,
+  isHotelDetailsPage = false,
+  bookings = [],
+}: RoomCardProps) {
   const t = useTranslations('RoomCard');
+  const { user } = useAuth();
   const { toast } = useToast();
+  const router = useIRouter();
+  const { setBookingRoomData, setPaymentIntentId } = useBookRoom();
 
   const [isLoading, setIsLoading] = useState(false);
-  const [open, setOpen] = useState(false);
+  const [isBookingLoading, setIsBookingLoading] = useState(false);
+  const [roomDialogOpen, setRoomDialogOpen] = useState(false);
   const [date, setDate] = useState<DateRange | undefined>();
   const [includeBreakfast, setIncludeBreakfast] = useState(false);
   const [days, setDays] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
+
+  const disabledDates = useMemo(() => {
+    const roomBookings = bookings.filter((b) => b.roomId === room.id);
+    const dates = roomBookings.flatMap((booking) =>
+      eachDayOfInterval({ start: new Date(booking.startDate), end: new Date(booking.endDate) }),
+    );
+    return dates; // NOTE: include duplicate dates
+  }, [bookings, room.id]);
 
   useEffect(() => {
     if (date && date.from && date.to) {
@@ -79,8 +115,8 @@ export default function RoomCard({ room, hotel, mutateHotel, isHotelDetailsPage 
     }
   }, [date, room.roomPrice, includeBreakfast]);
 
-  function handleToggleDialog() {
-    setOpen((prev) => !prev);
+  function handleToggleRoomDialog() {
+    setRoomDialogOpen((prev) => !prev);
   }
 
   async function handleDeleteRoom() {
@@ -95,6 +131,52 @@ export default function RoomCard({ room, hotel, mutateHotel, isHotelDetailsPage 
     } else {
       toast({ variant: 'destructive', description: t('toast.deleteFailure') });
       setIsLoading(false);
+    }
+  }
+
+  async function handleBookingRoom() {
+    // validate
+    if (!user) {
+      // push /login
+      return toast({ variant: 'destructive', description: t('toast.loginRequired') });
+    }
+    if (!user.isVerified) {
+      // verify link
+      return toast({ variant: 'destructive', description: t('toast.verifyRequired') });
+    }
+
+    if (date?.from && date.to) {
+      setIsBookingLoading(true);
+      const bookingData: CreateBookingDto = {
+        roomId: room.id,
+        hotelId: hotel.id,
+        // startDate: date.from,
+        // endDate: date.to,
+        startDate: format(date.from, 'yyyy-MM-dd'),
+        endDate: format(date.to, 'yyyy-MM-dd'),
+        breakFastIncluded: includeBreakfast,
+        totalPrice,
+      };
+
+      const { isSuccess, data } = await BookingApi.create(bookingData);
+      if (isSuccess) {
+        toast({ variant: 'success', description: t('toast.bookingSuccess') });
+        setBookingRoomData({
+          breakfastIncluded: includeBreakfast,
+          totalPrice,
+          startDate: date.from,
+          endDate: date.to,
+          room,
+          bookingId: data.id,
+        });
+        setPaymentIntentId(data.paymentId);
+        router.push(routeConfig.BOOK_ROOM);
+      } else {
+        toast({ variant: 'destructive', description: t('toast.bookingFailure') });
+      }
+      setIsBookingLoading(false);
+    } else {
+      return toast({ variant: 'destructive', description: t('toast.dateRequired') });
     }
   }
 
@@ -222,7 +304,12 @@ export default function RoomCard({ room, hotel, mutateHotel, isHotelDetailsPage 
           <div className="flex flex-col gap-6">
             <div>
               <div>{t('footer.selectDateDesc')}</div>
-              <DatePickerWithRange date={date} setDate={setDate} title={t('footer.selectDateTitle')} />
+              <DatePickerWithRange
+                date={date}
+                setDate={setDate}
+                title={t('footer.selectDateTitle')}
+                disabledDates={disabledDates}
+              />
             </div>
             {room.breakFastPrice > 0 && (
               <div>
@@ -242,6 +329,30 @@ export default function RoomCard({ room, hotel, mutateHotel, isHotelDetailsPage 
                 {days} {t('footer.days')}
               </span>
             </div>
+
+            {/* Booking Button with dialog */}
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button disabled={isBookingLoading} type="button">
+                  {isBookingLoading ? (
+                    <Loader2 className="mr-2 size-4 animate-spin" />
+                  ) : (
+                    <Wand2 className="mr-2 size-4" />
+                  )}
+                  {isBookingLoading ? t('footer.loading') : t('footer.book')}
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>{t('footer.bookingDialogTitle')}</AlertDialogTitle>
+                  <AlertDialogDescription>{t('footer.bookingDialogDesc')}</AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>{t('footer.bookingDialogCancel')}</AlertDialogCancel>
+                  <AlertDialogAction onClick={handleBookingRoom}>{t('footer.bookingDialogAction')}</AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
           </div>
         ) : (
           mutateHotel && (
@@ -262,7 +373,7 @@ export default function RoomCard({ room, hotel, mutateHotel, isHotelDetailsPage 
               </Button>
 
               {/* Edit Dialog */}
-              <Dialog open={open} onOpenChange={setOpen}>
+              <Dialog open={roomDialogOpen} onOpenChange={setRoomDialogOpen}>
                 <DialogTrigger asChild>
                   <Button className="max-w-[150px]">
                     <Pencil className="mr-2 size-4" />
@@ -277,7 +388,7 @@ export default function RoomCard({ room, hotel, mutateHotel, isHotelDetailsPage 
                   <RoomForm
                     hotel={hotel}
                     room={room}
-                    handleToggleDialog={handleToggleDialog}
+                    handleToggleDialog={handleToggleRoomDialog}
                     mutateHotel={mutateHotel}
                   />
                 </DialogContent>

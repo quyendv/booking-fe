@@ -7,7 +7,7 @@ interface MainLayoutProps {
 
 function MainLayout({ children }: MainLayoutProps) {
   return (
-    <main className="flex min-h-screen flex-col">
+    <main className="z-0 flex min-h-screen flex-col">
       <Header />
       <section className="flex-grow">
         <Container>{children}</Container>

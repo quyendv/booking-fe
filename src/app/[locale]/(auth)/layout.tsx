@@ -10,7 +10,7 @@ interface LayoutProps {
 export default function AuthLayout({ children }: LayoutProps) {
   return (
     <GuestGuard>
-      <main className="flex min-h-screen flex-col">
+      <main className="z-0 flex min-h-screen flex-col">
         <Header showUserMenu={false} />
         <section className="flex flex-grow items-center justify-center">{children}</section>
       </main>

@@ -17,7 +17,7 @@ interface HeaderProps {
 
 const Header = ({ showUserMenu = true, className = '' }: HeaderProps) => {
   return (
-    <header className={cn('sticky top-0 border border-b-primary/10 bg-background', className)}>
+    <header className={cn('sticky top-0 z-10 border border-b-primary/10 bg-background', className)}>
       <Container className="flex items-center">
         <Logo />
 
