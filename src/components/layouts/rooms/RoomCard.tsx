@@ -67,6 +67,7 @@ interface RoomCardProps {
   bookings?: BookingSchema[];
   mutateHotel?: KeyedMutator<HotelSchema>;
   isHotelDetailsPage?: boolean;
+  isBookRoomPage?: boolean;
 }
 
 export default function RoomCard({
@@ -74,6 +75,7 @@ export default function RoomCard({
   hotel,
   mutateHotel,
   isHotelDetailsPage = false,
+  isBookRoomPage = false,
   bookings = [],
 }: RoomCardProps) {
   const t = useTranslations('RoomCard');
@@ -167,6 +169,7 @@ export default function RoomCard({
           startDate: date.from,
           endDate: date.to,
           room,
+          hotel,
           bookingId: data.id,
         });
         setPaymentIntentId(data.paymentId);
@@ -299,104 +302,106 @@ export default function RoomCard({
 
         <Separator />
       </CardContent>
-      <CardFooter>
-        {isHotelDetailsPage ? (
-          <div className="flex flex-col gap-6">
-            <div>
-              <div>{t('footer.selectDateDesc')}</div>
-              <DatePickerWithRange
-                date={date}
-                setDate={setDate}
-                title={t('footer.selectDateTitle')}
-                disabledDates={disabledDates}
-              />
-            </div>
-            {room.breakFastPrice > 0 && (
+      {!isBookRoomPage && (
+        <CardFooter>
+          {isHotelDetailsPage ? (
+            <div className="flex flex-col gap-6">
               <div>
-                <div className="mb-2">{t('footer.includeBreakfastDesc')}</div>
-                <div className="flex items-center space-x-2">
-                  <Checkbox id="breakfast" onCheckedChange={(value) => setIncludeBreakfast(!!value)} />
-                  <label htmlFor="breakfast" className="cursor-pointer text-sm">
-                    {t('footer.includeBreakfastLabel')}
-                  </label>
-                </div>
+                <div>{t('footer.selectDateDesc')}</div>
+                <DatePickerWithRange
+                  date={date}
+                  setDate={setDate}
+                  title={t('footer.selectDateTitle')}
+                  disabledDates={disabledDates}
+                />
               </div>
-            )}
-            <div>
-              {t('footer.totalPrice')}: <span className="font-bold">{convertPriceToString(totalPrice)} VND</span>{' '}
-              {t('footer.priceFor')}{' '}
-              <span className="font-bold">
-                {days} {t('footer.days')}
-              </span>
-            </div>
+              {room.breakFastPrice > 0 && (
+                <div>
+                  <div className="mb-2">{t('footer.includeBreakfastDesc')}</div>
+                  <div className="flex items-center space-x-2">
+                    <Checkbox id="breakfast" onCheckedChange={(value) => setIncludeBreakfast(!!value)} />
+                    <label htmlFor="breakfast" className="cursor-pointer text-sm">
+                      {t('footer.includeBreakfastLabel')}
+                    </label>
+                  </div>
+                </div>
+              )}
+              <div>
+                {t('footer.totalPrice')}: <span className="font-bold">{convertPriceToString(totalPrice)} VND</span>{' '}
+                {t('footer.priceFor')}{' '}
+                <span className="font-bold">
+                  {days} {t('footer.days')}
+                </span>
+              </div>
 
-            {/* Booking Button with dialog */}
-            <AlertDialog>
-              <AlertDialogTrigger asChild>
-                <Button disabled={isBookingLoading} type="button">
-                  {isBookingLoading ? (
-                    <Loader2 className="mr-2 size-4 animate-spin" />
-                  ) : (
-                    <Wand2 className="mr-2 size-4" />
-                  )}
-                  {isBookingLoading ? t('footer.loading') : t('footer.book')}
-                </Button>
-              </AlertDialogTrigger>
-              <AlertDialogContent>
-                <AlertDialogHeader>
-                  <AlertDialogTitle>{t('footer.bookingDialogTitle')}</AlertDialogTitle>
-                  <AlertDialogDescription>{t('footer.bookingDialogDesc')}</AlertDialogDescription>
-                </AlertDialogHeader>
-                <AlertDialogFooter>
-                  <AlertDialogCancel>{t('footer.bookingDialogCancel')}</AlertDialogCancel>
-                  <AlertDialogAction onClick={handleBookingRoom}>{t('footer.bookingDialogAction')}</AlertDialogAction>
-                </AlertDialogFooter>
-              </AlertDialogContent>
-            </AlertDialog>
-          </div>
-        ) : (
-          mutateHotel && (
-            <div className="flex w-full justify-between">
-              {/* Delete Button */}
-              <Button disabled={isLoading} type="button" variant="outline" onClick={handleDeleteRoom}>
-                {isLoading ? (
-                  <>
-                    <Loader2 className="mr-2 size-4" />
-                    {t('footer.deleting')}
-                  </>
-                ) : (
-                  <>
-                    <Trash className="mr-2 size-4" />
-                    {t('footer.delete')}
-                  </>
-                )}
-              </Button>
-
-              {/* Edit Dialog */}
-              <Dialog open={roomDialogOpen} onOpenChange={setRoomDialogOpen}>
-                <DialogTrigger asChild>
-                  <Button className="max-w-[150px]">
-                    <Pencil className="mr-2 size-4" />
-                    {t('footer.editTrigger')}
+              {/* Booking Button with dialog */}
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Button disabled={isBookingLoading} type="button">
+                    {isBookingLoading ? (
+                      <Loader2 className="mr-2 size-4 animate-spin" />
+                    ) : (
+                      <Wand2 className="mr-2 size-4" />
+                    )}
+                    {isBookingLoading ? t('footer.loading') : t('footer.book')}
                   </Button>
-                </DialogTrigger>
-                <DialogContent className="max-[900px] w-[90%]">
-                  <DialogHeader className="px-2">
-                    <DialogTitle>{t('footer.editTitle')}</DialogTitle>
-                    <DialogDescription>{t('footer.editDesc')}</DialogDescription>
-                  </DialogHeader>
-                  <RoomForm
-                    hotel={hotel}
-                    room={room}
-                    handleToggleDialog={handleToggleRoomDialog}
-                    mutateHotel={mutateHotel}
-                  />
-                </DialogContent>
-              </Dialog>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>{t('footer.bookingDialogTitle')}</AlertDialogTitle>
+                    <AlertDialogDescription>{t('footer.bookingDialogDesc')}</AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>{t('footer.bookingDialogCancel')}</AlertDialogCancel>
+                    <AlertDialogAction onClick={handleBookingRoom}>{t('footer.bookingDialogAction')}</AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
             </div>
-          )
-        )}
-      </CardFooter>
+          ) : (
+            mutateHotel && (
+              <div className="flex w-full justify-between">
+                {/* Delete Button */}
+                <Button disabled={isLoading} type="button" variant="outline" onClick={handleDeleteRoom}>
+                  {isLoading ? (
+                    <>
+                      <Loader2 className="mr-2 size-4" />
+                      {t('footer.deleting')}
+                    </>
+                  ) : (
+                    <>
+                      <Trash className="mr-2 size-4" />
+                      {t('footer.delete')}
+                    </>
+                  )}
+                </Button>
+
+                {/* Edit Dialog */}
+                <Dialog open={roomDialogOpen} onOpenChange={setRoomDialogOpen}>
+                  <DialogTrigger asChild>
+                    <Button className="max-w-[150px]">
+                      <Pencil className="mr-2 size-4" />
+                      {t('footer.editTrigger')}
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="max-[900px] w-[90%]">
+                    <DialogHeader className="px-2">
+                      <DialogTitle>{t('footer.editTitle')}</DialogTitle>
+                      <DialogDescription>{t('footer.editDesc')}</DialogDescription>
+                    </DialogHeader>
+                    <RoomForm
+                      hotel={hotel}
+                      room={room}
+                      handleToggleDialog={handleToggleRoomDialog}
+                      mutateHotel={mutateHotel}
+                    />
+                  </DialogContent>
+                </Dialog>
+              </div>
+            )
+          )}
+        </CardFooter>
+      )}
     </Card>
   );
 }

@@ -1,8 +1,11 @@
+import { getCookie } from 'cookies-next';
 import { axiosPrivateInstance } from './instances/axios.instance';
+import { LocaleConfig } from '~/configs/locale.config';
 
 const bookingEndpoints = {
   create: '/bookings',
   list: '/bookings',
+  createVnpayPaymentURL: '/bookings/payment/vnpay',
 };
 
 export type CreateBookingDto = {
@@ -38,5 +41,16 @@ export type BookingSchema = {
 export const BookingApi = {
   async create(dto: CreateBookingDto) {
     return await axiosPrivateInstance.post<BookingSchema>(bookingEndpoints.create, dto);
+  },
+
+  async createVnpayPaymentUrl(bookingId: string) {
+    return await axiosPrivateInstance.post<{ status: 'success' | 'failure' | 'error'; data: string }>(
+      bookingEndpoints.createVnpayPaymentURL,
+      {
+        bookingId,
+        locale: getCookie('NEXT_LOCALE') ?? LocaleConfig.defaultLocale,
+        // bankCode: 'VNBANK',
+      },
+    );
   },
 };

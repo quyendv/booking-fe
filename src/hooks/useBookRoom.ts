@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { RoomSchema } from '~/apis/hotel.api';
+import { HotelSchema, RoomSchema } from '~/apis/hotel.api';
 import { persist } from 'zustand/middleware';
 
 interface BookingRoomData {
@@ -13,6 +13,7 @@ interface BookingRoomData {
 }
 
 type RoomDataType = {
+  hotel: HotelSchema;
   room: RoomSchema;
   totalPrice: number;
   breakfastIncluded: boolean;
