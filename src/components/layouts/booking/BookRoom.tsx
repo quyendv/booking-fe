@@ -9,6 +9,7 @@ import PaymentChannel from './PaymentChannel';
 import { Button } from '~/components/ui/button';
 import { useToast } from '~/components/ui/use-toast';
 import { BookingApi } from '~/apis/booking.api';
+import { useTranslations } from 'next-intl';
 
 interface BookRoomProps {}
 
@@ -16,6 +17,7 @@ export default function BookRoom({}: BookRoomProps) {
   const { bookingRoomData } = useBookRoom();
   const [channel, setChannel] = useState('vn_pay');
   const [isLoading, setIsLoading] = useState(false);
+  const t = useTranslations('BookRoom');
   const { toast } = useToast();
 
   async function handlePayment() {
@@ -25,7 +27,7 @@ export default function BookRoom({}: BookRoomProps) {
         const { isSuccess, data } = await BookingApi.createVnpayPaymentUrl(bookingRoomData.bookingId);
         if (isSuccess) {
           toast({
-            description: 'Redirecting to VNPay payment gateway ...',
+            description: t('toast.redirecting'),
             variant: 'success',
           });
           // window.open(data.data, '_blank');
@@ -33,14 +35,14 @@ export default function BookRoom({}: BookRoomProps) {
           // window.location.href = data.data;
         } else {
           toast({
-            description: 'Failed to redirect to VNPay payment gateway!',
+            description: t('toast.redirectFailed'),
             variant: 'destructive',
           });
         }
       } else {
         toast({
           // title: 'Payment Method',
-          description: 'This payment method is not available yet!',
+          description: t('toast.methodNotSupported'),
           variant: 'destructive',
         });
         setIsLoading(false);
@@ -48,7 +50,7 @@ export default function BookRoom({}: BookRoomProps) {
     } else {
       toast({
         // title: 'Booking Error',
-        description: 'No booking found!',
+        description: t('toast.noBooking'),
         variant: 'destructive',
       });
     }
@@ -58,7 +60,7 @@ export default function BookRoom({}: BookRoomProps) {
     <div className="mx-auto max-w-[700px]">
       {bookingRoomData ? (
         <>
-          <h3 className="mb-6 text-2xl font-semibold">Complete payment to reserve this room!</h3>
+          <h3 className="mb-6 text-2xl font-semibold">{t('title')}</h3>
           <div className="mb-6">
             <RoomCard room={bookingRoomData.room} hotel={bookingRoomData.hotel} isBookRoomPage />
           </div>
@@ -67,20 +69,22 @@ export default function BookRoom({}: BookRoomProps) {
 
           <div className="mt-8 flex flex-col gap-4">
             <div className="space-y-1">
-              <h3 className="mb-1 text-xl font-semibold">Your Booking Summary</h3>
-              <div>You will check-in on {format(bookingRoomData.startDate, 'yyyy-MM-dd')} at 5PM</div>
-              <div>You will check-out on {format(bookingRoomData.endDate, 'yyyy-MM-dd')} at 5PM</div>
-              {bookingRoomData.breakfastIncluded && <div>You will be served breakfast each day at 8PM</div>}
+              <h3 className="mb-1 text-xl font-semibold">{t('summary.heading')}</h3>
+              <div>{t('summary.checkIn', { date: format(bookingRoomData.startDate, 'yyyy-MM-dd') })}</div>
+              <div>{t('summary.checkOut', { date: format(bookingRoomData.endDate, 'yyyy-MM-dd') })}</div>
+              {bookingRoomData.breakfastIncluded && <div>{t('summary.breakfast')}</div>}
             </div>
-            <div className="text-lg font-bold">Total Price: {splitNumber(bookingRoomData.totalPrice)} VND</div>
+            <div className="text-lg font-bold">
+              {t('summary.total')}: {splitNumber(bookingRoomData.totalPrice)} VND
+            </div>
           </div>
 
           <Button onClick={handlePayment} disabled={isLoading} className="mt-4">
-            {isLoading ? 'Process Payment ...' : 'Pay Now'}
+            {isLoading ? t('summary.processPayment') : t('summary.payNow')}
           </Button>
         </>
       ) : (
-        <div>No Booking Found</div>
+        <div>{t('toast.noBooking')}</div>
       )}
     </div>
   );

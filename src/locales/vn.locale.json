@@ -290,5 +290,30 @@
       "bookingSuccess": "🎉 Đặt phòng thành công",
       "bookingFailure": "Đặt phòng thất bại!"
     }
+  },
+  "BookRoom": {
+    "toast": {
+      "redirecting": "Đang chuyển hướng đến cổng thanh toán...",
+      "redirectFailed": "Chuyển hướng đến cổng thanh toán thất bại!",
+      "methodNotSupported": "Phương thức thanh toán này chưa được hỗ trợ!",
+      "noBooking": "Không tìm thấy phòng đã đặt!"
+    },
+    "title": "Hoàn tất thanh toán đặt phòng này!",
+    "summary": {
+      "heading": "Thông tin chi tiết",
+      "checkIn": "Bạn sẽ nhận phòng vào ngày {date} lúc 9AM",
+      "checkOut": "Bạn sẽ trả phòng vào ngày {date} lúc 9AM",
+      "breakfast": "Bạn sẽ được phục vụ bữa sáng hàng ngày lúc 8AM",
+      "total": "Tổng giá",
+      "payNow": "Thanh toán ngay",
+      "processPayment": "Đang xử lý thanh toán..."
+    }
+  },
+  "PaymentResult": {
+    "success": "Thanh toán thành công",
+    "successDesc": "Cảm ơn bạn đã mua hàng!",
+    "failure": "Thanh toán thất bại",
+    "failureDesc": "Có lỗi xảy ra, vui lòng thử lại.",
+    "goHome": "Quay lại trang chủ"
   }
 }

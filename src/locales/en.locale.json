@@ -290,5 +290,30 @@
       "bookingSuccess": "🎉 Room booked successfully",
       "bookingFailure": "Room booking failed!"
     }
+  },
+  "BookRoom": {
+    "toast": {
+      "redirecting": "Redirecting to payment gateway ...",
+      "redirectFailed": "Failed to redirect to payment gateway!",
+      "methodNotSupported": "This payment method is not available yet!",
+      "noBooking": "No booking found!"
+    },
+    "title": "Complete payment to reserve this room!",
+    "summary": {
+      "heading": "Your Booking Summary",
+      "checkIn": "You will check-in on {date} at 9AM",
+      "checkOut": "You will check-out on {date} at 9AM",
+      "breakfast": "You will be served breakfast each day at 8AM",
+      "total": "Total Price",
+      "payNow": "Pay Now",
+      "processPayment": "Process Payment ..."
+    }
+  },
+  "PaymentResult": {
+    "success": "Payment successful",
+    "successDesc": "Thank you for your purchase!",
+    "failure": "Payment failed",
+    "failureDesc": "An error occurred, please try again.",
+    "goHome": "Go back to homepage"
   }
 }

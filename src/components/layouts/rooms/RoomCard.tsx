@@ -97,12 +97,13 @@ export default function RoomCard({
     const dates = roomBookings.flatMap((booking) =>
       eachDayOfInterval({ start: new Date(booking.startDate), end: new Date(booking.endDate) }),
     );
-    return dates; // NOTE: include duplicate dates
+    return dates; // NOTE: include duplicate dates // FIXME: can allow last end date
   }, [bookings, room.id]);
 
   useEffect(() => {
     if (date && date.from && date.to) {
-      const daysDiff = differenceInCalendarDays(date.to, date.from) + 1;
+      // const daysDiff = differenceInCalendarDays(date.to, date.from) + 1;
+      const daysDiff = differenceInCalendarDays(date.to, date.from);
       setDays(daysDiff);
       if (daysDiff && room.roomPrice) {
         if (includeBreakfast && room.breakFastPrice) {
