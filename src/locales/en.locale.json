@@ -287,6 +287,8 @@
       "loginRequired": "You need to sign in to book a room",
       "verifyRequired": "You need to verify your email to book a room",
       "dateRequired": "Please select a date",
+      "dateOverlapTitle": "Date Overlap!",
+      "dateOverlapDesc": "Oops! Some of the days you are trying to book have already been reserved. Please select different dates or rooms",
       "bookingSuccess": "🎉 Room booked successfully",
       "bookingFailure": "Room booking failed!"
     }

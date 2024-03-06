@@ -287,6 +287,8 @@
       "loginRequired": "Bạn cần đăng nhập để đặt phòng",
       "verifyRequired": "Bạn cần xác minh email để đặt phòng",
       "dateRequired": "Vui lòng chọn ngày",
+      "dateOverlapTitle": "Ngày không hợp lệ!",
+      "dateOverlapDesc": "Một số ngày đã được đặt trước. Vui lòng chọn lại ngày hoặc phòng khác",
       "bookingSuccess": "🎉 Đặt phòng thành công",
       "bookingFailure": "Đặt phòng thất bại!"
     }

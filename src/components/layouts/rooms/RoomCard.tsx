@@ -1,6 +1,6 @@
 'use client';
 
-import { differenceInCalendarDays, eachDayOfInterval, format } from 'date-fns';
+import { differenceInCalendarDays, eachDayOfInterval, format, isWithinInterval, startOfDay } from 'date-fns';
 import {
   AirVent,
   Bath,
@@ -61,6 +61,20 @@ import AmenityItem from '../amenities/AmenityItem';
 import { DatePickerWithRange } from './DateRangePicker';
 import RoomForm from './RoomForm';
 
+type DateRangeType = { startDate: Date; endDate: Date };
+function checkTimeRangeOverlap(startDate: Date, endDate: Date, dateRanges: DateRangeType[]): boolean {
+  const targetInterval = { start: startOfDay(startDate), end: startOfDay(endDate) };
+
+  return dateRanges.some((dateRange) => {
+    const interval = { start: startOfDay(dateRange.startDate), end: startOfDay(dateRange.endDate) };
+    return (
+      isWithinInterval(targetInterval.start, interval) ||
+      isWithinInterval(targetInterval.end, interval) ||
+      (targetInterval.start < interval.start && targetInterval.end > interval.end)
+    );
+  });
+}
+
 interface RoomCardProps {
   hotel: HotelSchema;
   room: RoomSchema;
@@ -92,13 +106,14 @@ export default function RoomCard({
   const [days, setDays] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
 
+  const roomBookings = useMemo(() => bookings.filter((b) => b.roomId === room.id), [bookings, room.id]);
   const disabledDates = useMemo(() => {
-    const roomBookings = bookings.filter((b) => b.roomId === room.id);
     const dates = roomBookings.flatMap((booking) =>
       eachDayOfInterval({ start: new Date(booking.startDate), end: new Date(booking.endDate) }),
     );
-    return dates; // NOTE: include duplicate dates // FIXME: can allow last end date
-  }, [bookings, room.id]);
+    // return dates;
+    return Array.from(new Set(dates)); // FIXME: can allow last end date
+  }, [roomBookings]);
 
   useEffect(() => {
     if (date && date.from && date.to) {
@@ -138,7 +153,6 @@ export default function RoomCard({
   }
 
   async function handleBookingRoom() {
-    // validate
     if (!user) {
       // push /login
       return toast({ variant: 'destructive', description: t('toast.loginRequired') });
@@ -149,12 +163,23 @@ export default function RoomCard({
     }
 
     if (date?.from && date.to) {
+      const isTimeRangeOverlap = checkTimeRangeOverlap(
+        date.from,
+        date.to,
+        roomBookings.map((b) => ({ startDate: new Date(b.startDate), endDate: new Date(b.endDate) })),
+      );
+      if (isTimeRangeOverlap) {
+        return toast({
+          variant: 'destructive',
+          title: t('toast.dateOverlapTitle'),
+          description: t('toast.dateOverlapDesc'),
+        });
+      }
+
       setIsBookingLoading(true);
       const bookingData: CreateBookingDto = {
         roomId: room.id,
         hotelId: hotel.id,
-        // startDate: date.from,
-        // endDate: date.to,
         startDate: format(date.from, 'yyyy-MM-dd'),
         endDate: format(date.to, 'yyyy-MM-dd'),
         breakFastIncluded: includeBreakfast,
