@@ -1,5 +1,4 @@
 import { axiosPrivateInstance } from './instances/axios.instance';
-import { FetchInstance, PrivateFetchInstance } from './instances/fetch.instance';
 
 const StorageApiEndpoint = {
   upload: '/storage/upload/single',

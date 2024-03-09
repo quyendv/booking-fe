@@ -1,14 +1,9 @@
-import { useTranslations } from 'next-intl';
-import { routeConfig } from '~/configs/route.config';
-import { useAuth } from '~/contexts/auth.context';
-import { ILink } from '~/locales/i18nNavigation';
+import { cn } from '~/utils/ui.util';
 import LocaleSwitcher from '../../common/LocaleSwitcher';
 import { ThemeToggle } from '../../common/ThemeToggle';
-import { buttonVariants } from '../../ui/button';
+import Container from '../Container';
 import Logo from './Logo';
 import { UserMenu } from './UserMenu';
-import { cn } from '~/utils/ui.util';
-import Container from '../Container';
 
 interface HeaderProps {
   showUserMenu?: boolean;

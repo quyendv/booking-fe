@@ -4,16 +4,15 @@ import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { KeyedMutator, mutate } from 'swr';
+import { KeyedMutator } from 'swr';
 import * as z from 'zod';
-import { HotelApi, HotelSchema, RoomSchema, hotelEndpoints } from '~/apis/hotel.api';
+import { HotelApi, HotelSchema, RoomSchema } from '~/apis/hotel.api';
 import { StorageApi } from '~/apis/storage.api';
 import { Button } from '~/components/ui/button';
 import { Checkbox } from '~/components/ui/checkbox';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '~/components/ui/form';
 import { Input } from '~/components/ui/input';
 import { useToast } from '~/components/ui/use-toast';
-import { useIRouter } from '~/locales/i18nNavigation';
 import UploadFile from '../form/UploadFile';
 
 interface RoomFormProps {
@@ -26,7 +25,7 @@ interface RoomFormProps {
 function RoomForm({ hotel, room, handleToggleDialog, mutateHotel }: RoomFormProps) {
   const t = useTranslations();
   const { toast } = useToast();
-  const router = useIRouter();
+  // const router = useIRouter();
 
   const gallerySchema = z.object({
     url: z.string().url({ message: t('HotelForm.error.galleryUrl') }),
@@ -106,7 +105,7 @@ function RoomForm({ hotel, room, handleToggleDialog, mutateHotel }: RoomFormProp
       });
       form.setValue('imageKey', preview.key ?? undefined);
     }
-  }, [preview]);
+  }, [form, preview]);
 
   useEffect(() => {
     if (+form.watch('kingBed') + +form.watch('queenBed') > +form.watch('bedCount')) {
@@ -114,7 +113,7 @@ function RoomForm({ hotel, room, handleToggleDialog, mutateHotel }: RoomFormProp
     } else {
       form.clearErrors('bedCount');
     }
-  }, [form.watch('bedCount'), form.watch('kingBed'), form.watch('queenBed')]);
+  }, [t, form.watch('bedCount'), form.watch('kingBed'), form.watch('queenBed')]);
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
@@ -327,7 +326,7 @@ function RoomForm({ hotel, room, handleToggleDialog, mutateHotel }: RoomFormProp
           <FormField
             control={form.control}
             name="imageUrl"
-            render={({ field }) => (
+            render={({ field: _field }) => (
               <FormItem className="flex flex-col space-y-3">
                 <FormLabel>{t('RoomForm.label.image')}</FormLabel>
                 <FormDescription>{t('RoomForm.desc.image')}</FormDescription>

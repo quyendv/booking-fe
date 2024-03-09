@@ -1,7 +1,9 @@
 'use client';
 
-import { Dumbbell, MapPin, Waves } from 'lucide-react';
+import { Dumbbell, MapPin } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import Image from 'next/image';
+import { FaSwimmer } from 'react-icons/fa';
 import { HotelSchema } from '~/apis/hotel.api';
 import { Button } from '~/components/ui/button';
 import { routeConfig } from '~/configs/route.config';
@@ -9,8 +11,6 @@ import { useIPathname, useIRouter } from '~/locales/i18nNavigation';
 import { convertPriceToString } from '~/utils/common.util';
 import { cn } from '~/utils/ui.util';
 import AmenityItem from '../amenities/AmenityItem';
-import { useTranslations } from 'next-intl';
-import { FaSwimmer } from 'react-icons/fa';
 
 interface HotelCardProps {
   hotel: HotelSchema;

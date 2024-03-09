@@ -1,7 +1,6 @@
-import useSWRImmutable from 'swr/immutable';
-import { axiosPrivateInstance, axiosPublicInstance } from './instances/axios.instance';
-import { FetchInstance, PrivateFetchInstance } from './instances/fetch.instance';
 import { BookingSchema } from './booking.api';
+import { axiosPrivateInstance } from './instances/axios.instance';
+import { FetchInstance, PrivateFetchInstance } from './instances/fetch.instance';
 
 export type AddressSchema = {
   id: number;

@@ -6,8 +6,8 @@ interface BookingRoomData {
   bookingRoomData: RoomDataType | null;
   paymentIntentId: string | null;
   // clientSecret: string | undefined;
-  setBookingRoomData: (data: RoomDataType) => void;
-  setPaymentIntentId: (paymentIntent: string) => void;
+  setBookingRoomData: (_data: RoomDataType) => void;
+  setPaymentIntentId: (_paymentIntent: string) => void;
   // setClientSecret: (clientSecret: string) => void;
   resetBookingRoom: () => void;
 }

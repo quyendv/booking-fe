@@ -2,6 +2,7 @@
 
 import { CheckCircle, XCircle } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import { useEffect } from 'react';
 import useBookRoom from '~/hooks/useBookRoom';
 
 interface PaymentResultPageProps {
@@ -13,11 +14,16 @@ interface PaymentResultPageProps {
 
 export default function PaymentResultPage({ searchParams }: PaymentResultPageProps) {
   const { resetBookingRoom } = useBookRoom();
-  if (searchParams.code === '00') {
-    resetBookingRoom();
-    // toast, redirect, etc.
-  }
+
+  useEffect(() => {
+    if (searchParams.code === '00') {
+      resetBookingRoom();
+      // toast, redirect, etc.
+    }
+  }, [searchParams.code]);
+
   const isSuccess = searchParams.channel === 'vn_pay' && searchParams.code === '00';
+
   const t = useTranslations('PaymentResult');
 
   return (

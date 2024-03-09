@@ -1,4 +1,4 @@
-import { AxiosInstance, axiosPrivateInstance, axiosPublicInstance } from './instances/axios.instance';
+import { axiosPrivateInstance } from './instances/axios.instance';
 
 const LocationEndpoint = {
   vnProvinces: '/addresses/provinces/vn',

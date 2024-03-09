@@ -11,8 +11,8 @@ export interface StorageResult {
 
 interface Props {
   folder?: string;
-  onUploadComplete?: (file: StorageResult) => void;
-  onUploadError?: (error: any) => void;
+  onUploadComplete?: (_file: StorageResult) => void;
+  onUploadError?: (_error: any) => void;
 }
 
 const UploadFile = ({ folder = 'default', onUploadComplete, onUploadError }: Props) => {
@@ -47,13 +47,11 @@ const UploadFile = ({ folder = 'default', onUploadComplete, onUploadError }: Pro
       setLoading(true);
       if (uploadResult) {
         // delete old file
-        const deleteResponse = await StorageApi.deleteFile(uploadResult.key);
-        console.log({ deleteResponse });
+        await StorageApi.deleteFile(uploadResult.key);
       }
 
       // upload new file
       const uploadResponse = await StorageApi.uploadFile(selectedFile, folder);
-      console.log(uploadResponse);
       if (uploadResponse.isSuccess) {
         setUploadResult(uploadResponse.data);
         if (onUploadComplete) onUploadComplete(uploadResponse.data);

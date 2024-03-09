@@ -131,7 +131,7 @@ export default function RoomCard({
       setDays(0);
       setTotalPrice(0);
     }
-  }, [date, room.roomPrice, includeBreakfast]);
+  }, [date, room.roomPrice, room.breakFastPrice, includeBreakfast]);
 
   function handleToggleRoomDialog() {
     setRoomDialogOpen((prev) => !prev);

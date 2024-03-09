@@ -12,13 +12,12 @@ import {
 import { PersonIcon } from '@radix-ui/react-icons';
 import { Heart, HotelIcon, LayoutDashboardIcon, LogOutIcon, Luggage, UsersIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import Image from 'next/image';
+import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar';
 import { buttonVariants } from '~/components/ui/button';
 import { UserRole } from '~/configs/role.config';
 import { routeConfig } from '~/configs/route.config';
 import { useAuth } from '~/contexts/auth.context';
 import { ILink } from '~/locales/i18nNavigation';
-import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar';
 
 const customerMenuItems = [
   { label: 'manageAccount', href: routeConfig.MANAGE_ACCOUNT, icon: PersonIcon },

@@ -6,8 +6,9 @@ import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { KeyedMutator } from 'swr';
 import * as z from 'zod';
-import { HotelApi, HotelSchema } from '~/apis/hotel.api';
+import { HotelApi, HotelSchema, HotelSchemaWithBookings } from '~/apis/hotel.api';
 import { StorageApi } from '~/apis/storage.api';
 import { Alert, AlertDescription, AlertTitle } from '~/components/ui/alert';
 import { Button, buttonVariants } from '~/components/ui/button';
@@ -25,20 +26,22 @@ import { Input } from '~/components/ui/input';
 import { Separator } from '~/components/ui/separator';
 import { Textarea } from '~/components/ui/textarea';
 import { useToast } from '~/components/ui/use-toast';
+import { UserRole } from '~/configs/role.config';
 import { routeConfig } from '~/configs/route.config';
+import { useAuth } from '~/contexts/auth.context';
 import { ILink, useIRouter } from '~/locales/i18nNavigation';
 import UploadFile from '../form/UploadFile';
 import RoomCard from '../rooms/RoomCard';
 import RoomForm from '../rooms/RoomForm';
-import { KeyedMutator } from 'swr';
 
 interface HotelFormProps {
   hotel?: HotelSchema;
-  mutateHotel?: KeyedMutator<HotelSchema>;
+  mutateHotel?: KeyedMutator<HotelSchema | HotelSchemaWithBookings>;
 }
 
 export default function HotelForm({ hotel, mutateHotel }: HotelFormProps) {
   const t = useTranslations();
+  const { user } = useAuth();
   const { toast } = useToast();
   const router = useIRouter();
 
@@ -128,7 +131,7 @@ export default function HotelForm({ hotel, mutateHotel }: HotelFormProps) {
       });
       form.setValue('imageKey', preview.key ?? undefined);
     }
-  }, [preview]);
+  }, [form, preview]);
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
@@ -163,7 +166,10 @@ export default function HotelForm({ hotel, mutateHotel }: HotelFormProps) {
       if (isSuccess) {
         toast({ variant: 'success', description: t('HotelForm.toast.createSuccess') });
         setIsLoading(false);
-        router.push(routeConfig.MANAGE_HOTELS(data.id));
+        if (user) {
+          if (user.role === UserRole.ADMIN) router.push(routeConfig.MANAGE_HOTEL_DETAILS(data.id));
+          if (user.role === UserRole.HOTEL) router.push(routeConfig.MY_HOTEL);
+        }
       } else {
         toast({ variant: 'destructive', description: t('HotelForm.toast.createFailure') });
         setIsLoading(false);
@@ -371,7 +377,7 @@ export default function HotelForm({ hotel, mutateHotel }: HotelFormProps) {
               <FormField
                 control={form.control}
                 name="imageUrl"
-                render={({ field }) => (
+                render={({ field: _field }) => (
                   <FormItem className="flex flex-col space-y-3">
                     <FormLabel>{t('HotelForm.label.image')}</FormLabel>
                     <FormDescription>{t('HotelForm.desc.image')}</FormDescription>
@@ -538,10 +544,7 @@ export default function HotelForm({ hotel, mutateHotel }: HotelFormProps) {
 
                 {/* View Details */}
                 {hotel && (
-                  <ILink
-                    className={buttonVariants({ variant: 'outline' })}
-                    href={routeConfig.SYSTEM_HOTEL_DETAILS(hotel.id)}
-                  >
+                  <ILink className={buttonVariants({ variant: 'outline' })} href={routeConfig.HOTEL_DETAILS(hotel.id)}>
                     <Eye className="mr-2 size-4" />
                     View
                   </ILink>
@@ -561,7 +564,11 @@ export default function HotelForm({ hotel, mutateHotel }: HotelFormProps) {
                         <DialogTitle>{t('HotelForm.dialog.title')}</DialogTitle>
                         <DialogDescription>{t('HotelForm.dialog.desc')}</DialogDescription>
                       </DialogHeader>
-                      <RoomForm hotel={hotel} handleToggleDialog={handleToggleDialog} mutateHotel={mutateHotel} />
+                      <RoomForm
+                        hotel={hotel}
+                        handleToggleDialog={handleToggleDialog}
+                        mutateHotel={mutateHotel as any}
+                      />
                     </DialogContent>
                   </Dialog>
                 )}
@@ -574,7 +581,7 @@ export default function HotelForm({ hotel, mutateHotel }: HotelFormProps) {
                   <h3 className="my-4 text-lg font-semibold">Hotel Rooms</h3>
                   <div className="grid grid-cols-1 gap-6 2xl:grid-cols-2">
                     {hotel.rooms.map((room, index) => (
-                      <RoomCard key={index} room={room} hotel={hotel} mutateHotel={mutateHotel} />
+                      <RoomCard key={index} room={room} hotel={hotel} mutateHotel={mutateHotel as any} />
                     ))}
                   </div>
                 </div>
