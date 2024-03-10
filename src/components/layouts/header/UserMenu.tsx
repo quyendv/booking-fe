@@ -21,7 +21,7 @@ import { ILink } from '~/locales/i18nNavigation';
 
 const customerMenuItems = [
   { label: 'manageAccount', href: routeConfig.MANAGE_ACCOUNT, icon: PersonIcon },
-  { label: 'myBookings', href: routeConfig.MY_BOOKING, icon: Luggage },
+  { label: 'myBookings', href: routeConfig.MY_BOOKINGS, icon: Luggage },
   { label: 'saved', href: routeConfig.SAVED, icon: Heart },
 ];
 

@@ -169,6 +169,9 @@
       "coffeeShop": "Quán cà phê"
     }
   },
+  "MyBookings": {
+    "title": "Dưới đây là các đặt phòng bạn đã đặt"
+  },
   "RoomForm": {
     "error": {
       "title": "Tiêu đề phải có ít nhất 3 ký tự",
@@ -260,6 +263,17 @@
       "hour": "24 giờ",
       "breakFast": "Giá bữa sáng"
     },
+    "bookingDetails": {
+      "title": "Chi tiết đặt phòng",
+      "desc": "Phòng được đặt bởi <bold>{customer}</bold> trong {dayCount} ngày vào {date}",
+      "checkIn": "Check-in: {date} vào lúc {hour}",
+      "checkOut": "Check-out: {date} vào lúc {hour}",
+      "breakfast": "Bữa sáng sẽ được phục vụ",
+      "paid": "Đã thanh toán {price} VND - Phòng đã đặt",
+      "notPaid": "Chưa thanh toán {price} VND - Phòng chưa đặt",
+      "viewHotel": "Xem khách sạn",
+      "payNow": "Thanh toán ngay"
+    },
     "footer": {
       "selectDateDesc": "Chọn thời gian bạn sẽ ở phòng này",
       "selectDateTitle": "Chọn ngày",
@@ -303,9 +317,9 @@
     "title": "Hoàn tất thanh toán đặt phòng này!",
     "summary": {
       "heading": "Thông tin chi tiết",
-      "checkIn": "Bạn sẽ nhận phòng vào ngày {date} lúc 9AM",
-      "checkOut": "Bạn sẽ trả phòng vào ngày {date} lúc 9AM",
-      "breakfast": "Bạn sẽ được phục vụ bữa sáng hàng ngày lúc 8AM",
+      "checkIn": "Bạn sẽ nhận phòng vào ngày {date} lúc {hour}",
+      "checkOut": "Bạn sẽ trả phòng vào ngày {date} lúc {hour}",
+      "breakfast": "Bạn sẽ được phục vụ bữa sáng hàng ngày lúc {hour}",
       "total": "Tổng giá",
       "payNow": "Thanh toán ngay",
       "processPayment": "Đang xử lý thanh toán..."

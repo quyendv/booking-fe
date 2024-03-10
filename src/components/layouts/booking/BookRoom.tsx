@@ -70,9 +70,9 @@ export default function BookRoom({}: BookRoomProps) {
           <div className="mt-8 flex flex-col gap-4">
             <div className="space-y-1">
               <h3 className="mb-1 text-xl font-semibold">{t('summary.heading')}</h3>
-              <div>{t('summary.checkIn', { date: format(bookingRoomData.startDate, 'yyyy-MM-dd') })}</div>
-              <div>{t('summary.checkOut', { date: format(bookingRoomData.endDate, 'yyyy-MM-dd') })}</div>
-              {bookingRoomData.breakfastIncluded && <div>{t('summary.breakfast')}</div>}
+              <div>{t('summary.checkIn', { date: format(bookingRoomData.startDate, 'yyyy-MM-dd'), hour: '9AM' })}</div>
+              <div>{t('summary.checkOut', { date: format(bookingRoomData.endDate, 'yyyy-MM-dd'), hour: '9AM' })}</div>
+              {bookingRoomData.breakfastIncluded && <div>{t('summary.breakfast', { hour: '8AM' })}</div>}
             </div>
             <div className="text-lg font-bold">
               {t('summary.total')}: {splitNumber(bookingRoomData.totalPrice)} VND

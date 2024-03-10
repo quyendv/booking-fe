@@ -1,10 +1,11 @@
 import { getCookie } from 'cookies-next';
-import { axiosPrivateInstance } from './instances/axios.instance';
 import { LocaleConfig } from '~/configs/locale.config';
+import { HotelSchema, RoomSchema } from './hotel.api';
+import { axiosPrivateInstance } from './instances/axios.instance';
 
-const bookingEndpoints = {
+export const bookingEndpoints = {
   create: '/bookings',
-  list: '/bookings',
+  myBookings: '/bookings',
   createVnpayPaymentURL: '/bookings/payment/vnpay',
 };
 
@@ -38,6 +39,11 @@ export type BookingSchema = {
   hotelId: number;
 };
 
+export type BookingDetails = BookingSchema & {
+  room: RoomSchema;
+  hotel: HotelSchema;
+};
+
 export const BookingApi = {
   async create(dto: CreateBookingDto) {
     return await axiosPrivateInstance.post<BookingSchema>(bookingEndpoints.create, dto);
@@ -52,5 +58,9 @@ export const BookingApi = {
         // bankCode: 'VNBANK',
       },
     );
+  },
+
+  async listMyBookings() {
+    return await axiosPrivateInstance.get<BookingSchema[]>(bookingEndpoints.myBookings);
   },
 };

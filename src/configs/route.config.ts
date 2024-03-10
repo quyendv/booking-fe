@@ -12,7 +12,7 @@ export const routeConfig = {
 
   // Customer
   MANAGE_ACCOUNT: '/personal',
-  MY_BOOKING: '/my-booking',
+  MY_BOOKINGS: '/my-bookings',
   MY_TRIPS: '/my-trips',
   SAVED: '/saved',
 
