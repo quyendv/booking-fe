@@ -76,17 +76,18 @@ export default function MyBookingCard({ booking }: MyBookingCardProps) {
     <Card className="h-fit">
       <CardHeader>
         <CardTitle>{hotel.name}</CardTitle>
-        <CardDescription>
-          <p className="mt-4 font-semibold">
+        <div className="text-sm text-muted-foreground">
+          <div className="mt-4 font-semibold">
             <AmenityItem>
               <MapPin size={16} />
               {hotel.address.country}, {hotel.address.province}
               {hotel.address.district ? ', ' + hotel.address.district : ''}
               {hotel.address.ward ? ', ' + hotel.address.ward : ''}
             </AmenityItem>
-          </p>
+          </div>
           <p className="pb-2">{hotel.address.details}</p>
-        </CardDescription>
+        </div>
+
         <CardTitle>{room.title}</CardTitle>
         <CardDescription>{room.description}</CardDescription>
       </CardHeader>
@@ -206,7 +207,7 @@ export default function MyBookingCard({ booking }: MyBookingCardProps) {
         {/* Booking Details */}
         <div className="flex flex-col gap-2">
           <CardTitle className="text-lg">{t('bookingDetails.title')}</CardTitle>
-          <CardDescription className="space-y-1.5">
+          <div className="space-y-1.5 text-sm text-muted-foreground">
             <p>
               {t.rich('bookingDetails.desc', {
                 customer: booking.customerName,
@@ -233,7 +234,7 @@ export default function MyBookingCard({ booking }: MyBookingCardProps) {
                 {t('bookingDetails.notPaid', { price: convertPriceToString(booking.totalPrice) })}
               </p>
             )}
-          </CardDescription>
+          </div>
         </div>
       </CardContent>
       <CardFooter className="items-center justify-between">

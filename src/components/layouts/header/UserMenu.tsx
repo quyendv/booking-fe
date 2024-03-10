@@ -32,7 +32,10 @@ const adminMenuItems = [
   // { label: 'manageRooms', href: routeConfig.MANAGE_ROOMS, icon: Luggage },
 ];
 
-const hotelMenuItems = [{ label: 'myHotel', href: routeConfig.MY_HOTEL, icon: HotelIcon }];
+const hotelMenuItems = [
+  { label: 'myHotel', href: routeConfig.MY_HOTEL, icon: HotelIcon },
+  { label: 'customerBookings', href: routeConfig.MY_BOOKINGS, icon: Luggage },
+];
 
 interface UserMenuProps {}
 

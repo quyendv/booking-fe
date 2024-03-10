@@ -12,6 +12,7 @@
     "manageCustomers": "Manage Customers",
     "manageHotels": "Manage Hotels",
     "myHotel": "My Hotel",
+    "customerBookings": "Customer Bookings",
     "signIn": "Sign In",
     "signUp": "Sign Up",
     "signOut": "Sign out"
@@ -170,7 +171,7 @@
     }
   },
   "MyBookings": {
-    "title": "Here are bookings you have made"
+    "title": "Here are bookings {role, select, hotel {visitors} customer {you} other {visitors}} have made"
   },
   "RoomForm": {
     "error": {

@@ -12,6 +12,7 @@
     "manageCustomers": "Quản lý khách hàng",
     "manageHotels": "Quản lý khách sạn",
     "myHotel": "Khách sạn của tôi",
+    "customerBookings": "Đặt chỗ của khách hàng",
     "signIn": "Đăng nhập",
     "signUp": "Đăng ký",
     "signOut": "Đăng xuất"
@@ -170,7 +171,7 @@
     }
   },
   "MyBookings": {
-    "title": "Dưới đây là các đặt phòng bạn đã đặt"
+    "title": "Đây là các đặt phòng mà {role, select, hotel {khách tham quan} customer {bạn} other {khách tham quan}} đã đặt"
   },
   "RoomForm": {
     "error": {
