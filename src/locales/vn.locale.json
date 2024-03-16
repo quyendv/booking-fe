@@ -171,7 +171,29 @@
     }
   },
   "MyBookings": {
-    "title": "Đây là các đặt phòng mà {role, select, hotel {khách tham quan} customer {bạn} other {khách tham quan}} đã đặt"
+    "title": "Đây là các đặt phòng mà {role, select, hotel {khách tham quan} customer {bạn} other {khách tham quan}} đã đặt",
+    "card": {
+      "toast": {
+        "statusChanged": "Trạng thái đặt phòng đã thay đổi",
+        "statusChangeFailed": "Thay đổi trạng thái đặt phòng thất bại!"
+      },
+      "status": {
+        "booked": "Đã đặt",
+        "checked_in": "Đã nhận phòng",
+        "checked_out": "Đã trả phòng",
+        "completed": "Hoàn thành"
+      },
+      "button": {
+        "rate": "Đánh giá",
+        "seeReview": "Xem đánh giá"
+      },
+      "confirm": {
+        "title": "Bạn có chắc chắn muốn thay đổi trạng thái đặt phòng?",
+        "desc": "Hành động này không thể hoàn tác. Vui lòng xác nhận nếu bạn muốn tiếp tục.",
+        "action": "Tiếp tục",
+        "cancel": "Hủy"
+      }
+    }
   },
   "RoomForm": {
     "error": {

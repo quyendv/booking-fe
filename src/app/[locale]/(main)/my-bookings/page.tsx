@@ -9,12 +9,11 @@ interface MyBookingsPageProps {}
 
 export default function MyBookingsPage({}: MyBookingsPageProps) {
   const t = useTranslations('MyBookings');
+
   const { user } = useAuth();
-  // if (!user) return <div>Not authenticated </div>;
-
   const { isLoading, data, error } = useMyBookings();
-  // TODO: get hotel bookings... (9h50)
 
+  if (!user) return <div>Not authenticated </div>;
   if (isLoading) return <div>Loading...</div>;
   if (error || !data) return <div>Error</div>;
 

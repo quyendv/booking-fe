@@ -7,7 +7,17 @@ export const bookingEndpoints = {
   create: '/bookings',
   myBookings: '/bookings',
   createVnpayPaymentURL: '/bookings/payment/vnpay',
+  updateBooking: (id: string) => `/bookings/${id}`,
 };
+
+export enum BookingStatus {
+  PENDING = 'pending',
+  BOOKED = 'booked',
+  CHECKED_IN = 'checked_in',
+  CHECKED_OUT = 'checked_out',
+  // COMPLETED = 'completed',
+  REVIEWED = 'reviewed',
+}
 
 export type CreateBookingDto = {
   roomId: number;
@@ -18,6 +28,10 @@ export type CreateBookingDto = {
   totalPrice: number;
   currency?: 'VND';
   paymentChannel?: 'vn_pay';
+};
+
+export type UpdateBookingDto = {
+  status?: BookingStatus;
 };
 
 export type BookingSchema = {
@@ -34,6 +48,7 @@ export type BookingSchema = {
   paymentChannel: 'vn_pay';
   paymentId: string; // Payment gateway's payment id
   paymentInfo: any;
+  status: BookingStatus;
   createdAt: string;
   roomId: number;
   hotelId: number;
@@ -62,5 +77,12 @@ export const BookingApi = {
 
   async listMyBookings() {
     return await axiosPrivateInstance.get<BookingSchema[]>(bookingEndpoints.myBookings);
+  },
+
+  async updateBooking(bookingId: string, dto: UpdateBookingDto) {
+    return await axiosPrivateInstance.patch<{ status: string; message: string }>(
+      bookingEndpoints.updateBooking(bookingId),
+      dto,
+    );
   },
 };

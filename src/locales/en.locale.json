@@ -171,7 +171,29 @@
     }
   },
   "MyBookings": {
-    "title": "Here are bookings {role, select, hotel {visitors} customer {you} other {visitors}} have made"
+    "title": "Here are bookings {role, select, hotel {visitors} customer {you} other {visitors}} have made",
+    "card": {
+      "toast": {
+        "statusChanged": "Booking status changed",
+        "statusChangeFailed": "Change booking status failed!"
+      },
+      "button": {
+        "rate": "Rate",
+        "seeReview": "See Review"
+      },
+      "status": {
+        "booked": "Booked",
+        "checked_in": "Checked In",
+        "checked_out": "Checked Out",
+        "completed": "Completed"
+      },
+      "confirm": {
+        "title": "Are you sure you want to change the booking status?",
+        "desc": "This action cannot be undone. Please confirm if you want to proceed.",
+        "action": "Continue",
+        "cancel": "Cancel"
+      }
+    }
   },
   "RoomForm": {
     "error": {
