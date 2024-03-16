@@ -31,6 +31,7 @@ import { useIRouter } from '~/locales/i18nNavigation';
 import { convertPriceToString, splitNumber } from '~/utils/common.util';
 import AmenityItem from '../amenities/AmenityItem';
 import ChangeBookingStatus from './ChangeBookingStatus';
+import ReviewModal from './ReviewModal';
 
 interface MyBookingCardProps {
   booking: BookingDetails;
@@ -263,13 +264,17 @@ export default function MyBookingCard({ booking }: MyBookingCardProps) {
         >
           {t('RoomCard.bookingDetails.viewHotel')}
         </Button>
-
         {!booking.isPaid && booking.customerEmail === user?.email && (
           <Button onClick={handleBookingRoom}>{t('RoomCard.bookingDetails.payNow')}</Button>
         )}
-
         {bookingStatus === BookingStatus.CHECKED_OUT ? (
-          <Button>{t('MyBookings.card.button.rate')}</Button>
+          <ReviewModal
+            bookingId={booking.id}
+            title={t('MyBookings.card.rate.title')}
+            description={t.rich('MyBookings.card.rate.desc', { hotelName: hotel.name, bold: (text) => <b>{text}</b> })}
+            buttonLabel={t('MyBookings.card.button.rate')}
+            onReviewSubmit={() => setBookingStatus(BookingStatus.REVIEWED)}
+          />
         ) : bookingStatus === BookingStatus.REVIEWED ? (
           <Button>{t('MyBookings.card.button.seeReview')}</Button>
         ) : (

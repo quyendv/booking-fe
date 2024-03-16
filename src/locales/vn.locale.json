@@ -192,6 +192,10 @@
         "desc": "Hành động này không thể hoàn tác. Vui lòng xác nhận nếu bạn muốn tiếp tục.",
         "action": "Tiếp tục",
         "cancel": "Hủy"
+      },
+      "rate": {
+        "title": "Đánh giá chuyến đi của bạn",
+        "desc": "Chia sẻ về trải nghiệm của bạn tại <bold>{hotelName}</bold> và giúp du khách khác có lựa chọn tốt hơn."
       }
     }
   },
@@ -354,5 +358,37 @@
     "failure": "Thanh toán thất bại",
     "failureDesc": "Có lỗi xảy ra, vui lòng thử lại.",
     "goHome": "Quay lại trang chủ"
+  },
+  "Review": {
+    "form": {
+      "ratingRequired": "Vui lòng đánh giá",
+      "commentRequired": "Vui lòng viết đánh giá",
+      "staff": "Nhân viên",
+      "facility": "Tiện nghi",
+      "comfort": "Thoải mái",
+      "cleanliness": "Vệ sinh",
+      "valueForMoney": "Đáng tiền",
+      "location": "Vị trí",
+      "comment": "Bình luận",
+      "commentPlaceholder": "Chia sẻ trải nghiệm của bạn",
+      "submit": "Gửi",
+      "cancel": "Đóng"
+    },
+    "toast": {
+      "success": "🎉 Đánh giá đã được gửi thành công",
+      "failure": "Gửi đánh giá thất bại!"
+    },
+    "rateDesc": {
+      "useless": "Không hữu ích",
+      "useless+": "Không hữu ích+",
+      "poor": "Kém",
+      "poor+": "Kém+",
+      "ok": "Trung bình",
+      "ok+": "Trung bình+",
+      "good": "Rất tốt",
+      "good+": "Rất tốt+",
+      "excellent": "Xuất sắc",
+      "excellent+": "Xuất sắc+"
+    }
   }
 }

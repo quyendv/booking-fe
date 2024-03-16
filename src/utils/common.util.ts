@@ -11,3 +11,8 @@ export function convertPriceToString(price: number): string {
     return price.toString();
   }
 }
+
+export function roundToNDecimal(value: number, decimal = 2, toFixed = true): number {
+  const result = Math.round(value * 10 ** decimal) / 10 ** decimal;
+  return toFixed ? +result.toFixed(decimal) : result;
+}

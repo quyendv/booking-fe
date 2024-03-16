@@ -192,6 +192,10 @@
         "desc": "This action cannot be undone. Please confirm if you want to proceed.",
         "action": "Continue",
         "cancel": "Cancel"
+      },
+      "rate": {
+        "title": "Rating your trips",
+        "desc": "Tell us about your experience at <bold>{hotelName}</bold> and help other travelers make a better choice."
       }
     }
   },
@@ -353,5 +357,37 @@
     "failure": "Payment failed",
     "failureDesc": "An error occurred, please try again.",
     "goHome": "Go back to homepage"
+  },
+  "Review": {
+    "form": {
+      "ratingRequired": "Rating is required",
+      "commentRequired": "Review is required",
+      "staff": "Staff",
+      "facility": "Facilities",
+      "comfort": "Comfort",
+      "cleanliness": "Cleanliness",
+      "valueForMoney": "Value for Money",
+      "location": "Location",
+      "comment": "Comment",
+      "commentPlaceholder": "Tell us about your experience",
+      "submit": "Submit",
+      "cancel": "Close"
+    },
+    "toast": {
+      "success": "🎉 Review submitted successfully",
+      "failure": "Review submission failed!"
+    },
+    "rateDesc": {
+      "useless": "Useless",
+      "useless+": "Useless+",
+      "poor": "Poor",
+      "poor+": "Poor+",
+      "ok": "Ok",
+      "ok+": "Ok+",
+      "good": "Good",
+      "good+": "Good+",
+      "excellent": "Excellent",
+      "excellent+": "Excellent+"
+    }
   }
 }

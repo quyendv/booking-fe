@@ -113,7 +113,7 @@ function RoomForm({ hotel, room, handleToggleDialog, mutateHotel }: RoomFormProp
     } else {
       form.clearErrors('bedCount');
     }
-  }, [t, form.watch('bedCount'), form.watch('kingBed'), form.watch('queenBed')]);
+  }, [t, form, form.watch('bedCount'), form.watch('kingBed'), form.watch('queenBed')]);
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);

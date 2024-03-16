@@ -20,7 +20,7 @@ export default function PaymentResultPage({ searchParams }: PaymentResultPagePro
       resetBookingRoom();
       // toast, redirect, etc.
     }
-  }, [searchParams.code]);
+  }, [searchParams.code, resetBookingRoom]);
 
   const isSuccess = searchParams.channel === 'vn_pay' && searchParams.code === '00';
 
