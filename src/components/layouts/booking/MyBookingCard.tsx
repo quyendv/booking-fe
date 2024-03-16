@@ -43,7 +43,7 @@ export default function MyBookingCard({ booking }: MyBookingCardProps) {
   const [isBookingLoading, setIsBookingLoading] = useState(false);
   const [bookingStatus, setBookingStatus] = useState(booking.status);
 
-  const { hotel, room } = booking;
+  const { hotel, room, review } = booking;
   const dayCount = differenceInCalendarDays(new Date(booking.endDate), new Date(booking.startDate));
 
   const t = useTranslations();
@@ -276,7 +276,14 @@ export default function MyBookingCard({ booking }: MyBookingCardProps) {
             onReviewSubmit={() => setBookingStatus(BookingStatus.REVIEWED)}
           />
         ) : bookingStatus === BookingStatus.REVIEWED ? (
-          <Button>{t('MyBookings.card.button.seeReview')}</Button>
+          review && (
+            <ReviewModal
+              title={t('MyBookings.card.seeRate.title')}
+              description={t('MyBookings.card.seeRate.desc')}
+              buttonLabel={t('MyBookings.card.button.seeReview')}
+              review={review}
+            />
+          )
         ) : (
           booking.isPaid && (
             <ChangeBookingStatus currentStatus={bookingStatus} t={t} onStatusChange={handleChangeBookingStatus} />

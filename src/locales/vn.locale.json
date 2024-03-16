@@ -196,6 +196,10 @@
       "rate": {
         "title": "Đánh giá chuyến đi của bạn",
         "desc": "Chia sẻ về trải nghiệm của bạn tại <bold>{hotelName}</bold> và giúp du khách khác có lựa chọn tốt hơn."
+      },
+      "seeRate": {
+        "title": "Chi tiết đánh giá",
+        "desc": "Xem đánh giá và bình luận của chuyến đi này"
       }
     }
   },
@@ -376,7 +380,8 @@
     },
     "toast": {
       "success": "🎉 Đánh giá đã được gửi thành công",
-      "failure": "Gửi đánh giá thất bại!"
+      "failure": "Gửi đánh giá thất bại!",
+      "missingParams": "Thiếu hotelId hoặc bookingId"
     },
     "rateDesc": {
       "useless": "Không hữu ích",

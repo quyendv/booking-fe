@@ -3,7 +3,7 @@ import { useTranslations } from 'next-intl';
 import { ReactElement, ReactNode, useEffect, useState } from 'react';
 import { UseFormReturn, useForm } from 'react-hook-form';
 import * as z from 'zod';
-import { ReviewApi } from '~/apis/review.api';
+import { ReviewApi, ReviewSchema } from '~/apis/review.api';
 import { Button } from '~/components/ui/button';
 import {
   Dialog,
@@ -26,8 +26,9 @@ interface ReviewModelProps {
   title: string;
   description: string | ReactElement | readonly ReactNode[];
   buttonLabel: string;
-  bookingId: string;
-  onReviewSubmit: () => void;
+  bookingId?: string;
+  onReviewSubmit?: () => void;
+  review?: ReviewSchema;
 }
 
 function getTotalRate(
@@ -50,8 +51,14 @@ function getTotalRate(
   return roundToNDecimal((total * 2) / 6, 1);
 }
 
-export default function ReviewModel({ title, description, buttonLabel, bookingId, onReviewSubmit }: ReviewModelProps) {
-  const [isLoading, setIsLoading] = useState(false);
+export default function ReviewModel({
+  title,
+  description,
+  buttonLabel,
+  bookingId,
+  review,
+  onReviewSubmit,
+}: ReviewModelProps) {
   const t = useTranslations('Review');
 
   const formSchema = z.object({
@@ -66,17 +73,30 @@ export default function ReviewModel({ title, description, buttonLabel, bookingId
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      staffRating: 5,
-      facilityRating: 5,
-      cleanlinessRating: 5,
-      comfortRating: 5,
-      valueForMoneyRating: 5,
-      locationRating: 5,
-      comment: '',
-    },
+    defaultValues: review
+      ? {
+          staffRating: review.staffRating,
+          facilityRating: review.facilityRating,
+          cleanlinessRating: review.cleanlinessRating,
+          comfortRating: review.comfortRating,
+          valueForMoneyRating: review.valueForMoneyRating,
+          locationRating: review.locationRating,
+          comment: review.comment,
+        }
+      : {
+          staffRating: 5,
+          facilityRating: 5,
+          cleanlinessRating: 5,
+          comfortRating: 5,
+          valueForMoneyRating: 5,
+          locationRating: 5,
+          comment: '',
+        },
   });
+
   const [totalRate, setTotalRate] = useState(10);
+  const [isLoading, setIsLoading] = useState(false);
+  const isReadOnly = !bookingId && !!review;
 
   useEffect(() => {
     setTotalRate(getTotalRate(form));
@@ -90,6 +110,9 @@ export default function ReviewModel({ title, description, buttonLabel, bookingId
   ]);
 
   async function onSubmit(data: z.infer<typeof formSchema>) {
+    if (isReadOnly) return;
+    if (!bookingId) return toast({ variant: 'destructive', title: t('toast.missingParams') });
+
     setIsLoading(true);
     const { isSuccess } = await ReviewApi.create({ ...data, bookingId });
 
@@ -132,6 +155,7 @@ export default function ReviewModel({ title, description, buttonLabel, bookingId
                         stars={field.value}
                         onRateChange={field.onChange}
                         localeConverter={localeConverter}
+                        readOnly={isReadOnly}
                       />
                     </FormControl>
                     <FormMessage />
@@ -149,6 +173,7 @@ export default function ReviewModel({ title, description, buttonLabel, bookingId
                         stars={field.value}
                         onRateChange={field.onChange}
                         localeConverter={localeConverter}
+                        readOnly={isReadOnly}
                       />
                     </FormControl>
                     <FormMessage />
@@ -166,6 +191,7 @@ export default function ReviewModel({ title, description, buttonLabel, bookingId
                         stars={field.value}
                         onRateChange={field.onChange}
                         localeConverter={localeConverter}
+                        readOnly={isReadOnly}
                       />
                     </FormControl>
                     <FormMessage />
@@ -183,6 +209,7 @@ export default function ReviewModel({ title, description, buttonLabel, bookingId
                         stars={field.value}
                         onRateChange={field.onChange}
                         localeConverter={localeConverter}
+                        readOnly={isReadOnly}
                       />
                     </FormControl>
                     <FormMessage />
@@ -200,6 +227,7 @@ export default function ReviewModel({ title, description, buttonLabel, bookingId
                         stars={field.value}
                         onRateChange={field.onChange}
                         localeConverter={localeConverter}
+                        readOnly={isReadOnly}
                       />
                     </FormControl>
                     <FormMessage />
@@ -217,6 +245,7 @@ export default function ReviewModel({ title, description, buttonLabel, bookingId
                         stars={field.value}
                         onRateChange={field.onChange}
                         localeConverter={localeConverter}
+                        readOnly={isReadOnly}
                       />
                     </FormControl>
                     <FormMessage />
@@ -246,7 +275,7 @@ export default function ReviewModel({ title, description, buttonLabel, bookingId
                       </span>
                     </FormLabel>
                     <FormControl>
-                      <Textarea placeholder={t('form.commentPlaceholder')} {...field} />
+                      <Textarea placeholder={t('form.commentPlaceholder')} {...field} readOnly={isReadOnly} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -256,14 +285,17 @@ export default function ReviewModel({ title, description, buttonLabel, bookingId
           </form>
         </Form>
 
-        <DialogFooter className="space-x-4">
-          <DialogClose asChild>
-            <Button variant="secondary">{t('form.cancel')}</Button>
-          </DialogClose>
-          <Button type="submit" onClick={form.handleSubmit(onSubmit)}>
-            {t('form.submit')}
-          </Button>
-        </DialogFooter>
+        {/* Button */}
+        {!isReadOnly && (
+          <DialogFooter className="space-x-4">
+            <DialogClose asChild>
+              <Button variant="secondary">{t('form.cancel')}</Button>
+            </DialogClose>
+            <Button type="submit" onClick={form.handleSubmit(onSubmit)}>
+              {t('form.submit')}
+            </Button>
+          </DialogFooter>
+        )}
       </DialogContent>
     </Dialog>
   );

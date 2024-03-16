@@ -196,6 +196,10 @@
       "rate": {
         "title": "Rating your trips",
         "desc": "Tell us about your experience at <bold>{hotelName}</bold> and help other travelers make a better choice."
+      },
+      "seeRate": {
+        "title": "Review Details",
+        "desc": "See the rating and review of this trip"
       }
     }
   },
@@ -375,7 +379,8 @@
     },
     "toast": {
       "success": "🎉 Review submitted successfully",
-      "failure": "Review submission failed!"
+      "failure": "Review submission failed!",
+      "missingParams": "Missing hotelId or bookingId"
     },
     "rateDesc": {
       "useless": "Useless",

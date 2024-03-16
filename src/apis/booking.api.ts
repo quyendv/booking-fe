@@ -2,6 +2,7 @@ import { getCookie } from 'cookies-next';
 import { LocaleConfig } from '~/configs/locale.config';
 import { HotelSchema, RoomSchema } from './hotel.api';
 import { axiosPrivateInstance } from './instances/axios.instance';
+import { ReviewSchema } from './review.api';
 
 export const bookingEndpoints = {
   create: '/bookings',
@@ -57,6 +58,7 @@ export type BookingSchema = {
 export type BookingDetails = BookingSchema & {
   room: RoomSchema;
   hotel: HotelSchema;
+  review?: ReviewSchema;
 };
 
 export const BookingApi = {
