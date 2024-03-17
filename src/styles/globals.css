@@ -76,6 +76,19 @@
 }
 
 @layer components {
+  .loader {
+    @apply relative mx-auto h-12 w-12;
+  }
+
+  .loader:before {
+    content: '';
+    @apply absolute left-0 top-16 h-1 w-12 animate-shadow rounded-full bg-red-200;
+  }
+
+  .loader:after {
+    content: '';
+    @apply absolute left-0 top-0 h-full w-full animate-jump rounded-md bg-red-400;
+  }
 }
 
 @layer utilities {

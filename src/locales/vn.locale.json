@@ -291,7 +291,7 @@
     },
     "price": {
       "roomPrice": "Giá phòng",
-      "hour": "24 giờ",
+      "hour": "đêm",
       "breakFast": "Giá bữa sáng"
     },
     "bookingDetails": {

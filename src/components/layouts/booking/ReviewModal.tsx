@@ -137,13 +137,13 @@ export default function ReviewModel({
       <DialogContent className="w-[90%] max-w-[900px] overflow-y-auto 2xl:max-w-[1200px]">
         <DialogHeader className="px-2">
           <DialogTitle>{title}</DialogTitle>
-          <DialogDescription>{description} </DialogDescription>
+          <DialogDescription>{description}</DialogDescription>
         </DialogHeader>
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2 p-2 md:space-y-4">
             {/* Rates */}
-            <div className="&>*:w-full grid grid-cols-1 gap-4 md:grid-cols-2 2xl:grid-cols-3">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 2xl:grid-cols-3 [&>*]:w-full">
               <FormField
                 control={form.control}
                 name="staffRating"

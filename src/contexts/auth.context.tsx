@@ -17,8 +17,6 @@ export interface UserInfo {
 
 type AuthContextProps = {
   isLoading: boolean; // both reload (refresh token) & sign in/up -> render loading screen
-  isAuthenticated: boolean;
-  // user: UserInfo | null;
   signInWithGoogle: () => Promise<AuthFunctionType>;
   // eslint-disable-next-line no-unused-vars
   signInWithPassword: (email: string, password: string) => Promise<AuthFunctionType>;
@@ -73,7 +71,6 @@ const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
         const { isSuccess, data } = await AuthApi.signIn(token);
         if (!isSuccess) {
           setIsAuthenticated(false);
-          // throw new Error(error);
         } else {
           setIsAuthenticated(true);
           setUserInfo(user, data);

@@ -6,11 +6,11 @@ import Logo from './Logo';
 import { UserMenu } from './UserMenu';
 
 interface HeaderProps {
-  showUserMenu?: boolean;
+  disableUserMenu?: boolean;
   className?: string;
 }
 
-const Header = ({ showUserMenu = true, className = '' }: HeaderProps) => {
+const Header = ({ disableUserMenu = false, className = '' }: HeaderProps) => {
   return (
     <header className={cn('sticky top-0 z-10 border border-b-primary/10 bg-background', className)}>
       <Container className="flex items-center">
@@ -20,7 +20,7 @@ const Header = ({ showUserMenu = true, className = '' }: HeaderProps) => {
           <ThemeToggle />
           <LocaleSwitcher />
 
-          {showUserMenu && <UserMenu />}
+          {!disableUserMenu && <UserMenu />}
         </div>
       </Container>
     </header>

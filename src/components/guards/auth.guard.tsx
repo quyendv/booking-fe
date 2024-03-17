@@ -8,14 +8,8 @@ interface AuthGuardProps {
 }
 
 export default function AuthGuard({ children }: AuthGuardProps) {
-  const { isAuthenticated } = useAuth();
+  const { /* isLoading, */ isAuthenticated } = useAuth();
   const router = useIRouter();
-
-  // if (isLoading) return <div>loading...</div>;
-  // if (!isAuthenticated) {
-  //   // return page showing that user is not authenticated & redirect to login page link
-  //   router.push(routeConfig.SIGN_IN);
-  // }
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -23,6 +17,7 @@ export default function AuthGuard({ children }: AuthGuardProps) {
       router.push(routeConfig.SIGN_IN);
     }
   }, [isAuthenticated, router]);
+  // if (isLoading) return <GlobalLoading />;
 
   return <>{children}</>;
 }

@@ -291,7 +291,7 @@
     },
     "price": {
       "roomPrice": "Room Price",
-      "hour": "24hrs",
+      "hour": "night",
       "breakFast": "Breakfast Price"
     },
     "bookingDetails": {

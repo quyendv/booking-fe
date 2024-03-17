@@ -89,16 +89,14 @@ export default function MyBookingCard({ booking }: MyBookingCardProps) {
     <Card className="h-fit">
       <CardHeader>
         <CardTitle>{hotel.name}</CardTitle>
-        <div className="text-sm text-muted-foreground">
-          <div className="mt-4 font-semibold">
-            <AmenityItem>
-              <MapPin size={16} />
-              {hotel.address.country}, {hotel.address.province}
-              {hotel.address.district ? ', ' + hotel.address.district : ''}
-              {hotel.address.ward ? ', ' + hotel.address.ward : ''}
-            </AmenityItem>
-          </div>
-          <p className="pb-2">{hotel.address.details}</p>
+        <div className="text-sm font-medium text-muted-foreground">
+          <AmenityItem>
+            <MapPin size={16} />
+            {hotel.address.country}, {hotel.address.province}
+            {hotel.address.district ? ', ' + hotel.address.district : ''}
+            {hotel.address.ward ? ', ' + hotel.address.ward : ''}
+            {hotel.address.details ? ', ' + hotel.address.details : ''}
+          </AmenityItem>
         </div>
 
         <CardTitle>{room.title}</CardTitle>

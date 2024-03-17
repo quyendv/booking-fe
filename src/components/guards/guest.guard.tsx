@@ -8,11 +8,8 @@ interface GuestGuardProps {
 }
 
 export default function GuestGuard({ children }: GuestGuardProps) {
-  const { isAuthenticated } = useAuth();
+  const { /* isLoading, */ isAuthenticated } = useAuth();
   const router = useIRouter();
-
-  // if (isLoading) return <div>loading...</div>;
-  // if (isAuthenticated) router.push(routeConfig.HOME);
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -20,6 +17,7 @@ export default function GuestGuard({ children }: GuestGuardProps) {
     }
   }, [isAuthenticated, router]);
 
+  // if (isLoading) return <GlobalLoading />;
   return <>{children}</>;
 }
 

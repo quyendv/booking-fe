@@ -1,5 +1,6 @@
 import Container from '~/components/layouts/Container';
 import Header from '~/components/layouts/header/Header';
+import GlobalLoading from '~/components/layouts/loading/GlobalLoading';
 
 interface MainLayoutProps {
   children: React.ReactNode;
@@ -7,12 +8,15 @@ interface MainLayoutProps {
 
 function MainLayout({ children }: MainLayoutProps) {
   return (
-    <main className="z-0 flex min-h-screen flex-col">
-      <Header />
-      <section className="flex-grow">
-        <Container>{children}</Container>
-      </section>
-    </main>
+    <>
+      <GlobalLoading />
+      <main className="z-0 flex min-h-screen flex-col">
+        <Header />
+        <section className="flex-grow">
+          <Container>{children}</Container>
+        </section>
+      </main>
+    </>
   );
 }
 
