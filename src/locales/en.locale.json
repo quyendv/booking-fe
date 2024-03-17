@@ -62,6 +62,12 @@
     "failed": "There was a problem",
     "failedDescription": "This token is not valid or might be expired. Please try again."
   },
+  "Guard": {
+    "unauthorized": "You are not authorized to access this page.",
+    "notEnoughPermission": "You do not have enough permission to access this page.",
+    "signIn": "Sign In",
+    "goHome": "Go Home"
+  },
   "HotelForm": {
     "title": {
       "create": "Describe new hotel",

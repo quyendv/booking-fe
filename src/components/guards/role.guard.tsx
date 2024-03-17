@@ -1,7 +1,10 @@
+'use client';
+
+import { useTranslations } from 'next-intl';
 import { UserRole } from '~/configs/role.config';
 import { routeConfig } from '~/configs/route.config';
 import { useAuth } from '~/contexts/auth.context';
-import { ILink } from '~/locales/i18nNavigation';
+import GuardDeny from '../layouts/auth/GuardDeny';
 
 type AllowedRolesType = {
   allowedRoles: UserRole[];
@@ -19,20 +22,14 @@ type RoleGuardProps = { children: React.ReactNode } & RoleGuardType;
 
 export default function RoleGuard({ children, allowedRoles, notAllowedRoles }: RoleGuardProps) {
   const { user } = useAuth();
+  const t = useTranslations('Guard');
 
   const userRole = user?.role as UserRole; // ensure user is not null (RoleGuard in AuthGuard)
   const isAllowed =
     (allowedRoles && allowedRoles.includes(userRole)) || (notAllowedRoles && notAllowedRoles.includes(userRole));
 
   if (!isAllowed) {
-    return (
-      <div className="flex h-screen w-screen flex-col items-center justify-center gap-2">
-        <p className="text-3xl text-destructive">You do not have permission to access this page</p>
-        <ILink href={routeConfig.HOME} className="hover:text-primary">
-          Go to Home page
-        </ILink>
-      </div>
-    );
+    return <GuardDeny title={t('notEnoughPermission')} link={routeConfig.HOME} linkText={t('goHome')} />;
   }
 
   return <>{children}</>;

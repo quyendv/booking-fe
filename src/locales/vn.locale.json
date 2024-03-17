@@ -62,6 +62,12 @@
     "failed": "Có lỗi xảy ra",
     "failedDescription": "Mã thông báo này không hợp lệ hoặc có thể đã hết hạn. Vui lòng thử lại"
   },
+  "Guard": {
+    "unauthorized": "Bạn cần đăng nhập để truy cập trang này.",
+    "notEnoughPermission": "Bạn không có quyền truy cập trang này.",
+    "signIn": "Đăng nhập",
+    "goHome": "Về trang chủ"
+  },
   "HotelForm": {
     "title": {
       "create": "Mô tả khách sạn mới",

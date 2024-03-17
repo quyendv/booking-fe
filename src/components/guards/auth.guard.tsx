@@ -1,7 +1,9 @@
-import { useEffect } from 'react';
+'use client';
+
+import { useTranslations } from 'next-intl';
 import { routeConfig } from '~/configs/route.config';
 import { useAuth } from '~/contexts/auth.context';
-import { useIRouter } from '~/locales/i18nNavigation';
+import GuardDeny from '../layouts/auth/GuardDeny';
 
 interface AuthGuardProps {
   children: React.ReactNode;
@@ -9,15 +11,20 @@ interface AuthGuardProps {
 
 export default function AuthGuard({ children }: AuthGuardProps) {
   const { /* isLoading, */ isAuthenticated } = useAuth();
-  const router = useIRouter();
+  const t = useTranslations('Guard');
 
-  useEffect(() => {
-    if (!isAuthenticated) {
-      // return page showing that user is not authenticated & redirect to login page link
-      router.push(routeConfig.SIGN_IN);
-    }
-  }, [isAuthenticated, router]);
+  // const router = useIRouter();
+
+  // useEffect(() => {
+  //   if (!isAuthenticated) {
+  //     router.push(routeConfig.SIGN_IN);
+  //   }
+  // }, [isAuthenticated, router]);
   // if (isLoading) return <GlobalLoading />;
+
+  if (!isAuthenticated) {
+    return <GuardDeny title={t('unauthorized')} link={routeConfig.SIGN_IN} linkText={t('signIn')} />;
+  }
 
   return <>{children}</>;
 }
