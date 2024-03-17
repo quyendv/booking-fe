@@ -9,23 +9,19 @@ import {
   DropdownMenuTrigger,
 } from '~/components/ui/dropdown-menu';
 
-import Image from 'next/image';
-import { UserInfo } from '~/contexts/auth.context';
-import { useTranslations } from 'next-intl';
-import { routeConfig } from '~/configs/route.config';
 import { PersonIcon } from '@radix-ui/react-icons';
-import { Luggage, Heart, LogOutIcon, LayoutDashboardIcon, UsersIcon, HotelIcon } from 'lucide-react';
-import { ILink } from '~/locales/i18nNavigation';
+import { Heart, HotelIcon, LayoutDashboardIcon, LogOutIcon, Luggage, UsersIcon } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar';
+import { buttonVariants } from '~/components/ui/button';
 import { UserRole } from '~/configs/role.config';
-
-interface UserMenuProps {
-  user: UserInfo;
-  signOut: () => Promise<void>;
-}
+import { routeConfig } from '~/configs/route.config';
+import { useAuth } from '~/contexts/auth.context';
+import { ILink } from '~/locales/i18nNavigation';
 
 const customerMenuItems = [
   { label: 'manageAccount', href: routeConfig.MANAGE_ACCOUNT, icon: PersonIcon },
-  { label: 'myBookings', href: routeConfig.MY_BOOKING, icon: Luggage },
+  { label: 'myBookings', href: routeConfig.MY_BOOKINGS, icon: Luggage },
   { label: 'saved', href: routeConfig.SAVED, icon: Heart },
 ];
 
@@ -36,27 +32,39 @@ const adminMenuItems = [
   // { label: 'manageRooms', href: routeConfig.MANAGE_ROOMS, icon: Luggage },
 ];
 
-const hotelMenuItems = [{ label: 'myHotel', href: routeConfig.MY_HOTEL, icon: HotelIcon }];
+const hotelMenuItems = [
+  { label: 'myHotel', href: routeConfig.MY_HOTEL, icon: HotelIcon },
+  { label: 'customerBookings', href: routeConfig.MY_BOOKINGS, icon: Luggage },
+];
 
-export function UserMenu({ user, signOut }: UserMenuProps) {
+interface UserMenuProps {}
+
+export function UserMenu({}: UserMenuProps) {
+  const { isAuthenticated, user, signOut } = useAuth();
   const t = useTranslations('Header');
-  const menuItems =
-    user.role === UserRole.CUSTOMER
+
+  const menuItems = isAuthenticated
+    ? user.role === UserRole.CUSTOMER
       ? customerMenuItems
       : user.role === UserRole.ADMIN
         ? adminMenuItems
-        : hotelMenuItems;
+        : hotelMenuItems
+    : [];
 
-  return (
+  return isAuthenticated ? (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        {user.avatar ? (
-          <Image src={user.avatar} alt="avatar" width={32} height={32} className="size-8 cursor-pointer rounded-full" />
-        ) : (
-          <div className="flex size-8 cursor-pointer items-center justify-center rounded-full bg-primary/10">
-            {user.name[0]}
-          </div>
-        )}
+        <Avatar className="size-8 cursor-pointer rounded-full">
+          {user.avatar ? (
+            <>
+              <AvatarImage src={user.avatar} alt="avatar" />
+              <AvatarFallback>{user.name[0].toUpperCase()}</AvatarFallback>
+            </>
+          ) : (
+            <AvatarFallback>{user.name[0].toUpperCase()}</AvatarFallback>
+            // <div className="flex-center size-8 rounded-full bg-primary/10">{user.name[0].toUpperCase()}</div>
+          )}
+        </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="[&>*]:cursor-pointer">
         <DropdownMenuLabel>Hi, {user.name.split(' ')[0]}</DropdownMenuLabel>
@@ -76,5 +84,14 @@ export function UserMenu({ user, signOut }: UserMenuProps) {
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
+  ) : (
+    <div className="space-x-3">
+      <ILink className={buttonVariants({ variant: 'outline' })} href={routeConfig.SIGN_IN}>
+        {t('signIn')}
+      </ILink>
+      <ILink className={buttonVariants()} href={routeConfig.SIGN_UP}>
+        {t('signUp')}
+      </ILink>
+    </div>
   );
 }

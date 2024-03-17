@@ -13,7 +13,7 @@ export default function Home() {
   const { isAuthenticated, signOut } = useAuth();
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+    <div className="flex min-h-screen flex-col items-center justify-between p-24">
       <div className="flex items-center justify-between gap-4">
         <ul className="flex items-center gap-10">
           <NavLink href={routeConfig.HOME}>Home</NavLink>
@@ -33,6 +33,6 @@ export default function Home() {
         </div>
       </div>
       <h1>{t('title')}</h1>
-    </main>
+    </div>
   );
 }

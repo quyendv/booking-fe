@@ -12,6 +12,9 @@
     "manageCustomers": "Manage Customers",
     "manageHotels": "Manage Hotels",
     "myHotel": "My Hotel",
+    "customerBookings": "Customer Bookings",
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
     "signOut": "Sign out"
   },
   "SignIn": {
@@ -58,5 +61,338 @@
     "verifyingDescription": "This won't take long.",
     "failed": "There was a problem",
     "failedDescription": "This token is not valid or might be expired. Please try again."
+  },
+  "HotelForm": {
+    "title": {
+      "create": "Describe new hotel",
+      "edit": "Update your hotel"
+    },
+    "error": {
+      "email": "Invalid Email",
+      "name": "Name must be at least 3 characters long",
+      "description": "Description must be at least 10 characters long",
+      "imageUrl": "Image is required",
+      "country": "Country is required",
+      "province": "Province is required",
+      "address": "Address is required",
+      "galleryUrl": "Invalid url"
+    },
+    "placeholder": {
+      "name": "Beach Hotel",
+      "description": "Beach Hotel is parked with many awesome amenities!",
+      "email": "abc@gmail.com",
+      "country": "Enter the country",
+      "province": "Enter the city",
+      "district": "Enter the district",
+      "ward": "Enter the ward",
+      "address": "Located at the very end of the beach road!"
+    },
+    "label": {
+      "name": "Hotel Name",
+      "description": "Hotel Description",
+      "amenities": "Choose Amenities",
+      "gym": "Gym",
+      "bar": "Bar",
+      "restaurant": "Restaurant",
+      "freeParking": "Free Parking",
+      "movieNight": "Movie Night",
+      "coffeeShop": "Coffee Shop",
+      "spa": "Spa",
+      "laundry": "Laundry Facilities",
+      "shopping": "Shopping",
+      "bikeRental": "Bike Rental",
+      "swimmingPool": "Swimming Pool",
+      "image": "Upload an image",
+      "email": "Email",
+      "country": "Country",
+      "province": "City",
+      "district": "District",
+      "ward": "Ward",
+      "address": "Location Description",
+      "vn": "Viet Nam"
+    },
+    "desc": {
+      "name": "Provide your hotel name",
+      "description": "Provide your hotel description",
+      "amenities": "Choose Amenities popular in your hotel",
+      "image": "Choose an image that will show-case your hotel nicely!",
+      "email": "Please provide your hotel's email address. This will be used for communication with your customers.",
+      "country": "In which country is your property located?",
+      "province": "In which province/city is your property located?",
+      "district": "In which district is your property located?",
+      "ward": "In which ward is your property located?",
+      "address": "Provide a detailed location description of your hotel"
+    },
+    "toast": {
+      "uploadSuccess": "🎉 Upload Completed!",
+      "uploadFailure": "Upload failed!",
+      "removeSuccess": "Image removed",
+      "removeFailure": "Remove image failed!",
+      "createSuccess": "🎉 Hotel created successfully",
+      "createFailure": "Hotel created failed!",
+      "updateSuccess": "🎉 Hotel updated successfully",
+      "updateFailure": "Hotel updated failed!"
+    },
+    "button": {
+      "updating": "Updating...",
+      "update": "Update",
+      "creating": "Creating...",
+      "create": "Create",
+      "view": "View"
+    },
+    "alert": {
+      "title": "One last step!",
+      "desc1": "Your hotel created successfully🔥",
+      "desc2": "Please add some rooms to complete your hotel setup!"
+    },
+    "dialog": {
+      "trigger": "Add Room",
+      "title": "Add a room",
+      "desc": "Add details about a room in your hotel."
+    }
+  },
+  "HotelDetails": {
+    "heading": {
+      "location": "Location Details",
+      "about": "About this hotel",
+      "amenities": "Popular Amenities"
+    },
+    "info": {
+      "swimmingPool": "Pool",
+      "gym": "Gym",
+      "spa": "Spa",
+      "bar": "Bar",
+      "laundry": "Laundry Facilities",
+      "restaurant": "Restaurant",
+      "shopping": "Shopping",
+      "freeParking": "Free Parking",
+      "movieNight": "Movie Night",
+      "coffeeShop": "Coffee Shop"
+    }
+  },
+  "MyBookings": {
+    "title": "Here are bookings {role, select, hotel {visitors} customer {you} other {visitors}} have made",
+    "card": {
+      "toast": {
+        "statusChanged": "Booking status changed",
+        "statusChangeFailed": "Change booking status failed!"
+      },
+      "button": {
+        "rate": "Rate",
+        "seeReview": "See Review"
+      },
+      "status": {
+        "booked": "Booked",
+        "checked_in": "Checked In",
+        "checked_out": "Checked Out",
+        "completed": "Completed"
+      },
+      "confirm": {
+        "title": "Are you sure you want to change the booking status?",
+        "desc": "This action cannot be undone. Please confirm if you want to proceed.",
+        "action": "Continue",
+        "cancel": "Cancel"
+      },
+      "rate": {
+        "title": "Rating your trips",
+        "desc": "Tell us about your experience at <bold>{hotelName}</bold> and help other travelers make a better choice."
+      },
+      "seeRate": {
+        "title": "Review Details",
+        "desc": "See the rating and review of this trip"
+      }
+    }
+  },
+  "RoomForm": {
+    "error": {
+      "title": "Title must be at least 3 characters",
+      "description": "Description must be at least 10 characters",
+      "imageUrl": "Image URL is invalid",
+      "bedCount": "Bed count is required",
+      "bedCountExceed": "Bed count must be greater than or equal king bed count and queen bed count",
+      "guestCount": "Guest count is required",
+      "bathroomCount": "Bathroom count is required",
+      "roomPrice": "Room price is required"
+    },
+    "label": {
+      "title": "Room Title",
+      "description": "Room Description",
+      "amenities": "Choose Room Amenities",
+      "roomService": "24hrs Room Services",
+      "tv": "TV",
+      "balcony": "Balcony",
+      "freeWifi": "Free Wifi",
+      "cityView": "City View",
+      "oceanView": "Ocean View",
+      "forestView": "Forest View",
+      "mountainView": "Mountain View",
+      "airCondition": "Air Condition",
+      "soundProofed": "Sound Proofed",
+      "image": "Upload an image",
+      "roomPrice": "Room price in VND",
+      "bedCount": "Bed Count",
+      "guestCount": "Guest Count",
+      "bathroomCount": "Bathroom Count",
+      "breakFastPrice": "Breakfast Price in VND",
+      "kingBed": "King Beds",
+      "queenBed": "Queen Beds"
+    },
+    "desc": {
+      "title": "Provide your room name",
+      "description": "Is there anything special about this room?",
+      "amenities": "What make this room a good choice?",
+      "image": "Choose an image that will show-case your room nicely!",
+      "roomPrice": "State the price for staying in this room for 24hrs",
+      "bedCount": "How many beds are available in this room",
+      "guestCount": "How many guests are allowed in this room",
+      "bathroomCount": "How many bathrooms are in this room",
+      "breakFastPrice": "State the price for breakfast in this room",
+      "kingBed": "How many king beds are available in this room",
+      "queenBed": "How many queen beds are available in this room"
+    },
+    "placeholder": {
+      "title": "Double Room",
+      "description": "Have a beautiful view of the ocean while in this room!"
+    },
+    "toast": {
+      "uploadSuccess": "🎉 Upload Completed!",
+      "uploadFailure": "Upload failed!",
+      "removeSuccess": "Image removed",
+      "removeFailure": "Remove image failed!",
+      "createSuccess": "🎉 Room created successfully",
+      "createFailure": "Room created failed!",
+      "updateSuccess": "🎉 Room updated successfully",
+      "updateFailure": "Room updated failed!"
+    },
+    "button": {
+      "updating": "Updating...",
+      "update": "Update",
+      "creating": "Creating...",
+      "create": "Create"
+    }
+  },
+  "RoomCard": {
+    "amenities": {
+      "bed": "Bed(s)",
+      "guest": "Guest(s)",
+      "bathroom": "Bathroom(s)",
+      "kingBed": "King Bed(s)",
+      "queenBed": "Queen Bed(s)",
+      "roomService": "Room Services",
+      "tv": "TV",
+      "balcony": "Balcony",
+      "freeWifi": "Free Wifi",
+      "cityView": "City View",
+      "oceanView": "Ocean View",
+      "forestView": "Forest View",
+      "mountainView": "Mountain View",
+      "airCondition": "Air Condition",
+      "soundProofed": "Sound Proofed"
+    },
+    "price": {
+      "roomPrice": "Room Price",
+      "hour": "24hrs",
+      "breakFast": "Breakfast Price"
+    },
+    "bookingDetails": {
+      "title": "Booking Details",
+      "desc": "Room booked by <bold>{customer}</bold> for {dayCount} days at {date}",
+      "checkIn": "Check-in: {date} at {hour}",
+      "checkOut": "Check-out: {date} at {hour}",
+      "breakfast": "Breakfast will be served",
+      "paid": "Paid {price} VND - Room Reserved",
+      "notPaid": "Not Paid {price} VND - Room Not Reserved",
+      "viewHotel": "View Hotel",
+      "payNow": "Pay Now"
+    },
+    "footer": {
+      "selectDateDesc": "Select days that you will spend in this room",
+      "selectDateTitle": "Pick a date",
+      "includeBreakfastDesc": "Do you want to be served breakfast each day",
+      "includeBreakfastLabel": "Include Breakfast",
+      "totalPrice": "Total Price",
+      "priceFor": "for",
+      "days": "days",
+      "book": "Book Room",
+      "loading": "Loading...",
+      "bookingDialogTitle": "Booking Confirmation",
+      "bookingDialogDesc": "You want to book this room for the selected days?",
+      "bookingDialogCancel": "Cancel",
+      "bookingDialogAction": "Continue",
+      "delete": "Delete",
+      "deleting": "Deleting...",
+      "editTrigger": "Edit Room",
+      "editTitle": "Edit Room",
+      "editDesc": "Make changes to this room."
+    },
+    "toast": {
+      "deleteSuccess": "Room removed",
+      "deleteFailure": "Remove room failed!",
+      "loginRequired": "You need to sign in to book a room",
+      "verifyRequired": "You need to verify your email to book a room",
+      "dateRequired": "Please select a date",
+      "dateOverlapTitle": "Date Overlap!",
+      "dateOverlapDesc": "Oops! Some of the days you are trying to book have already been reserved. Please select different dates or rooms",
+      "bookingSuccess": "🎉 Room booked successfully",
+      "bookingFailure": "Room booking failed!"
+    }
+  },
+  "BookRoom": {
+    "toast": {
+      "redirecting": "Redirecting to payment gateway ...",
+      "redirectFailed": "Failed to redirect to payment gateway!",
+      "methodNotSupported": "This payment method is not available yet!",
+      "noBooking": "No booking found!"
+    },
+    "title": "Complete payment to reserve this room!",
+    "summary": {
+      "heading": "Your Booking Summary",
+      "checkIn": "You will check-in on {date} at {hour}",
+      "checkOut": "You will check-out on {date} at {hour}",
+      "breakfast": "You will be served breakfast each day at {hour}",
+      "total": "Total Price",
+      "payNow": "Pay Now",
+      "processPayment": "Process Payment ..."
+    }
+  },
+  "PaymentResult": {
+    "success": "Payment successful",
+    "successDesc": "Thank you for your purchase!",
+    "failure": "Payment failed",
+    "failureDesc": "An error occurred, please try again.",
+    "goHome": "Go back to homepage"
+  },
+  "Review": {
+    "form": {
+      "ratingRequired": "Rating is required",
+      "commentRequired": "Review is required",
+      "staff": "Staff",
+      "facility": "Facilities",
+      "comfort": "Comfort",
+      "cleanliness": "Cleanliness",
+      "valueForMoney": "Value for Money",
+      "location": "Location",
+      "comment": "Comment",
+      "commentPlaceholder": "Tell us about your experience",
+      "submit": "Submit",
+      "cancel": "Close"
+    },
+    "toast": {
+      "success": "🎉 Review submitted successfully",
+      "failure": "Review submission failed!",
+      "missingParams": "Missing hotelId or bookingId"
+    },
+    "rateDesc": {
+      "useless": "Useless",
+      "useless+": "Useless+",
+      "poor": "Poor",
+      "poor+": "Poor+",
+      "ok": "Ok",
+      "ok+": "Ok+",
+      "good": "Good",
+      "good+": "Good+",
+      "excellent": "Excellent",
+      "excellent+": "Excellent+"
+    }
   }
 }

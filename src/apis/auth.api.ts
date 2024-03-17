@@ -1,7 +1,7 @@
 import useSWRImmutable from 'swr/immutable';
 import { FetchInstance } from './instances/fetch.instance';
 
-export const AuthApiEndPoint = {
+const AuthApiEndPoint = {
   SIGN_IN: '/auth/sign-in',
   SIGN_UP: '/auth/sign-up',
   VERIFY_EMAIL: '/auth/verify-email',

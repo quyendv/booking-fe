@@ -7,11 +7,13 @@ interface LayoutProps {
   children: React.ReactNode;
 }
 
-export default function Layout({ children }: LayoutProps) {
+export default function AuthLayout({ children }: LayoutProps) {
   return (
     <GuestGuard>
-      <Header showUserMenu={false} className="fixed left-0 right-0 top-0 bg-background" />
-      {children}
+      <main className="z-0 flex min-h-screen flex-col">
+        <Header showUserMenu={false} />
+        <section className="flex flex-grow items-center justify-center">{children}</section>
+      </main>
     </GuestGuard>
   );
 }

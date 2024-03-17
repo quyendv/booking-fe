@@ -1,10 +1,5 @@
 import { getCookie } from 'cookies-next';
-
-type SuccessResponse<T> = { isSuccess: true; data: T; error?: never };
-type ErrorResponse = { isSuccess: false; error: any; data?: never };
-export type ApiResponse<T = any> = SuccessResponse<T> | ErrorResponse;
-
-type FetcherMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
+import { ApiResponse, FetcherMethod } from './instance.config';
 
 export class FetchInstance<T = any> {
   private readonly controller: AbortController;
@@ -51,7 +46,8 @@ export class FetchInstance<T = any> {
     });
     const data = await response.json();
     if (!response.ok || response.status >= 400) {
-      throw new Error(data.message || response.statusText || response.status.toString());
+      // throw new Error(data.message || response.statusText || response.status.toString());
+      throw { statusCode: response.status, message: data.message || response.statusText || response.status.toString() };
     }
     return data;
   }
