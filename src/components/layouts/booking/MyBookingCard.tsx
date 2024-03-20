@@ -35,9 +35,10 @@ import ReviewModal from './ReviewModal';
 
 interface MyBookingCardProps {
   booking: BookingDetails;
+  isCustomer?: boolean;
 }
 
-export default function MyBookingCard({ booking }: MyBookingCardProps) {
+export default function MyBookingCard({ booking, isCustomer = false }: MyBookingCardProps) {
   const { setBookingRoomData, setPaymentIntentId } = useBookRoom();
   const { user } = useAuth();
   const [isBookingLoading, setIsBookingLoading] = useState(false);
@@ -265,28 +266,31 @@ export default function MyBookingCard({ booking }: MyBookingCardProps) {
         {!booking.isPaid && booking.customerEmail === user?.email && (
           <Button onClick={handleBookingRoom}>{t('RoomCard.bookingDetails.payNow')}</Button>
         )}
-        {bookingStatus === BookingStatus.CHECKED_OUT ? (
-          <ReviewModal
-            bookingId={booking.id}
-            title={t('MyBookings.card.rate.title')}
-            description={t.rich('MyBookings.card.rate.desc', { hotelName: hotel.name, bold: (text) => <b>{text}</b> })}
-            buttonLabel={t('MyBookings.card.button.rate')}
-            onReviewSubmit={() => setBookingStatus(BookingStatus.REVIEWED)}
-          />
-        ) : bookingStatus === BookingStatus.REVIEWED ? (
-          review && (
-            <ReviewModal
-              title={t('MyBookings.card.seeRate.title')}
-              description={t('MyBookings.card.seeRate.desc')}
-              buttonLabel={t('MyBookings.card.button.seeReview')}
-              review={review}
-            />
-          )
-        ) : (
-          booking.isPaid && (
-            <ChangeBookingStatus currentStatus={bookingStatus} t={t} onStatusChange={handleChangeBookingStatus} />
-          )
-        )}
+        {bookingStatus === BookingStatus.CHECKED_OUT
+          ? isCustomer && (
+              <ReviewModal
+                bookingId={booking.id}
+                title={t('MyBookings.card.rate.title')}
+                description={t.rich('MyBookings.card.rate.desc', {
+                  hotelName: hotel.name,
+                  bold: (text) => <b>{text}</b>,
+                })}
+                buttonLabel={t('MyBookings.card.button.rate')}
+                onReviewSubmit={() => setBookingStatus(BookingStatus.REVIEWED)}
+              />
+            )
+          : bookingStatus === BookingStatus.REVIEWED
+            ? review && (
+                <ReviewModal
+                  title={t('MyBookings.card.seeRate.title')}
+                  description={t('MyBookings.card.seeRate.desc')}
+                  buttonLabel={t('MyBookings.card.button.seeReview')}
+                  review={review}
+                />
+              )
+            : booking.isPaid && (
+                <ChangeBookingStatus currentStatus={bookingStatus} t={t} onStatusChange={handleChangeBookingStatus} />
+              )}
       </CardFooter>
     </Card>
   );

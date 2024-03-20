@@ -3,6 +3,7 @@
 import { useTranslations } from 'next-intl';
 import { BookingDetails } from '~/apis/booking.api';
 import MyBookingCard from '~/components/layouts/booking/MyBookingCard';
+import { UserRole } from '~/configs/role.config';
 import { useAuth } from '~/contexts/auth.context';
 import useMyBookings from '~/hooks/useMyBookings';
 
@@ -20,10 +21,10 @@ export default function MyBookingsPage({}: MyBookingsPageProps) {
 
   return (
     <div className="flex flex-col gap-10">
-      <h2 className="mb-6 mt-2 text-xl font-semibold md:text-2xl">{t('title', { role: user?.role })}</h2>
+      <h2 className="mb-6 mt-2 text-xl font-semibold md:text-2xl">{t('title', { role: user.role })}</h2>
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
         {data.map((item) => (
-          <MyBookingCard key={item.id} booking={item} />
+          <MyBookingCard key={item.id} booking={item} isCustomer={user.role === UserRole.CUSTOMER} />
         ))}
       </div>
     </div>
