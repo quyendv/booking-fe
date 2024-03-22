@@ -366,6 +366,7 @@
     "successDesc": "Thank you for your purchase!",
     "failure": "Payment failed",
     "failureDesc": "An error occurred, please try again.",
+    "myBookings": "My Bookings",
     "goHome": "Go back to homepage"
   },
   "Review": {

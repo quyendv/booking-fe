@@ -3,7 +3,10 @@
 import { CheckCircle, XCircle } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useEffect } from 'react';
+import { buttonVariants } from '~/components/ui/button';
+import { routeConfig } from '~/configs/route.config';
 import useBookRoom from '~/hooks/useBookRoom';
+import { ILink } from '~/locales/i18nNavigation';
 
 interface PaymentResultPageProps {
   searchParams: {
@@ -35,7 +38,12 @@ export default function PaymentResultPage({ searchParams }: PaymentResultPagePro
           <div className="flex-center">
             <CheckCircle className="size-12" />
           </div>
-          <button className="!mt-4 rounded-md bg-green-500/60 px-4 py-2 text-primary/95">{t('goHome')}</button>
+          <ILink
+            href={routeConfig.MY_BOOKINGS}
+            className={buttonVariants({ className: '!mt-4 rounded-md !bg-green-500/60 px-4 py-2 !text-primary' })}
+          >
+            {t('goHome')}
+          </ILink>
         </div>
       ) : (
         <div className="space-y-2 rounded-md bg-red-500/15 p-4 text-red-700">
@@ -44,7 +52,12 @@ export default function PaymentResultPage({ searchParams }: PaymentResultPagePro
           <div className="flex-center">
             <XCircle className="size-12" />
           </div>
-          <button className="!mt-4 rounded-md bg-red-500/60 px-4 py-2 text-primary/95">{t('goHome')}</button>
+          <ILink
+            href={routeConfig.HOME}
+            className={buttonVariants({ className: '!mt-4 rounded-md !bg-red-500/60 px-4 py-2 !text-primary' })}
+          >
+            {t('goHome')}
+          </ILink>
         </div>
       )}
     </div>

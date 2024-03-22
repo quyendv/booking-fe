@@ -57,7 +57,7 @@ export default function BookRoom({}: BookRoomProps) {
   }
 
   return (
-    <div className="mx-auto max-w-[700px]">
+    <div className="mx-auto max-w-[700px] p-8">
       {bookingRoomData ? (
         <>
           <h3 className="mb-6 text-2xl font-semibold">{t('title')}</h3>

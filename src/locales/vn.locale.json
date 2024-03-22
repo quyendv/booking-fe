@@ -367,6 +367,7 @@
     "successDesc": "Cảm ơn bạn đã mua hàng!",
     "failure": "Thanh toán thất bại",
     "failureDesc": "Có lỗi xảy ra, vui lòng thử lại.",
+    "myBookings": "Xem phòng đã đặt",
     "goHome": "Quay lại trang chủ"
   },
   "Review": {
