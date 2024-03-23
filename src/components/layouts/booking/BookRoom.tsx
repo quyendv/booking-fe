@@ -62,7 +62,7 @@ export default function BookRoom({}: BookRoomProps) {
         <>
           <h3 className="mb-6 text-2xl font-semibold">{t('title')}</h3>
           <div className="mb-6">
-            <RoomCard room={bookingRoomData.room} hotel={bookingRoomData.hotel} isBookRoomPage />
+            <RoomCard room={bookingRoomData.room} hotel={bookingRoomData.hotel} />
           </div>
 
           <PaymentChannel channel={channel} setChannel={setChannel} />

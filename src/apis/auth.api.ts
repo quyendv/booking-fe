@@ -1,5 +1,6 @@
 import useSWRImmutable from 'swr/immutable';
 import { FetchInstance } from './instances/fetch.instance';
+import { UserRole } from '~/configs/role.config';
 
 const AuthApiEndPoint = {
   SIGN_IN: '/auth/sign-in',
@@ -17,7 +18,7 @@ type VerifyEmailResponse = {
 export type SignInResponse = {
   id: string; // email
   isVerified: boolean;
-  roleName: string;
+  roleName: UserRole;
 };
 
 export const AuthApi = {

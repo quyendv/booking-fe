@@ -42,7 +42,7 @@ export default function PaymentResultPage({ searchParams }: PaymentResultPagePro
             href={routeConfig.MY_BOOKINGS}
             className={buttonVariants({ className: '!mt-4 rounded-md !bg-green-500/60 px-4 py-2 !text-primary' })}
           >
-            {t('goHome')}
+            {t('myBookings')}
           </ILink>
         </div>
       ) : (

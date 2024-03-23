@@ -6,5 +6,5 @@ interface HotelLayoutProps {
 }
 
 export default function HotelLayout({ children }: HotelLayoutProps) {
-  return <RoleGuard allowedRoles={[UserRole.HOTEL]}>{children}</RoleGuard>;
+  return <RoleGuard allowedRoles={[UserRole.HOTEL, UserRole.RECEPTIONIST]}>{children}</RoleGuard>;
 }

@@ -80,17 +80,17 @@ interface RoomCardProps {
   room: RoomSchema;
   bookings?: BookingSchema[];
   mutateHotel?: KeyedMutator<HotelSchema>;
-  isHotelDetailsPage?: boolean;
-  isBookRoomPage?: boolean;
+  canBook?: boolean;
+  canManage?: boolean;
 }
 
 export default function RoomCard({
   room,
   hotel,
   mutateHotel,
-  isHotelDetailsPage = false,
-  isBookRoomPage = false,
   bookings = [],
+  canBook = false, // Booking Hotel Room
+  canManage = false, // Manage Hotel Room
 }: RoomCardProps) {
   const t = useTranslations('RoomCard');
   const { user } = useAuth();
@@ -328,10 +328,12 @@ export default function RoomCard({
 
         <Separator />
       </CardContent>
-      {!isBookRoomPage && (
+      {(canBook || canManage) && (
         <CardFooter>
-          {isHotelDetailsPage ? (
+          {/* Booking Section */}
+          {canBook && (
             <div className="flex flex-col gap-6">
+              {/* Date Picker */}
               <div>
                 <div>{t('footer.selectDateDesc')}</div>
                 <DatePickerWithRange
@@ -341,6 +343,7 @@ export default function RoomCard({
                   disabledDates={disabledDates}
                 />
               </div>
+              {/* Breakfast include? */}
               {room.breakFastPrice > 0 && (
                 <div>
                   <div className="mb-2">{t('footer.includeBreakfastDesc')}</div>
@@ -352,6 +355,7 @@ export default function RoomCard({
                   </div>
                 </div>
               )}
+              {/* Summary */}
               <div>
                 {t('footer.totalPrice')}: <span className="font-bold">{convertPriceToString(totalPrice)} VND</span>{' '}
                 {t('footer.priceFor')}{' '}
@@ -384,47 +388,48 @@ export default function RoomCard({
                 </AlertDialogContent>
               </AlertDialog>
             </div>
-          ) : (
-            mutateHotel && (
-              <div className="flex w-full justify-between">
-                {/* Delete Button */}
-                <Button disabled={isLoading} type="button" variant="outline" onClick={handleDeleteRoom}>
-                  {isLoading ? (
-                    <>
-                      <Loader2 className="mr-2 size-4" />
-                      {t('footer.deleting')}
-                    </>
-                  ) : (
-                    <>
-                      <Trash className="mr-2 size-4" />
-                      {t('footer.delete')}
-                    </>
-                  )}
-                </Button>
+          )}
 
-                {/* Edit Dialog */}
-                <Dialog open={roomDialogOpen} onOpenChange={setRoomDialogOpen}>
-                  <DialogTrigger asChild>
-                    <Button className="max-w-[150px]">
-                      <Pencil className="mr-2 size-4" />
-                      {t('footer.editTrigger')}
-                    </Button>
-                  </DialogTrigger>
-                  <DialogContent className="max-[900px] w-[90%]">
-                    <DialogHeader className="px-2">
-                      <DialogTitle>{t('footer.editTitle')}</DialogTitle>
-                      <DialogDescription>{t('footer.editDesc')}</DialogDescription>
-                    </DialogHeader>
-                    <RoomForm
-                      hotel={hotel}
-                      room={room}
-                      handleToggleDialog={handleToggleRoomDialog}
-                      mutateHotel={mutateHotel}
-                    />
-                  </DialogContent>
-                </Dialog>
-              </div>
-            )
+          {/* Manage Room Section */}
+          {canManage && mutateHotel && (
+            <div className="flex w-full justify-between">
+              {/* Delete Button */}
+              <Button disabled={isLoading} type="button" variant="outline" onClick={handleDeleteRoom}>
+                {isLoading ? (
+                  <>
+                    <Loader2 className="mr-2 size-4" />
+                    {t('footer.deleting')}
+                  </>
+                ) : (
+                  <>
+                    <Trash className="mr-2 size-4" />
+                    {t('footer.delete')}
+                  </>
+                )}
+              </Button>
+
+              {/* Edit Dialog */}
+              <Dialog open={roomDialogOpen} onOpenChange={setRoomDialogOpen}>
+                <DialogTrigger asChild>
+                  <Button className="max-w-[150px]">
+                    <Pencil className="mr-2 size-4" />
+                    {t('footer.editTrigger')}
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="max-[900px] w-[90%]">
+                  <DialogHeader className="px-2">
+                    <DialogTitle>{t('footer.editTitle')}</DialogTitle>
+                    <DialogDescription>{t('footer.editDesc')}</DialogDescription>
+                  </DialogHeader>
+                  <RoomForm
+                    hotel={hotel}
+                    room={room}
+                    handleToggleDialog={handleToggleRoomDialog}
+                    mutateHotel={mutateHotel}
+                  />
+                </DialogContent>
+              </Dialog>
+            </div>
           )}
         </CardFooter>
       )}

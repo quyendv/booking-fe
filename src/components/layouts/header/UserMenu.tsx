@@ -48,7 +48,7 @@ export function UserMenu({}: UserMenuProps) {
       ? customerMenuItems
       : user.role === UserRole.ADMIN
         ? adminMenuItems
-        : hotelMenuItems
+        : hotelMenuItems // hotel & receptionist
     : [];
 
   return isAuthenticated ? (
