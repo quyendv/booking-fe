@@ -6,11 +6,12 @@ import { useTranslations } from 'next-intl';
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { AuthApi, SignInResponse } from '~/apis/auth.api';
 import { auth, googleProvider } from '~/configs/firebase.config';
+import { UserRole } from '~/configs/role.config';
 
 export interface UserInfo {
   email: string;
   isVerified: boolean;
-  role: string;
+  role: UserRole;
   name: string;
   avatar?: string | null;
 }
@@ -67,6 +68,7 @@ const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
       } else {
         // Firebase
         const token = await user.getIdToken();
+        // console.log(user.refreshToken);
 
         const { isSuccess, data } = await AuthApi.signIn(token);
         if (!isSuccess) {
