@@ -35,7 +35,7 @@ export default function RoleGuard({ children, allowedRoles, notAllowedRoles }: R
   return <>{children}</>;
 }
 
-export function withRoleGuard(Component: React.ComponentType, roles: RoleGuardType) {
+export function withRoleGuard<T>(Component: React.ComponentType<T>, roles: RoleGuardType) {
   return function WithRoleGuardWrapper(props: any) {
     if (roles.allowedRoles) {
       return (

@@ -12,7 +12,7 @@ export default function AuthLayout({ children }: LayoutProps) {
     <GuestGuard>
       <main className="z-0 flex min-h-screen flex-col">
         <Header disableUserMenu />
-        <section className="flex flex-grow items-center justify-center">{children}</section>
+        <section className="flex-center flex-grow">{children}</section>
       </main>
     </GuestGuard>
   );

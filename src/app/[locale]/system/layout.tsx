@@ -15,7 +15,8 @@ export default function SystemLayout({ children }: SystemLayoutProps) {
         <main className="z-0 flex min-h-screen flex-col">
           <Header />
           <section className="flex-grow">
-            <Container>{children}</Container>
+            {/* <Container>{children}</Container> */}
+            {children}
           </section>
         </main>
       </AuthGuard>

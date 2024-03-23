@@ -3,6 +3,7 @@ import { NextIntlClientProvider, useMessages } from 'next-intl';
 import { notFound } from 'next/navigation';
 import { ThemeProvider } from '~/components/common/ThemeProvider';
 import { Toaster } from '~/components/ui/toaster';
+import { TooltipProvider } from '~/components/ui/tooltip';
 import { inter } from '~/configs/font.config';
 import { LocaleConfig } from '~/configs/locale.config';
 import { themesConfig } from '~/configs/theme.config';
@@ -35,7 +36,9 @@ export default function RootLayout({ children, params: { locale } }: LayoutProps
       <body className={inter.className}>
         <NextIntlClientProvider locale={locale} messages={messages}>
           <ThemeProvider attribute="class" defaultTheme={themesConfig.SYSTEM} enableSystem disableTransitionOnChange>
-            <AuthContextProvider>{children}</AuthContextProvider>
+            <TooltipProvider delayDuration={0}>
+              <AuthContextProvider>{children}</AuthContextProvider>
+            </TooltipProvider>
           </ThemeProvider>
         </NextIntlClientProvider>
         <Toaster />

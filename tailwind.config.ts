@@ -15,6 +15,10 @@ const config: Config = {
       },
     },
     extend: {
+      spacing: {
+        header: `68px`,
+        excludeHeader: `calc(100vh - 68px)`,
+      },
       fontFamily: {
         inter: ['var(--font-inter)'],
         roboto: ['var(--font-roboto-mono)'],
