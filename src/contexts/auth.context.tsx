@@ -84,12 +84,19 @@ const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
   }, []);
 
   function setUserInfo(firebaseCredentials: User, serverData: SignInResponse) {
+    // setUser({
+    //   email: serverData.id,
+    //   isVerified: serverData.isVerified,
+    //   role: serverData.roleName,
+    //   name: firebaseCredentials.displayName ?? serverData.id.split('@')[0],
+    //   avatar: firebaseCredentials.photoURL,
+    // });
     setUser({
-      email: serverData.id,
+      email: serverData.email,
       isVerified: serverData.isVerified,
-      role: serverData.roleName,
-      name: firebaseCredentials.displayName ?? serverData.id.split('@')[0],
-      avatar: firebaseCredentials.photoURL,
+      role: serverData.role,
+      name: serverData.name ?? firebaseCredentials.displayName ?? serverData.email.split('@')[0],
+      avatar: serverData.avatar ?? firebaseCredentials.photoURL,
     });
   }
 
