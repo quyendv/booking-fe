@@ -55,31 +55,37 @@ export function UserMenu({}: UserMenuProps) {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Avatar className="size-8 cursor-pointer rounded-full">
-          {user.avatar ? (
+          {/* {user.avatar ? (
             <>
               <AvatarImage src={user.avatar} alt="avatar" />
               <AvatarFallback>{user.name[0].toUpperCase()}</AvatarFallback>
             </>
           ) : (
             <AvatarFallback>{user.name[0].toUpperCase()}</AvatarFallback>
-            // <div className="flex-center size-8 rounded-full bg-primary/10">{user.name[0].toUpperCase()}</div>
-          )}
+          )} */}
+          <AvatarImage src={user.avatar ?? ''} alt="avatar" />
+          <AvatarFallback>{user.name[0].toUpperCase()}</AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="[&>*]:cursor-pointer">
-        <DropdownMenuLabel>Hi, {user.name.split(' ')[0]}</DropdownMenuLabel>
+        <DropdownMenuLabel className="font-normal">
+          <div className="flex flex-col items-end gap-1">
+            <p className="text-sm font-medium">Hi, {user.name.split(' ')[0]}</p>
+            <p className="text-xs leading-none text-muted-foreground">{user.email}</p>
+          </div>
+        </DropdownMenuLabel>
         <DropdownMenuSeparator />
         {menuItems.map((item, index) => (
           <DropdownMenuItem key={index}>
             <ILink href={item.href} className="flex-center">
-              <item.icon className="size-5" />
+              <item.icon className="size-4" />
               <span className="ml-4">{t(item.label)}</span>
             </ILink>
           </DropdownMenuItem>
         ))}
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={signOut}>
-          <LogOutIcon className="size-5" />
+          <LogOutIcon className="size-4" />
           <span className="ml-4">{t('signOut')}</span>
         </DropdownMenuItem>
       </DropdownMenuContent>
