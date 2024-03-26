@@ -144,7 +144,7 @@ export default function RoomCard({
       toast({ variant: 'success', description: t('toast.deleteSuccess') });
       setIsLoading(false);
       // router.refresh();
-      // router.push(routeConfig.MANAGE_HOTELS + `/${hotel.id}`);
+      // router.push(routeConfig.A_MANAGE_HOTELS + `/${hotel.id}`);
       mutate(hotelEndpoints.getById(hotel.id));
     } else {
       toast({ variant: 'destructive', description: t('toast.deleteFailure') });

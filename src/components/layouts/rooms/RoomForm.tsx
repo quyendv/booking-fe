@@ -124,7 +124,7 @@ function RoomForm({ hotel, room, handleToggleDialog, mutateHotel }: RoomFormProp
         setIsLoading(false);
         handleToggleDialog();
         // router.refresh();
-        // router.push(routeConfig.MANAGE_HOTELS + `/${hotel.id}`);
+        // router.push(routeConfig.A_MANAGE_HOTELS + `/${hotel.id}`);
         mutateHotel(); // mutate(hotelEndpoints.getById(hotel.id));
       } else {
         toast({ variant: 'destructive', description: t('RoomForm.toast.updateFailure') });
@@ -137,7 +137,7 @@ function RoomForm({ hotel, room, handleToggleDialog, mutateHotel }: RoomFormProp
         setIsLoading(false);
         handleToggleDialog();
         // router.refresh();
-        // router.push(routeConfig.MANAGE_HOTELS + `/${hotel.id}`);
+        // router.push(routeConfig.A_MANAGE_HOTELS + `/${hotel.id}`);
         mutateHotel(); // mutate(hotelEndpoints.getById(hotel.id));
       } else {
         toast({ variant: 'destructive', description: t('RoomForm.toast.createFailure') });

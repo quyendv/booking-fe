@@ -1,14 +1,16 @@
 'use client';
 
-import { Archive, ArchiveX, File, Inbox, Send, Trash2 } from 'lucide-react';
 import { useState } from 'react';
 import { BsArrowLeftShort } from 'react-icons/bs';
 import { cn } from '~/utils/ui.util';
 import { SideBarNav } from './SideBarNav';
+import { useAuth } from '~/contexts/auth.context';
+import { UserRole } from '~/configs/role.config';
 
 interface SideBarProps {}
 
 export default function SideBar({}: SideBarProps) {
+  const { user } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
 
   const handleToggle = () => {
@@ -18,8 +20,8 @@ export default function SideBar({}: SideBarProps) {
   return (
     <div
       className={cn(
-        'relative hidden h-full border-r pt-6 transition-all duration-500 ease-in-out md:block',
-        isOpen ? 'w-56' : 'w-20',
+        'relative h-full border-r pt-8 transition-all ease-linear md:block',
+        isOpen ? 'w-48 duration-300' : 'w-[72px] duration-200',
       )}
     >
       <BsArrowLeftShort
@@ -30,49 +32,7 @@ export default function SideBar({}: SideBarProps) {
         onClick={handleToggle}
       />
 
-      <div className="space-y-4 px-3 py-4">
-        <SideBarNav
-          isOpen={isOpen}
-          items={[
-            {
-              title: 'Overview',
-              label: '128',
-              icon: Inbox,
-              variant: 'default',
-            },
-            {
-              title: 'Customers',
-              label: '9',
-              icon: File,
-              variant: 'ghost',
-            },
-            {
-              title: 'Hotels',
-              label: '',
-              icon: Send,
-              variant: 'ghost',
-            },
-            {
-              title: 'Receptionist',
-              label: '23',
-              icon: ArchiveX,
-              variant: 'ghost',
-            },
-            {
-              title: 'Rooms',
-              label: '',
-              icon: Trash2,
-              variant: 'ghost',
-            },
-            {
-              title: 'Settings',
-              label: '',
-              icon: Archive,
-              variant: 'ghost',
-            },
-          ]}
-        />
-      </div>
+      <SideBarNav isOpen={isOpen} isAdmin={user?.role === UserRole.ADMIN} />
     </div>
   );
 }

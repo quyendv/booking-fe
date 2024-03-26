@@ -1,5 +1,6 @@
 import RoleGuard from '~/components/guards/role.guard';
 import Container from '~/components/layouts/Container';
+import SideBar from '~/components/layouts/sidebar/SideBar';
 import { UserRole } from '~/configs/role.config';
 
 interface AdminLayoutProps {
@@ -10,7 +11,10 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
   // return <RoleGuard allowedRoles={[UserRole.ADMIN]}>{children}</RoleGuard>;
   return (
     <RoleGuard allowedRoles={[UserRole.ADMIN]}>
-      <Container className="h-excludeHeader p-0">{children}</Container>
+      <div className="flex h-excludeHeader w-full border-collapse flex-row">
+        <SideBar />
+        <Container className="h-excludeHeader flex-1">{children}</Container>
+      </div>
     </RoleGuard>
   );
 }

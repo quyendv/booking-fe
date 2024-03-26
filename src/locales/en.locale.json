@@ -68,6 +68,16 @@
     "signIn": "Sign In",
     "goHome": "Go Home"
   },
+  "Sidebar": {
+    "overview": "Overview",
+    "customers": "Customers",
+    "hotels": "Hotels",
+    "rooms": "rooms",
+    "receptionists": "Receptionists",
+    "my_hotel": "My Hotel",
+    "bookings": "Bookings",
+    "settings": "Settings"
+  },
   "HotelForm": {
     "title": {
       "create": "Describe new hotel",

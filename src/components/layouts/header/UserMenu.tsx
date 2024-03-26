@@ -26,10 +26,10 @@ const customerMenuItems = [
 ];
 
 const adminMenuItems = [
-  { label: 'dashboard', href: routeConfig.DASHBOARD, icon: LayoutDashboardIcon },
-  { label: 'manageCustomers', href: routeConfig.MANAGE_CUSTOMERS, icon: UsersIcon },
-  { label: 'manageHotels', href: routeConfig.MANAGE_HOTELS, icon: HotelIcon },
-  // { label: 'manageRooms', href: routeConfig.MANAGE_ROOMS, icon: Luggage },
+  { label: 'dashboard', href: routeConfig.A_OVERVIEW, icon: LayoutDashboardIcon },
+  { label: 'manageCustomers', href: routeConfig.A_MANAGE_CUSTOMERS, icon: UsersIcon },
+  { label: 'manageHotels', href: routeConfig.A_MANAGE_HOTELS, icon: HotelIcon },
+  // { label: 'manageRooms', href: routeConfig.A_MANAGE_ROOMS, icon: Luggage },
 ];
 
 const hotelMenuItems = [

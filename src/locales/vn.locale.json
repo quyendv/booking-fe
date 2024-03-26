@@ -68,6 +68,16 @@
     "signIn": "Đăng nhập",
     "goHome": "Về trang chủ"
   },
+  "Sidebar": {
+    "overview": "Tổng quan",
+    "customers": "Khách hàng",
+    "hotels": "Khách sạn",
+    "rooms": "Phòng",
+    "receptionists": "Lễ tân",
+    "my_hotel": "Khách sạn",
+    "bookings": "Đơn hàng",
+    "settings": "Cài đặt"
+  },
   "HotelForm": {
     "title": {
       "create": "Mô tả khách sạn mới",

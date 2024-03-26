@@ -153,7 +153,7 @@ export default function HotelForm({ hotel, mutateHotel, viewOnly = false }: Hote
       if (isSuccess) {
         toast({ variant: 'success', description: t('HotelForm.toast.updateSuccess') });
         setIsLoading(false);
-        // router.push(routeConfig.MANAGE_HOTELS(hotel.id)); // can only mutate new data
+        // router.push(routeConfig.A_MANAGE_HOTELS(hotel.id)); // can only mutate new data
         router.refresh();
         // if (mutateHotel) {
         //   mutateHotel();
@@ -169,7 +169,7 @@ export default function HotelForm({ hotel, mutateHotel, viewOnly = false }: Hote
         toast({ variant: 'success', description: t('HotelForm.toast.createSuccess') });
         setIsLoading(false);
         if (user) {
-          if (user.role === UserRole.ADMIN) router.push(routeConfig.MANAGE_HOTEL_DETAILS(data.id));
+          if (user.role === UserRole.ADMIN) router.push(routeConfig.A_MANAGE_HOTEL_DETAILS(data.id));
           if (user.role === UserRole.HOTEL) router.push(routeConfig.MY_HOTEL);
         }
       } else {
