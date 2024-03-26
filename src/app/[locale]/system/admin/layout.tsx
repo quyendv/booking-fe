@@ -1,5 +1,5 @@
 import RoleGuard from '~/components/guards/role.guard';
-import Container from '~/components/layouts/Container';
+import Container from '~/components/common/Container';
 import SideBar from '~/components/layouts/sidebar/SideBar';
 import { UserRole } from '~/configs/role.config';
 

@@ -1,5 +1,5 @@
 import AuthGuard from '~/components/guards/auth.guard';
-import Container from '~/components/layouts/Container';
+import Container from '~/components/common/Container';
 import Header from '~/components/layouts/header/Header';
 import GlobalLoading from '~/components/layouts/loading/GlobalLoading';
 

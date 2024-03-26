@@ -1,7 +1,7 @@
 import { cn } from '~/utils/ui.util';
 import LocaleSwitcher from '../../common/LocaleSwitcher';
 import { ThemeToggle } from '../../common/ThemeToggle';
-import Container from '../Container';
+import Container from '../../common/Container';
 import Logo from './Logo';
 import { UserMenu } from './UserMenu';
 

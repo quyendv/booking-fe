@@ -58,7 +58,7 @@ import useBookRoom from '~/hooks/useBookRoom';
 import { useIRouter } from '~/locales/i18nNavigation';
 import { convertPriceToString, splitNumber } from '~/utils/common.util';
 import AmenityItem from '../amenities/AmenityItem';
-import { CalendarDateRangePicker } from './DateRangePicker';
+import { CalendarDateRangePicker } from '../../common/DateRangePicker';
 import RoomForm from './RoomForm';
 
 type DateRangeType = { startDate: Date; endDate: Date };
