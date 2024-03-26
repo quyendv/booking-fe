@@ -58,7 +58,7 @@ import useBookRoom from '~/hooks/useBookRoom';
 import { useIRouter } from '~/locales/i18nNavigation';
 import { convertPriceToString, splitNumber } from '~/utils/common.util';
 import AmenityItem from '../amenities/AmenityItem';
-import { DatePickerWithRange } from './DateRangePicker';
+import { CalendarDateRangePicker } from './DateRangePicker';
 import RoomForm from './RoomForm';
 
 type DateRangeType = { startDate: Date; endDate: Date };
@@ -336,9 +336,10 @@ export default function RoomCard({
               {/* Date Picker */}
               <div>
                 <div>{t('footer.selectDateDesc')}</div>
-                <DatePickerWithRange
+                <CalendarDateRangePicker
                   date={date}
-                  setDate={setDate}
+                  onDateChange={setDate}
+                  fromDate={new Date()}
                   title={t('footer.selectDateTitle')}
                   disabledDates={disabledDates}
                 />

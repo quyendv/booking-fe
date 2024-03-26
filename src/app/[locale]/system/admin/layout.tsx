@@ -13,7 +13,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
     <RoleGuard allowedRoles={[UserRole.ADMIN]}>
       <div className="flex h-excludeHeader w-full border-collapse flex-row">
         <SideBar />
-        <Container className="h-excludeHeader flex-1">{children}</Container>
+        <Container className="h-excludeHeader flex-1 overflow-auto">{children}</Container>
       </div>
     </RoleGuard>
   );
