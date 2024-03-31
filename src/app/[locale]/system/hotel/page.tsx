@@ -16,7 +16,11 @@ const MyHotelPage = ({}: MyHotelPageProps) => {
   if (error) return <div>Hotel not found</div>;
 
   return (
-    <HotelForm hotel={data} mutateHotel={mutate} viewOnly={![UserRole.ADMIN, UserRole.HOTEL].includes(user.role)} />
+    <HotelForm
+      hotel={data}
+      mutateHotel={mutate}
+      viewOnly={![UserRole.ADMIN, UserRole.HOTEL_MANAGER].includes(user.role)}
+    />
   );
 };
 

@@ -20,7 +20,7 @@ export type SignInResponse = {
   // isVerified: boolean;
   // roleName: UserRole;
 
-  id: string | number;
+  // id: string | number;
   email: string;
   isVerified: boolean;
   role: UserRole;

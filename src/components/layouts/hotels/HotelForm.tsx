@@ -170,7 +170,7 @@ export default function HotelForm({ hotel, mutateHotel, viewOnly = false }: Hote
         setIsLoading(false);
         if (user) {
           if (user.role === UserRole.ADMIN) router.push(routeConfig.A_MANAGE_HOTEL_DETAILS(data.id));
-          if (user.role === UserRole.HOTEL) router.push(routeConfig.MY_HOTEL);
+          if (user.role === UserRole.HOTEL_MANAGER) router.push(routeConfig.MY_HOTEL);
         }
       } else {
         toast({ variant: 'destructive', description: t('HotelForm.toast.createFailure') });
