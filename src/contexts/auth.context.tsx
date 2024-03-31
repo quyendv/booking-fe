@@ -1,7 +1,13 @@
 'use client';
 
 import { deleteCookie, setCookie } from 'cookies-next';
-import { User, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
+import {
+  User,
+  UserCredential,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+} from 'firebase/auth';
 import { useTranslations } from 'next-intl';
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { AuthApi, SignInResponse } from '~/apis/auth.api';
@@ -84,13 +90,6 @@ const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
   }, []);
 
   function setUserInfo(firebaseCredentials: User, serverData: SignInResponse) {
-    // setUser({
-    //   email: serverData.id,
-    //   isVerified: serverData.isVerified,
-    //   role: serverData.roleName,
-    //   name: firebaseCredentials.displayName ?? serverData.id.split('@')[0],
-    //   avatar: firebaseCredentials.photoURL,
-    // });
     setUser({
       email: serverData.email,
       isVerified: serverData.isVerified,
@@ -159,20 +158,65 @@ const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
     [t],
   );
 
+  // const signUpWithPassword = useCallback(
+  //   async (email: string, password: string): Promise<AuthFunctionType> => {
+  //     try {
+  //       setIsLoading(true);
+  //       // Firebase
+  //       const userCredentials = await createUserWithEmailAndPassword(auth, email, password);
+
+  //       const { isSuccess, error } = await AuthApi.signUp(await userCredentials.user.getIdToken());
+  //       if (!isSuccess) {
+  //         // setIsAuthenticated(false);
+  //         return { isSuccess: false, type: 'toast', message: error?.message };
+  //       } else {
+  //         // setIsAuthenticated(true);
+  //         // setUser(...dataWithRole)
+  //       }
+
+  //       return {
+  //         isSuccess: true,
+  //         type: 'toast',
+  //         // message: signUpResponse.message, // TODO: localize
+  //         message: t('SignUp.verifyEmail'),
+  //       };
+  //     } catch (error: any) {
+  //       // setIsAuthenticated(false);
+  //       const { code, message } = error;
+  //       if (code === 'auth/email-already-in-use') {
+  //         // Firebase error: email already exists
+  //         return { isSuccess: false, type: 'form', message: t('SignUp.existingMessage') };
+  //       } else {
+  //         return { isSuccess: false, type: 'form', message: message ?? t('unknownError') };
+  //       }
+  //     } finally {
+  //       setIsLoading(false);
+  //     }
+  //   },
+  //   [t],
+  // );
+
   const signUpWithPassword = useCallback(
     async (email: string, password: string): Promise<AuthFunctionType> => {
       try {
         setIsLoading(true);
         // Firebase
-        const userCredentials = await createUserWithEmailAndPassword(auth, email, password);
+        let userCredentials: UserCredential | null = null;
+        try {
+          userCredentials = await createUserWithEmailAndPassword(auth, email, password);
+        } catch (error: any) {
+          if (error.code !== 'auth/email-already-in-use') throw error;
+        }
 
-        const { isSuccess, error } = await AuthApi.signUp(await userCredentials.user.getIdToken());
-        if (!isSuccess) {
-          // setIsAuthenticated(false);
-          return { isSuccess: false, type: 'toast', message: error?.message };
-        } else {
-          // setIsAuthenticated(true);
-          // setUser(...dataWithRole)
+        if (userCredentials) {
+          const { isSuccess, error } = await AuthApi.signUp(await userCredentials.user.getIdToken());
+          if (!isSuccess) {
+            // setIsAuthenticated(false);
+            return { isSuccess: false, type: 'toast', message: error?.message };
+          } else {
+            // setIsAuthenticated(true);
+            // setUser(...dataWithRole)
+          }
         }
 
         return {
@@ -183,13 +227,7 @@ const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
         };
       } catch (error: any) {
         // setIsAuthenticated(false);
-        const { code, message } = error;
-        if (code === 'auth/email-already-in-use') {
-          // Firebase error: email already exists
-          return { isSuccess: false, type: 'form', message: t('SignUp.existingMessage') };
-        } else {
-          return { isSuccess: false, type: 'form', message: message ?? t('unknownError') };
-        }
+        return { isSuccess: false, type: 'form', message: error?.message ?? t('unknownError') };
       } finally {
         setIsLoading(false);
       }
