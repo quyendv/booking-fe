@@ -1,6 +1,6 @@
 import { getCookie } from 'cookies-next';
 import { LocaleConfig } from '~/configs/locale.config';
-import { HotelSchema, RoomSchema } from './hotel.api';
+import { HotelSchema, RoomSchema, TimeRules } from './hotel.api';
 import { axiosPrivateInstance } from './instances/axios.instance';
 import { ReviewSchema } from './review.api';
 
@@ -42,6 +42,7 @@ export type BookingSchema = {
   hotelOwnerEmail: string;
   startDate: string;
   endDate: string;
+  timeRules: TimeRules;
   breakFastIncluded: boolean;
   currency: 'VND';
   totalPrice: number;

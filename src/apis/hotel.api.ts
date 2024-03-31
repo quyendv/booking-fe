@@ -64,6 +64,15 @@ export type HotelSchema = {
   shopping: boolean;
   bikeRental: boolean;
   swimmingPool: boolean;
+  allowPets: boolean;
+  allowSmoking: boolean;
+  timeRules: TimeRules;
+};
+
+export type TimeRules = {
+  timezone: number;
+  checkIn: { start?: string; end?: string };
+  checkOut: { start?: string; end?: string };
 };
 
 export type HotelSchemaWithBookings = HotelSchema & { bookings: BookingSchema[] };

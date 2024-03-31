@@ -1,7 +1,7 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Eye, Loader2Icon, PencilLineIcon, Plus, Terminal, XCircleIcon } from 'lucide-react';
+import { Eye, Loader2Icon, PencilLineIcon, Plus, Terminal, XCircleIcon, XIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
@@ -25,11 +25,12 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { Input } from '~/components/ui/input';
 import { Separator } from '~/components/ui/separator';
 import { Textarea } from '~/components/ui/textarea';
-import { useToast } from '~/components/ui/use-toast';
+import { toast } from '~/components/ui/use-toast';
 import { UserRole } from '~/configs/role.config';
 import { routeConfig } from '~/configs/route.config';
 import { useAuth } from '~/contexts/auth.context';
 import { ILink, useIRouter } from '~/locales/i18nNavigation';
+import TimeSelect from '../form/TimeSelect';
 import UploadFile from '../form/UploadFile';
 import RoomCard from '../rooms/RoomCard';
 import RoomForm from '../rooms/RoomForm';
@@ -43,7 +44,6 @@ interface HotelFormProps {
 export default function HotelForm({ hotel, mutateHotel, viewOnly = false }: HotelFormProps) {
   const t = useTranslations();
   const { user } = useAuth();
-  const { toast } = useToast();
   const router = useIRouter();
 
   const gallerySchema = z.object({
@@ -74,6 +74,19 @@ export default function HotelForm({ hotel, mutateHotel, viewOnly = false }: Hote
     shopping: z.boolean().optional(),
     bikeRental: z.boolean().optional(),
     swimmingPool: z.boolean().optional(),
+    allowPets: z.boolean().optional(),
+    allowSmoking: z.boolean().optional(),
+    timeRules: z.object({
+      timezone: z.number().default(7),
+      checkIn: z.object({
+        start: z.string().optional(),
+        end: z.string().optional(),
+      }),
+      checkOut: z.object({
+        start: z.string().optional(),
+        end: z.string().optional(),
+      }),
+    }),
   });
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -113,6 +126,13 @@ export default function HotelForm({ hotel, mutateHotel, viewOnly = false }: Hote
           shopping: false,
           bikeRental: false,
           swimmingPool: false,
+          allowPets: false,
+          allowSmoking: false,
+          timeRules: {
+            timezone: 7,
+            checkIn: { start: undefined, end: undefined },
+            checkOut: { start: undefined, end: undefined },
+          },
         },
   });
 
@@ -430,7 +450,138 @@ export default function HotelForm({ hotel, mutateHotel, viewOnly = false }: Hote
                 </div>
               </div>
 
-              {/* Profile Image */}
+              {/* Rules */}
+              <div className="space-y-3">
+                <FormLabel>{t('HotelForm.label.rules')}</FormLabel>
+
+                {/* Common Rules */}
+                <div className="mt-2 grid grid-cols-2 gap-4">
+                  <FormField
+                    control={form.control}
+                    name="allowPets"
+                    render={({ field }) => (
+                      <FormItem className="flex flex-row items-end space-x-3 rounded-md border p-4">
+                        <FormControl>
+                          <Checkbox
+                            checked={field.value}
+                            onCheckedChange={field.onChange}
+                            disabled={isLoading || viewOnly}
+                          />
+                        </FormControl>
+                        <FormLabel className="w-full cursor-pointer">{t('HotelForm.label.allowPets')}</FormLabel>
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="allowSmoking"
+                    render={({ field }) => (
+                      <FormItem className="flex flex-row items-end space-x-3 rounded-md border p-4">
+                        <FormControl>
+                          <Checkbox
+                            checked={field.value}
+                            onCheckedChange={field.onChange}
+                            disabled={isLoading || viewOnly}
+                          />
+                        </FormControl>
+                        <FormLabel className="w-full cursor-pointer">{t('HotelForm.label.allowSmoking')}</FormLabel>
+                      </FormItem>
+                    )}
+                  />
+                </div>
+
+                {/* Check In Time */}
+                <div>
+                  <span className="text-sm font-medium">{t('HotelForm.label.checkIn')}</span>
+                  <div className="flex w-full items-start gap-4">
+                    <FormField
+                      control={form.control}
+                      name="timeRules.checkIn.start"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormControl>
+                            <TimeSelect value={field.value} onChange={field.onChange} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="timeRules.checkIn.end"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormControl>
+                            <TimeSelect value={field.value} onChange={field.onChange} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <Button
+                      size="icon"
+                      variant="ghost"
+                      className="font-base"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        // form.resetField('timeRules.checkIn.start');
+                        // form.resetField('timeRules.checkIn.end');
+                        form.setValue('timeRules.checkIn.start', undefined);
+                        form.setValue('timeRules.checkIn.end', undefined);
+                      }}
+                    >
+                      <XIcon size={14} />
+                    </Button>
+                  </div>
+                </div>
+
+                {/* Check Out Time */}
+                <div>
+                  <span className="text-sm font-medium">{t('HotelForm.label.checkOut')}</span>
+                  <div className="flex w-full items-start gap-4">
+                    <FormField
+                      control={form.control}
+                      name="timeRules.checkOut.start"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormControl>
+                            <TimeSelect value={field.value} onChange={field.onChange} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="timeRules.checkOut.end"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormControl>
+                            <TimeSelect value={field.value} onChange={field.onChange} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <Button
+                      size="icon"
+                      variant="ghost"
+                      className="font-base"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        // form.resetField('timeRules.checkOut.start');
+                        // form.resetField('timeRules.checkOut.end');
+                        form.setValue('timeRules.checkOut.start', undefined);
+                        form.setValue('timeRules.checkOut.end', undefined);
+                      }}
+                    >
+                      <XIcon size={14} />
+                    </Button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Cover Image */}
               <FormField
                 control={form.control}
                 name="imageUrl"

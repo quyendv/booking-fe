@@ -229,17 +229,32 @@ export default function MyBookingCard({ booking, isCustomer = false }: MyBooking
               })}
             </p>
             <p>
-              {t('RoomCard.bookingDetails.checkIn', {
-                date: format(new Date(booking.startDate), 'dd/MM/yyyy'),
-                hour: '9AM',
-              })}
-              {/* TODO: dynamic */}
+              {booking.timeRules.checkIn.start
+                ? booking.timeRules.checkIn.end
+                  ? t('RoomCard.bookingDetails.checkInBetween', {
+                      date: format(new Date(booking.startDate), 'dd/MM/yyyy'),
+                      start: booking.timeRules.checkIn.start,
+                      end: booking.timeRules.checkIn.end,
+                    })
+                  : t('RoomCard.bookingDetails.checkInAfter', {
+                      date: format(new Date(booking.startDate), 'dd/MM/yyyy'),
+                      hour: booking.timeRules.checkIn.start,
+                    })
+                : t('RoomCard.bookingDetails.checkIn', { date: format(new Date(booking.startDate), 'dd/MM/yyyy') })}
             </p>
             <p>
-              {t('RoomCard.bookingDetails.checkOut', {
-                date: format(new Date(booking.endDate), 'dd/MM/yyyy'),
-                hour: '9AM',
-              })}
+              {booking.timeRules.checkOut.end
+                ? booking.timeRules.checkOut.start
+                  ? t('RoomCard.bookingDetails.checkOutBetween', {
+                      date: format(new Date(booking.endDate), 'dd/MM/yyyy'),
+                      start: booking.timeRules.checkOut.start,
+                      end: booking.timeRules.checkOut.end,
+                    })
+                  : t('RoomCard.bookingDetails.checkOutBefore', {
+                      date: format(new Date(booking.endDate), 'dd/MM/yyyy'),
+                      end: booking.timeRules.checkOut.end,
+                    })
+                : t('RoomCard.bookingDetails.checkOut', { date: format(new Date(booking.endDate), 'dd/MM/yyyy') })}
             </p>
 
             {booking.breakFastIncluded && <p>{t('RoomCard.bookingDetails.breakfast')}</p>}
