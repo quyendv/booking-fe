@@ -23,7 +23,7 @@ export const routeConfig = {
   A_MANAGE_HOTELS: `/system/admin/hotels`,
   A_MANAGE_RECEPTIONISTS: `/system/admin/receptionists`,
   A_MANAGE_ROOMS: `/system/admin/rooms`,
-  MANAGE_HOTEL_DETAILS: (hotelId: number) => `/system/admin/hotels/${hotelId}`,
+  A_MANAGE_HOTEL_DETAILS: (hotelId: number) => `/system/admin/hotels/${hotelId}`,
 
   // Hotel
   MY_HOTEL: '/system/hotel',

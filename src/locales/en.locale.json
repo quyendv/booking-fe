@@ -34,7 +34,7 @@
     "invalidCredentials": "Invalid credentials. Please try again.",
     "unknownError": "Unknown error. Please contact system administrator",
     "signUpLink": "Don't have an account? Sign up",
-    "success": "Sign in successful",
+    "success": "🎉 Sign in successful",
     "failed": "Sign in failed"
   },
   "SignUp": {

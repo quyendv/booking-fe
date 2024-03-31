@@ -42,11 +42,11 @@ export default function SignInPage() {
       if (type === 'form') {
         form.setError('email', { message });
       } else if (type === 'toast') {
-        toast({ title: t('failed'), description: message }); // TODO: localize msg
+        toast({ title: t('failed'), description: message, variant: 'destructive' }); // TODO: localize msg
       }
     } else {
       // show toast, redirect (with delay)
-      toast({ title: message });
+      toast({ title: message, variant: 'success' });
     }
   }
 

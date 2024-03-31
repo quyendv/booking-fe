@@ -2,17 +2,25 @@ import Rating, { RatingProps } from '@mui/material/Rating';
 import { useState } from 'react';
 import { cn } from '~/utils/ui.util';
 
+// const labels: { [index: string]: string } = {
+//   0.5: 'useless',
+//   1: 'useless+',
+//   1.5: 'poor',
+//   2: 'poor+',
+//   2.5: 'ok',
+//   3: 'ok+',
+//   3.5: 'good',
+//   4: 'good+',
+//   4.5: 'excellent',
+//   5: 'excellent+',
+// };
+
 const labels: { [index: string]: string } = {
-  0.5: 'useless',
-  1: 'useless+',
-  1.5: 'poor',
-  2: 'poor+',
-  2.5: 'ok',
-  3: 'ok+',
-  3.5: 'good',
-  4: 'good+',
-  4.5: 'excellent',
-  5: 'excellent+',
+  1: 'useless',
+  2: 'poor',
+  3: 'ok',
+  4: 'good',
+  5: 'excellent',
 };
 
 function getLabelText(value: number) {
@@ -22,11 +30,19 @@ function getLabelText(value: number) {
 type Props = RatingProps & {
   stars: number;
   className?: string;
+  precision?: number;
   onRateChange?: (value: number) => void;
   localeConverter: (value: string) => string;
 };
 
-export default function StyledRating({ stars, className = '', onRateChange, localeConverter, ...ratingProps }: Props) {
+export default function StyledRating({
+  stars,
+  precision = 1,
+  className = '',
+  onRateChange,
+  localeConverter,
+  ...ratingProps
+}: Props) {
   const [hover, setHover] = useState(-1);
 
   return (
@@ -35,7 +51,7 @@ export default function StyledRating({ stars, className = '', onRateChange, loca
         // name="styled-rating"
         value={stars}
         defaultValue={5}
-        precision={0.5}
+        precision={precision}
         getLabelText={getLabelText}
         onChange={(_event, newValue) => {
           if (onRateChange) {

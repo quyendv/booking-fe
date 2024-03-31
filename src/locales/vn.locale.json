@@ -34,7 +34,7 @@
     "invalidCredentials": "Email hoặc mật khẩu không đúng",
     "unknownError": "Lỗi không xác định. Liên hệ với quản trị viên",
     "signUpLink": "Chưa có tài khoản? Đăng ký",
-    "success": "Đăng nhập thành công",
+    "success": "🎉 Đăng nhập thành công",
     "failed": "Đăng nhập thất bại"
   },
   "SignUp": {

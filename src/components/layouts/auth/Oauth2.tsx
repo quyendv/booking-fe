@@ -9,7 +9,7 @@ interface OAuth2Props {
 export default function OAuth2({ authMethod, isLoading }: OAuth2Props) {
   return (
     <div className="grid grid-cols-2 gap-6">
-      <Button variant="outline" className="hover:!cursor-not-allowed">
+      <Button variant="outline" className="hover:!cursor-not-allowed" disabled={isLoading}>
         <Icons.facebookColorful className="mr-2 h-6 w-6" />
         Facebook
       </Button>
