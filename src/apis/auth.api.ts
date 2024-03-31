@@ -16,9 +16,16 @@ type VerifyEmailResponse = {
 };
 
 export type SignInResponse = {
-  id: string; // email
+  // id: string; // email
+  // isVerified: boolean;
+  // roleName: UserRole;
+
+  // id: string | number;
+  email: string;
   isVerified: boolean;
-  roleName: UserRole;
+  role: UserRole;
+  name: string;
+  avatar?: string;
 };
 
 export const AuthApi = {

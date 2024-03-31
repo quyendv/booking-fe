@@ -1,5 +1,5 @@
 import AuthGuard from '~/components/guards/auth.guard';
-import Container from '~/components/layouts/Container';
+import Container from '~/components/common/Container';
 import Header from '~/components/layouts/header/Header';
 import GlobalLoading from '~/components/layouts/loading/GlobalLoading';
 
@@ -15,7 +15,8 @@ export default function SystemLayout({ children }: SystemLayoutProps) {
         <main className="z-0 flex min-h-screen flex-col">
           <Header />
           <section className="flex-grow">
-            <Container>{children}</Container>
+            {/* <Container>{children}</Container> */}
+            {children}
           </section>
         </main>
       </AuthGuard>

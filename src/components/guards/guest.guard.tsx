@@ -23,7 +23,7 @@ export default function GuestGuard({ children }: GuestGuardProps) {
   return <>{children}</>;
 }
 
-export function withGuestGuard(Component: React.ComponentType) {
+export function withGuestGuard<T>(Component: React.ComponentType<T>) {
   return function WithGuestGuardWrapper(props: any) {
     return (
       <GuestGuard>

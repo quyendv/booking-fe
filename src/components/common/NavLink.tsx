@@ -7,6 +7,7 @@ import { ILink } from '~/locales/i18nNavigation';
 export default function NavLink({ href, ...rest }: ComponentProps<typeof ILink>) {
   const selectedLayoutSegment = useSelectedLayoutSegment();
   const pathname = selectedLayoutSegment ? `/${selectedLayoutSegment}` : '/';
+  // const pathname = usePathname(); -> pathname.includes(href)
   const isActive = pathname === href;
 
   return (

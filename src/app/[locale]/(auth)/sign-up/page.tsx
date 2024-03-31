@@ -63,10 +63,10 @@ export default function SignUpPage() {
       if (type === 'form') {
         form.setError('email', { message });
       } else if (type === 'toast') {
-        toast({ title: t('failed'), description: message }); // TODO: localize msg
+        toast({ variant: 'destructive', title: t('failed'), description: message }); // TODO: localize msg
       }
     } else {
-      toast({ title: t('success'), description: message });
+      toast({ variant: 'success', title: t('success'), description: message });
       router.push(routeConfig.VERIFY_EMAIL);
     }
   }

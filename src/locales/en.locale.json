@@ -4,6 +4,11 @@
     "signIn": "Sign In",
     "signUp": "Sign Up"
   },
+  "Shared": {
+    "datePicker": {
+      "title": "Pick a date"
+    }
+  },
   "Header": {
     "manageAccount": "Manage account",
     "myBookings": "Bookings & Trips",
@@ -29,7 +34,7 @@
     "invalidCredentials": "Invalid credentials. Please try again.",
     "unknownError": "Unknown error. Please contact system administrator",
     "signUpLink": "Don't have an account? Sign up",
-    "success": "Sign in successful",
+    "success": "🎉 Sign in successful",
     "failed": "Sign in failed"
   },
   "SignUp": {
@@ -67,6 +72,16 @@
     "notEnoughPermission": "You do not have enough permission to access this page.",
     "signIn": "Sign In",
     "goHome": "Go Home"
+  },
+  "Sidebar": {
+    "overview": "Overview",
+    "customers": "Customers",
+    "hotels": "Hotels",
+    "rooms": "rooms",
+    "receptionists": "Receptionists",
+    "my_hotel": "My Hotel",
+    "bookings": "Bookings",
+    "settings": "Settings"
   },
   "HotelForm": {
     "title": {

@@ -2,6 +2,8 @@
 
 import { CalendarIcon } from '@radix-ui/react-icons';
 import { format } from 'date-fns';
+import { useTranslations } from 'next-intl';
+import { useState } from 'react';
 import { DateRange } from 'react-day-picker';
 
 import { Button } from '~/components/ui/button';
@@ -9,15 +11,27 @@ import { Calendar } from '~/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '~/components/ui/popover';
 import { cn } from '~/utils/ui.util';
 
-interface DatePickerWithRangeProps {
-  title: string;
-  date: DateRange | undefined;
-  setDate: React.Dispatch<React.SetStateAction<DateRange | undefined>>;
+interface CalendarDateRangePickerProps {
+  date?: DateRange | undefined;
+  // onDateChange: React.Dispatch<React.SetStateAction<DateRange | undefined>>;
+  onDateChange?: (_date: DateRange | undefined) => void;
+  title?: string;
   className?: string;
+  fromDate?: Date;
   disabledDates?: Date[];
 }
 
-export function DatePickerWithRange({ title, className, date, setDate, disabledDates = [] }: DatePickerWithRangeProps) {
+export function CalendarDateRangePicker({
+  date: initRange,
+  onDateChange,
+  title,
+  className,
+  fromDate,
+  disabledDates = [],
+}: CalendarDateRangePickerProps) {
+  const t = useTranslations('Shared.datePicker');
+  const [date, setDate] = useState<DateRange | undefined>(initRange);
+
   return (
     <div className={cn('grid gap-2', className)}>
       <Popover>
@@ -37,7 +51,7 @@ export function DatePickerWithRange({ title, className, date, setDate, disabledD
                 format(date.from, 'LLL dd, y')
               )
             ) : (
-              <span>{title}</span>
+              <span>{title ?? t('title')}</span>
             )}
           </Button>
         </PopoverTrigger>
@@ -46,9 +60,12 @@ export function DatePickerWithRange({ title, className, date, setDate, disabledD
             initialFocus
             mode="range"
             defaultMonth={date?.from}
-            fromDate={new Date()}
+            fromDate={fromDate}
             selected={date}
-            onSelect={setDate}
+            onSelect={(date) => {
+              setDate(date);
+              if (onDateChange) onDateChange(date);
+            }}
             numberOfMonths={2}
             disabled={disabledDates}
           />
