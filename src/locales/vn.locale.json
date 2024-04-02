@@ -83,6 +83,14 @@
     "bookings": "Đơn hàng",
     "settings": "Cài đặt"
   },
+  "Favorites": {
+    "toast": {
+      "addSuccess": "Thêm vào danh sách yêu thích thành công!",
+      "addFailure": "Thêm vào danh sách yêu thích thất bại!",
+      "removeSuccess": "Đã xóa khỏi danh sách yêu thích!",
+      "removeFailure": "Xóa khỏi danh sách yêu thích thất bại!"
+    }
+  },
   "HotelForm": {
     "title": {
       "create": "Mô tả khách sạn mới",
@@ -159,12 +167,14 @@
       "updateSuccess": "🎉 Cập nhật khách sạn thành công",
       "updateFailure": "Cập nhật thông tin khách sạn thất bại!"
     },
+    "pricePerNight": "đêm",
     "button": {
       "updating": "Đang cập nhật...",
       "update": "Cập nhật",
       "creating": "Đang tạo mới...",
       "create": "Tạo",
-      "view": "Xem chi tiết"
+      "view": "Xem chi tiết",
+      "edit": "Chỉnh sửa"
     },
     "alert": {
       "title": "Bước cuối cùng!",
