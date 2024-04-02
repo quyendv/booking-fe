@@ -67,7 +67,7 @@ const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
    */
   useEffect(() => {
     setIsLoading(true);
-    auth.onIdTokenChanged(async (user) => {
+    const unsubscribe = auth.onIdTokenChanged(async (user) => {
       if (!user) {
         setUser(null);
         setIsAuthenticated(false);
@@ -87,6 +87,7 @@ const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
       }
       setIsLoading(false);
     });
+    return () => unsubscribe();
   }, []);
 
   function setUserInfo(firebaseCredentials: User, serverData: SignInResponse) {
