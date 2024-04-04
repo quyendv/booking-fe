@@ -1,4 +1,5 @@
 import Container from '~/components/common/Container';
+import CustomerLayout from '~/components/common/CustomerLayout';
 import Header from '~/components/layouts/header/Header';
 import GlobalLoading from '~/components/layouts/loading/GlobalLoading';
 
@@ -13,7 +14,9 @@ function MainLayout({ children }: MainLayoutProps) {
       <main className="z-0 flex min-h-screen flex-col">
         <Header />
         <section className="flex-grow">
-          <Container>{children}</Container>
+          <Container>
+            <CustomerLayout>{children}</CustomerLayout>
+          </Container>
         </section>
       </main>
     </>

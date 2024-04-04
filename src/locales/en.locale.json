@@ -83,6 +83,14 @@
     "bookings": "Bookings",
     "settings": "Settings"
   },
+  "Favorites": {
+    "toast": {
+      "addSuccess": "Hotel added to favorites",
+      "addFailure": "Add hotel to favorites failed!",
+      "removeSuccess": "Hotel removed from favorites",
+      "removeFailure": "Remove hotel from favorites failed!"
+    }
+  },
   "HotelForm": {
     "title": {
       "create": "Describe new hotel",
@@ -159,12 +167,14 @@
       "updateSuccess": "🎉 Hotel updated successfully",
       "updateFailure": "Hotel updated failed!"
     },
+    "pricePerNight": "night",
     "button": {
       "updating": "Updating...",
       "update": "Update",
       "creating": "Creating...",
       "create": "Create",
-      "view": "View"
+      "view": "View",
+      "edit": "Edit"
     },
     "alert": {
       "title": "One last step!",
