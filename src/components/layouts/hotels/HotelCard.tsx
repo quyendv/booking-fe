@@ -13,7 +13,7 @@ import useFavoriteHotels from '~/hooks/useFavoriteHotels';
 import { useIPathname, useIRouter } from '~/locales/i18nNavigation';
 import { convertPriceToString } from '~/utils/common.util';
 import { cn } from '~/utils/ui.util';
-import AmenityItem from '../amenities/AmenityItem';
+import AmenityWrapper from '../amenities/AmenityWrapper';
 import { isFavoriteHotel } from '~/utils/favorite.util';
 import { Icons } from '~/components/common/Icons';
 import { MouseEvent, useEffect, useState } from 'react';
@@ -111,20 +111,20 @@ export default function HotelCard({ hotel }: HotelCardProps) {
           <h3 className="text-xl font-semibold">{hotel.name}</h3>
           <div className="text-primary/90">{hotel.description.slice(0, 45)}...</div>
           <div className="space-y-1 text-primary/90">
-            <AmenityItem>
+            <AmenityWrapper>
               <MapPin className="size-4" /> {hotel.address.country}, {hotel.address.province}
-            </AmenityItem>
+            </AmenityWrapper>
             {hotel.swimmingPool && (
-              <AmenityItem>
+              <AmenityWrapper>
                 <FaSwimmer size={18} />
                 {t('HotelForm.label.swimmingPool')}
-              </AmenityItem>
+              </AmenityWrapper>
             )}
             {hotel.gym && (
-              <AmenityItem>
+              <AmenityWrapper>
                 <Dumbbell className="size-4" />
                 {t('HotelForm.label.gym')}
-              </AmenityItem>
+              </AmenityWrapper>
             )}
           </div>
           <div className="flex items-center justify-between">

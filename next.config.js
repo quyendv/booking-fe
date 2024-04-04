@@ -4,7 +4,7 @@ const withNextIntl = require('next-intl/plugin')('./src/locales/i18n.ts');
 const nextConfig = withNextIntl({
   distDir: '.next', // default
   images: {
-    domains: ['lh3.googleusercontent.com', 'firebasestorage.googleapis.com'],
+    // domains: ['lh3.googleusercontent.com', 'firebasestorage.googleapis.com', 'cf.bstatic.com'],
     remotePatterns: [
       {
         protocol: 'https',
@@ -15,6 +15,12 @@ const nextConfig = withNextIntl({
       {
         protocol: 'https',
         hostname: 'firebasestorage.googleapis.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'cf.bstatic.com',
         port: '',
         pathname: '/**',
       },

@@ -2,15 +2,19 @@
 
 import HotelDetails from '~/components/layouts/hotels/HotelDetails';
 import useHotel from '~/hooks/useHotel';
+import useHotelReviews from '~/hooks/useHotelReviews';
 
 interface HotelDetailsProps {
   params: { id: string };
 }
 
 export default function HotelDetailsPage({ params }: HotelDetailsProps) {
-  const { isLoading, data, error } = useHotel(+params.id);
-  if (isLoading) return <div>Loading...</div>;
-  if (error || !data) return <div>Oops! Hotel with given id not found</div>;
+  const hotelResponse = useHotel(+params.id);
+  const reviewsResponse = useHotelReviews(+params.id);
 
-  return <HotelDetails hotel={data} />;
+  if (hotelResponse.isLoading || reviewsResponse.isLoading) return <div>Loading...</div>;
+  if (hotelResponse.error || reviewsResponse.error || !hotelResponse.data || !reviewsResponse.data) {
+    return <div>Oops! Hotel with given id not found</div>;
+  }
+  return <HotelDetails hotel={hotelResponse.data} reviews={reviewsResponse.data} />;
 }
