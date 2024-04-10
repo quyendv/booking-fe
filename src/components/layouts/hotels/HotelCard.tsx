@@ -1,6 +1,6 @@
 'use client';
 
-import { Dumbbell, MapPin } from 'lucide-react';
+import { Dumbbell, MapPin, Star } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { FaHeart, FaSpinner, FaSwimmer } from 'react-icons/fa';
@@ -32,9 +32,9 @@ export default function HotelCard({ hotel }: HotelCardProps) {
 
   const t = useTranslations();
   const router = useIRouter();
-  const pathname = useIPathname();
-  const isMyHotel = pathname.includes(routeConfig.MY_HOTEL);
-  // const isMyHotel = hotel.email === user?.email;
+  // const pathname = useIPathname();
+  // const isMyHotel = pathname.includes(routeConfig.MY_HOTEL);
+  const isMyHotel = hotel.email === user?.email;
 
   useEffect(() => {
     setIsFavorite(isFavoriteHotel(data, hotel));
@@ -77,12 +77,15 @@ export default function HotelCard({ hotel }: HotelCardProps) {
 
   return (
     <div
-      onClick={() => !isMyHotel && router.push(routeConfig.HOTEL_DETAILS(hotel.id))}
-      className={cn('relative z-0 col-span-1 cursor-pointer transition hover:scale-105', isMyHotel && 'cursor-default')}
+      // onClick={() => !isMyHotel && router.push(routeConfig.HOTEL_DETAILS(hotel.id))}
+      onClick={() => router.push(routeConfig.HOTEL_DETAILS(hotel.id))}
+      className={cn(
+        'relative z-0 col-span-1 cursor-pointer transition hover:scale-105' /* isMyHotel && 'cursor-default' */,
+      )}
     >
       {/* Favorite */}
       {user && user.role === UserRole.CUSTOMER && (
-        <div className="absolute left-5 top-5 z-10 transition-all hover:scale-125">
+        <div className="absolute right-5 top-5 z-10 transition-all hover:scale-125">
           {favoriteLoading ? (
             <FaSpinner className="size-6 animate-spin" />
           ) : (
@@ -98,40 +101,36 @@ export default function HotelCard({ hotel }: HotelCardProps) {
       )}
 
       {/* Main Content */}
-      <div className="flex gap-2 rounded-lg border border-primary/10 bg-background/50">
-        <div className="relative aspect-square h-[210px] w-full flex-1 overflow-hidden rounded-s-lg">
-          <Image
-            fill
-            /* need position in parent */ src={hotel.imageUrl}
-            alt={hotel.name}
-            className="h-full w-full object-cover"
-          />
+      <div className="space-y-3 rounded-lg bg-background/50">
+        {/* Cover */}
+        <div className="relative aspect-[4/3] h-auto w-full overflow-hidden">
+          <Image fill src={hotel.imageUrl} alt={hotel.name} className="h-auto w-full rounded-lg object-cover" />
         </div>
-        <div className="flex h-[210px] flex-1 flex-col justify-between gap-1 px-1 py-2 text-sm">
-          <h3 className="text-xl font-semibold">{hotel.name}</h3>
-          <div className="text-primary/90">{hotel.description.slice(0, 45)}...</div>
-          <div className="space-y-1 text-primary/90">
-            <AmenityWrapper>
+
+        {/* Info */}
+        <div className="space-y-1 text-sm">
+          <div className="flex items-center justify-between">
+            <h3 className="text-lg font-medium">{hotel.name}</h3>
+            <p className="flex items-center gap-0.5 font-medium">
+              <Star className="size-4 fill-yellow-500 stroke-yellow-500" />
+              5.0
+            </p>
+          </div>
+          <div className="line-clamp-1 text-primary/90">{hotel.description}</div>
+
+          <div className="text-primary/90">
+            <AmenityWrapper className="text-muted-foreground">
               <MapPin className="size-4" /> {hotel.address.country}, {hotel.address.province}
             </AmenityWrapper>
-            {hotel.swimmingPool && (
-              <AmenityWrapper>
-                <FaSwimmer size={18} />
-                {t('HotelForm.label.swimmingPool')}
-              </AmenityWrapper>
-            )}
-            {hotel.gym && (
-              <AmenityWrapper>
-                <Dumbbell className="size-4" />
-                {t('HotelForm.label.gym')}
-              </AmenityWrapper>
-            )}
           </div>
+
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-1">
+            <div className="flex items-center justify-between gap-1">
               {hotel.rooms.length > 0 && (
                 <>
-                  <span className="text-base font-semibold">{convertPriceToString(hotel.rooms[0].roomPrice)}</span>{' '}
+                  <span className="text-base font-semibold">
+                    {convertPriceToString(Math.min(...hotel.rooms.map((item) => item.roomPrice)))}
+                  </span>{' '}
                   <span className="text-sm text-primary/70">VND/{t('HotelForm.pricePerNight')}</span>
                 </>
               )}

@@ -7,6 +7,7 @@ import { FaSpa, FaSwimmer } from 'react-icons/fa';
 import { MdDryCleaning } from 'react-icons/md';
 import { HotelSchemaWithBookings } from '~/apis/hotel.api';
 import { ReviewSchema } from '~/apis/review.api';
+import { ScrollArea } from '~/components/ui/scroll-area';
 import AmenityWrapper from '../amenities/AmenityWrapper';
 import RoomCard from '../rooms/RoomCard';
 import Gallery from './Gallery';
@@ -114,7 +115,10 @@ export default function HotelDetails({ hotel, reviews }: HotelDetailsProps) {
         </div>
 
         {/* Gallery Section */}
-        <Gallery data={hotel.gallery} />
+        <ScrollArea className="h-[250px] w-full">
+          <Gallery data={hotel.gallery} />
+          {/* <ScrollBar /> */}
+        </ScrollArea>
       </div>
 
       {/* Rooms */}
