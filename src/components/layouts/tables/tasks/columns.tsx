@@ -5,12 +5,13 @@ import { ColumnDef } from '@tanstack/react-table';
 import { Badge } from '~/components/ui/badge';
 import { Checkbox } from '~/components/ui/checkbox';
 
-import { labels, statuses, priorities } from '~/components/layouts/tables/data';
-import { Task } from './schema';
+import { labels, statuses, priorities } from '~/components/layouts/tables/tasks/data';
+import { Task } from '~/components/layouts/tables/tasks/schema';
 import { DataTableColumnHeader } from '~/components/layouts/tables/DataTableColumnHeader';
-import { DataTableRowActions } from '~/components/layouts/tables/DataTableRowActions';
+import { DataTableRowActions } from './Actions';
 
-export const columns: ColumnDef<Task>[] = [
+export const taskColumns: ColumnDef<Task>[] = [
+  // Checkbox Select
   {
     id: 'select',
     header: ({ table }) => (
@@ -32,8 +33,10 @@ export const columns: ColumnDef<Task>[] = [
     enableSorting: false,
     enableHiding: false,
   },
+  // Data
   {
-    accessorKey: 'id',
+    // id: 'any-column-id', // default is accessorKey -> row.getValue(id) // not accessorKey
+    accessorKey: 'id', // key in object type, if object is nested, use: accessorFn: (row) => row.childrenObject.nestedField or row.original.childrenObject.nestedField
     header: ({ column }) => <DataTableColumnHeader column={column} title="Task" />,
     cell: ({ row }) => <div className="w-[80px]">{row.getValue('id')}</div>,
     enableSorting: false,
@@ -91,10 +94,12 @@ export const columns: ColumnDef<Task>[] = [
         </div>
       );
     },
+    // if support filtering in DataTableFacetedFilter
     filterFn: (row, id, value) => {
       return value.includes(row.getValue(id));
     },
   },
+  // Actions
   {
     id: 'actions',
     cell: ({ row }) => <DataTableRowActions row={row} />,
