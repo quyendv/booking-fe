@@ -8,7 +8,7 @@ import { Checkbox } from '~/components/ui/checkbox';
 import { labels, statuses, priorities } from '~/components/layouts/tables/tasks/data';
 import { Task } from '~/components/layouts/tables/tasks/schema';
 import { DataTableColumnHeader } from '~/components/layouts/tables/DataTableColumnHeader';
-import { DataTableRowActions } from './Actions';
+import { TaskDataTableRowActions } from './Actions';
 
 export const taskColumns: ColumnDef<Task>[] = [
   // Checkbox Select
@@ -102,6 +102,6 @@ export const taskColumns: ColumnDef<Task>[] = [
   // Actions
   {
     id: 'actions',
-    cell: ({ row }) => <DataTableRowActions row={row} />,
+    cell: ({ row }) => <TaskDataTableRowActions row={row} />,
   },
 ];

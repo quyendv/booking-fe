@@ -20,11 +20,11 @@ export type UserSchema = {
 export type CustomerSchema = {
   id: string;
   name: string;
-  avatar: string;
-  avatarKey: string;
-  birthday: string;
-  phone: string;
-  gender: GenderTypes;
+  avatar?: string | null;
+  avatarKey?: string | null;
+  birthday?: string | null;
+  phone?: string | null;
+  gender?: GenderTypes | string | null;
   createdAt: string;
 };
 

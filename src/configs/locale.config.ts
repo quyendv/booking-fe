@@ -4,7 +4,7 @@ import { FlagIcons } from '~/components/common/Icons';
 
 export const LocaleConfig = {
   locales: ['en', 'vn'],
-  defaultLocale: 'en',
+  defaultLocale: 'vn',
   localePrefix: 'as-needed' as any,
   localeFlags: [
     { code: 'en', flag: FlagIcons.us },

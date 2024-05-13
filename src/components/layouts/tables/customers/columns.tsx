@@ -1,6 +1,6 @@
 import { ColumnDef } from '@tanstack/react-table';
 import { DataTableColumnHeader } from '~/components/layouts/tables/DataTableColumnHeader';
-// import { DataTableRowActions } from '~/components/layouts/tables/tasks/actions';
+// import { TaskDataTableRowActions } from '~/components/layouts/tables/tasks/actions';
 import { format } from 'date-fns';
 import { CustomerInfo } from '~/apis/customer.api';
 import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar';
@@ -40,7 +40,7 @@ export const customerColumns: ColumnDef<CustomerInfo>[] = [
       return (
         <div className="flex items-center space-x-2">
           <Avatar className="size-8 rounded-full">
-            <AvatarImage src={row.original.avatar} alt="avatar" />
+            <AvatarImage src={row.original.avatar ?? undefined} alt="avatar" />
             <AvatarFallback>{row.original.name.charAt(0).toUpperCase()}</AvatarFallback>
           </Avatar>
           <div className="flex flex-col gap-2">
@@ -128,6 +128,6 @@ export const customerColumns: ColumnDef<CustomerInfo>[] = [
   // Actions
   // {
   //   id: 'actions',
-  //   cell: ({ row }) => <DataTableRowActions row={row} />,
+  //   cell: ({ row }) => <TaskDataTableRowActions row={row} />,
   // },
 ];

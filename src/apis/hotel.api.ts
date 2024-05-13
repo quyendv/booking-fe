@@ -1,4 +1,5 @@
 import { BookingSchema } from './booking.api';
+import { CustomerInfo } from './customer.api';
 import { axiosPrivateInstance } from './instances/axios.instance';
 import { FetchInstance, PrivateFetchInstance } from './instances/fetch.instance';
 
@@ -69,6 +70,10 @@ export type HotelSchema = {
   timeRules: TimeRules;
 };
 
+export type ReceptionistInfo = CustomerInfo & {
+  hotelId: number;
+};
+
 export type TimeRules = {
   timezone: number;
   checkIn: { start?: string; end?: string };
@@ -86,6 +91,28 @@ type UpdateRoomDto = Partial<CreateRoomDto>;
 
 type DeleteResponse = { status: string; message: string };
 
+export type HotelReceptionist = Pick<HotelSchema, 'id' | 'name' | 'email'> & {
+  receptionists: ReceptionistInfo[];
+};
+
+type CreateReceptionistDto = {
+  email: string;
+  name: string;
+  hotelId: number;
+  avatar?: string;
+  avatarKey?: string;
+  phone?: string;
+  birthday?: string;
+  gender?: string;
+  address?: {
+    details: string;
+    ward?: string;
+    district?: string;
+    province: string;
+    country: string;
+  };
+};
+
 export const hotelEndpoints = {
   list: '/hotels',
   getById: (id: number) => `/hotels/${id}`,
@@ -98,9 +125,9 @@ export const hotelEndpoints = {
   createRoom: (hotelId: number) => `/hotels/${hotelId}/rooms`,
   updateRoom: (hotelId: number, roomId: number) => `/hotels/${hotelId}/rooms/${roomId}`,
   deleteRoom: (hotelId: number, roomId: number) => `/hotels/${hotelId}/rooms/${roomId}`,
-  // getGallery: '/hotels/:id/gallery',
-  // createGallery: '/hotels/:id/gallery',
-  // deleteGallery: '/hotels/:id/gallery/:id',
+  listReceptionists: '/receptionists',
+  createReceptionist: '/receptionists',
+  deleteReceptionist: (email: string) => '/receptionists?email=' + email,
 };
 
 export const HotelApi = {
@@ -136,5 +163,28 @@ export const HotelApi = {
 
   async deleteRoom(hotelId: number, roomId: number) {
     return await axiosPrivateInstance.delete<DeleteResponse>(hotelEndpoints.deleteRoom(hotelId, roomId));
+  },
+
+  async listReceptionists() {
+    return await axiosPrivateInstance.get<HotelReceptionist[]>(hotelEndpoints.listReceptionists);
+    // return await new PrivateFetchInstance<HotelReceptionist[]>().get(hotelEndpoints.listReceptionists);
+  },
+
+  async createReceptionist(data: CreateReceptionistDto) {
+    return await axiosPrivateInstance.post<Omit<ReceptionistInfo, 'isVerified'>>(
+      hotelEndpoints.createReceptionist,
+      data,
+    );
+  },
+
+  async updateReceptionist(data: CreateReceptionistDto) {
+    return await axiosPrivateInstance.patch<Omit<ReceptionistInfo, 'isVerified'>>(
+      hotelEndpoints.createReceptionist,
+      data,
+    );
+  },
+
+  async deleteReceptionist(email: string) {
+    return await axiosPrivateInstance.delete<DeleteResponse>(hotelEndpoints.deleteReceptionist(email));
   },
 };

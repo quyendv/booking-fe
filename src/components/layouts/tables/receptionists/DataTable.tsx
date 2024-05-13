@@ -16,18 +16,22 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 import { useState } from 'react';
+import { HotelReceptionist } from '~/apis/hotel.api';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '~/components/ui/table';
 import { DataTablePagination } from '../DataTablePagination';
-import { TaskDataTableToolbar } from './Toolbar';
+import { ReceptionistDataTableToolbar } from './Toolbar';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  hotels: Omit<HotelReceptionist, 'receptionists'>[];
 }
 
-export function TaskDataTable<TData, TValue>({ columns, data }: DataTableProps<TData, TValue>) {
+export function HotelReceptionistDataTable<TData, TValue>({ columns, data, hotels }: DataTableProps<TData, TValue>) {
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
-  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({}); // init hidden columns here
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({
+    createdAt: false,
+  });
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [sorting, setSorting] = useState<SortingState>([]);
 
@@ -50,7 +54,7 @@ export function TaskDataTable<TData, TValue>({ columns, data }: DataTableProps<T
 
   return (
     <div className="relative space-y-4">
-      <TaskDataTableToolbar table={table} />
+      <ReceptionistDataTableToolbar table={table} hotels={hotels} />
       <div className="rounded-md border">
         <Table className="relative">
           <TableHeader>
