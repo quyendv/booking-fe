@@ -52,7 +52,7 @@ export default function SignUpPage() {
         toast({ title: t('failed'), description: message }); // TODO: localize msg
       }
     } else {
-      toast({ title: message });
+      toast({ variant: 'success', title: message });
       router.push(`${routeConfig.VERIFY_EMAIL}?to=${values.email}`);
     }
   }

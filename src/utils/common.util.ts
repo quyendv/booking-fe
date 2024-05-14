@@ -16,3 +16,14 @@ export function roundToNDecimal(value: number, decimal = 2, toFixed = true): num
   const result = Math.round(value * 10 ** decimal) / 10 ** decimal;
   return toFixed ? +result.toFixed(decimal) : result;
 }
+
+export function removeNullishValues(obj: Record<string, any>): Record<string, any> {
+  return Object.fromEntries(
+    Object.entries(obj).map(([key, value]) => {
+      if (typeof value === 'object') {
+        return [key, removeNullishValues(value)];
+      }
+      return [key, value];
+    }),
+  );
+}

@@ -59,7 +59,7 @@ export default function SignInPage() {
         toast({ title: t('failed'), description: message }); // TODO: localize msg
       }
     } else {
-      toast({ title: message });
+      toast({ title: message, variant: 'success' });
     }
   }
 

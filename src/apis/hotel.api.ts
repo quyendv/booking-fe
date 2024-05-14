@@ -6,15 +6,15 @@ import { FetchInstance, PrivateFetchInstance } from './instances/fetch.instance'
 export type AddressSchema = {
   id: number;
   details: string;
-  ward?: string;
-  district?: string;
+  ward?: string | null;
+  district?: string | null;
   province: string;
   country: string;
 };
 
 export type GalleryItem = {
   url: string;
-  key?: string;
+  key?: string | null;
 };
 
 export type RoomSchema = {

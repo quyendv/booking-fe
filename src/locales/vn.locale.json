@@ -7,6 +7,20 @@
   "Shared": {
     "datePicker": {
       "title": "Chọn ngày"
+    },
+    "upload": {
+      "title": "Tải lên hình ảnh",
+      "button": "Chọn một hình ảnh",
+      "dropzone": "Kéo thả ảnh vào đây, hoặc chọn hình ảnh"
+    },
+    "uploadMultiple": {
+      "title": "Thêm các hình ảnh",
+      "button": "Chọn các hình ảnh",
+      "dropzone": "Kéo thả ảnh vào đây, hoặc chọn các hình ảnh",
+      "clear": "Xóa tất cả",
+      "noImage": "Không có hình ảnh nào được chọn",
+      "uploading": "Đang tải lên...",
+      "handling": "Đang xử lý..."
     }
   },
   "Header": {
@@ -143,7 +157,9 @@
       "allowPets": "Cho phép thú cưng",
       "checkIn": "Nhận phòng (Múi giờ +7)",
       "checkOut": "Trả phòng (Múi giờ +7)",
-      "vn": "Việt Nam"
+      "vn": "Việt Nam",
+      "gallery": "Thư viện ảnh",
+      "rooms": "Danh sách phòng"
     },
     "desc": {
       "name": "Nhập tên khách sạn của bạn",
@@ -155,7 +171,8 @@
       "province": "khách sạn của bạn nằm ở tỉnh/thành phố nào?",
       "district": "khách sạn của bạn nằm ở quận nào?",
       "ward": "khách sạn của bạn nằm ở phường/xã nào?",
-      "address": "Cung cấp mô tả chi tiết vị trí của khách sạn của bạn"
+      "address": "Cung cấp mô tả chi tiết vị trí của khách sạn của bạn",
+      "gallery": "Thêm một số hình ảnh khác về khách sạn của bạn"
     },
     "toast": {
       "uploadSuccess": "🎉 Tải lên thành công!",
