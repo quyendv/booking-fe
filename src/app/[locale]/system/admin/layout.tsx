@@ -10,15 +10,5 @@ interface AdminLayoutProps {
 
 export default function AdminLayout({ children }: AdminLayoutProps) {
   // return <RoleGuard allowedRoles={[UserRole.ADMIN]}>{children}</RoleGuard>;
-  return (
-    <RoleGuard allowedRoles={[UserRole.ADMIN]}>
-      <div className="flex h-excludeHeader w-full overflow-hidden">
-        <SideBar />
-        {/* <ScrollArea className="flex-1 overflow-auto">
-          <Container>{children}</Container>
-        </ScrollArea> */}
-        <Container className="flex-1 overflow-auto">{children}</Container>
-      </div>
-    </RoleGuard>
-  );
+  return <RoleGuard allowedRoles={[UserRole.ADMIN]}>{children}</RoleGuard>;
 }

@@ -5,6 +5,10 @@
     "signUp": "Đăng ký"
   },
   "Shared": {
+    "button": {
+      "create": "Tạo mới",
+      "searchHotel": "Tìm kiếm khách sạn"
+    },
     "datePicker": {
       "title": "Chọn ngày"
     },
@@ -106,6 +110,7 @@
     }
   },
   "HotelForm": {
+    "noRating": "Mới",
     "title": {
       "create": "Mô tả khách sạn mới",
       "edit": "Cập nhật thông tin khách sạn"

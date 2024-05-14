@@ -21,6 +21,7 @@ export const routeConfig = {
   A_OVERVIEW: '/system/admin/overview',
   A_MANAGE_CUSTOMERS: '/system/admin/customers',
   A_MANAGE_HOTELS: `/system/admin/hotels`,
+  A_NEW_HOTEL: `/system/admin/hotels/new`,
   A_MANAGE_RECEPTIONISTS: `/system/admin/receptionists`,
   A_MANAGE_ROOMS: `/system/admin/rooms`,
   A_MANAGE_HOTEL_DETAILS: (hotelId: number) => `/system/admin/hotels/${hotelId}`,

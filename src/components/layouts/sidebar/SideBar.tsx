@@ -7,9 +7,11 @@ import { SideBarNav } from './SideBarNav';
 import { useAuth } from '~/contexts/auth.context';
 import { UserRole } from '~/configs/role.config';
 
-interface SideBarProps {}
+interface SideBarProps {
+  className?: string;
+}
 
-export default function SideBar({}: SideBarProps) {
+export default function SideBar({ className }: SideBarProps) {
   const { user } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -22,6 +24,7 @@ export default function SideBar({}: SideBarProps) {
       className={cn(
         'relative h-full border-r pt-8 transition-all ease-linear md:block',
         isOpen ? 'w-48 duration-300' : 'w-[72px] duration-200',
+        className,
       )}
     >
       <BsArrowLeftShort

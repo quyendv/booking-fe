@@ -5,6 +5,10 @@
     "signUp": "Sign Up"
   },
   "Shared": {
+    "button": {
+      "create": "Create New",
+      "searchHotel": "Search Hotels..."
+    },
     "datePicker": {
       "title": "Pick a date"
     },
@@ -106,6 +110,7 @@
     }
   },
   "HotelForm": {
+    "noRating": "New",
     "title": {
       "create": "Describe new hotel",
       "edit": "Update your hotel"
