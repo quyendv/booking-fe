@@ -18,7 +18,6 @@ export default function CustomerLayout({ children }: CustomerLayoutProps) {
     const getFavoriteHotels = async () => {
       const { isSuccess, data } = await FavoriteApi.listFavorites();
       if (isSuccess) {
-        console.log(data);
         setFavoriteHotels(data);
       }
     };

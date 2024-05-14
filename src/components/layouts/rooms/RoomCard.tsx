@@ -57,7 +57,7 @@ import { useAuth } from '~/contexts/auth.context';
 import useBookRoom from '~/hooks/useBookRoom';
 import { useIRouter } from '~/locales/i18nNavigation';
 import { convertPriceToString, splitNumber } from '~/utils/common.util';
-import AmenityItem from '../amenities/AmenityItem';
+import AmenityWrapper from '../amenities/AmenityWrapper';
 import { CalendarDateRangePicker } from '../../common/DateRangePicker';
 import RoomForm from './RoomForm';
 
@@ -223,86 +223,86 @@ export default function RoomCard({
 
         {/* Amenities */}
         <div className="grid grid-cols-2 content-start gap-4 text-sm">
-          <AmenityItem>
+          <AmenityWrapper>
             <Bed className="size-4" /> {room.bedCount} {t('amenities.bed')}
-          </AmenityItem>
-          <AmenityItem>
+          </AmenityWrapper>
+          <AmenityWrapper>
             <Users className="size-4" /> {room.guestCount} {t('amenities.guest')}
-          </AmenityItem>
-          <AmenityItem>
+          </AmenityWrapper>
+          <AmenityWrapper>
             <Bath className="size-4" /> {room.bathroomCount} {t('amenities.bathroom')}
-          </AmenityItem>
+          </AmenityWrapper>
           {room.kingBed > 0 && (
-            <AmenityItem>
+            <AmenityWrapper>
               <BedDouble className="size-4" />
               {room.kingBed} {t('amenities.kingBed')}
-            </AmenityItem>
+            </AmenityWrapper>
           )}
           {room.queenBed > 0 && (
-            <AmenityItem>
+            <AmenityWrapper>
               <Bed className="size-4" />
               {room.queenBed} {t('amenities.queenBed')}
-            </AmenityItem>
+            </AmenityWrapper>
           )}
           {room.roomService && (
-            <AmenityItem>
+            <AmenityWrapper>
               <UtensilsCrossed className="size-4" />
               {t('amenities.roomService')}
-            </AmenityItem>
+            </AmenityWrapper>
           )}
           {room.tv && (
-            <AmenityItem>
+            <AmenityWrapper>
               <Tv className="size-4" />
               {t('amenities.tv')}
-            </AmenityItem>
+            </AmenityWrapper>
           )}
           {room.balcony && (
-            <AmenityItem>
+            <AmenityWrapper>
               <Home className="size-4" />
               {t('amenities.balcony')}
-            </AmenityItem>
+            </AmenityWrapper>
           )}
           {room.freeWifi && (
-            <AmenityItem>
+            <AmenityWrapper>
               <Wifi className="size-4" />
               {t('amenities.freeWifi')}
-            </AmenityItem>
+            </AmenityWrapper>
           )}
           {room.cityView && (
-            <AmenityItem>
+            <AmenityWrapper>
               <Castle className="size-4" />
               {t('amenities.cityView')}
-            </AmenityItem>
+            </AmenityWrapper>
           )}
           {room.oceanView && (
-            <AmenityItem>
+            <AmenityWrapper>
               <Ship className="size-4" />
               {t('amenities.oceanView')}
-            </AmenityItem>
+            </AmenityWrapper>
           )}
           {room.forestView && (
-            <AmenityItem>
+            <AmenityWrapper>
               <Trees className="size-4" />
               {t('amenities.forestView')}
-            </AmenityItem>
+            </AmenityWrapper>
           )}
           {room.mountainView && (
-            <AmenityItem>
+            <AmenityWrapper>
               <MountainSnow className="size-4" />
               {t('amenities.mountainView')}
-            </AmenityItem>
+            </AmenityWrapper>
           )}
           {room.airCondition && (
-            <AmenityItem>
+            <AmenityWrapper>
               <AirVent className="size-4" />
               {t('amenities.airCondition')}
-            </AmenityItem>
+            </AmenityWrapper>
           )}
           {room.soundProofed && (
-            <AmenityItem>
+            <AmenityWrapper>
               <VolumeX className="size-4" />
               {t('amenities.soundProofed')}
-            </AmenityItem>
+            </AmenityWrapper>
           )}
         </div>
 

@@ -6,14 +6,18 @@ import Image from 'next/image';
 import { FaSpa, FaSwimmer } from 'react-icons/fa';
 import { MdDryCleaning } from 'react-icons/md';
 import { HotelSchemaWithBookings } from '~/apis/hotel.api';
-import AmenityItem from '../amenities/AmenityItem';
+import { ReviewSchema } from '~/apis/review.api';
+import { ScrollArea } from '~/components/ui/scroll-area';
+import AmenityWrapper from '../amenities/AmenityWrapper';
 import RoomCard from '../rooms/RoomCard';
+import Gallery from './Gallery';
 
 interface HotelDetailsProps {
   hotel: HotelSchemaWithBookings;
+  reviews: ReviewSchema[];
 }
 
-export default function HotelDetails({ hotel }: HotelDetailsProps) {
+export default function HotelDetails({ hotel, reviews }: HotelDetailsProps) {
   const t = useTranslations();
 
   return (
@@ -24,83 +28,97 @@ export default function HotelDetails({ hotel }: HotelDetailsProps) {
       </div>
 
       {/* Hotel Info */}
-      <div>
-        <h3 className="text-xl font-semibold md:text-3xl">{hotel.name}</h3>
-        <div>
-          <AmenityItem>
+      <div className="space-y-12">
+        {/* Title Section */}
+        <div className="space-y-2.5">
+          <h3 className="text-xl font-semibold md:text-3xl">{hotel.name}</h3>
+          <AmenityWrapper className="text-sm leading-none text-muted-foreground">
             <MapPin size={16} />
             {hotel.address.country}, {hotel.address.province}
             {hotel.address.district ? ', ' + hotel.address.district : ''}
             {hotel.address.ward ? ', ' + hotel.address.ward : ''}
-          </AmenityItem>
+            {hotel.address.details ? ', ' + hotel.address.details : ''}
+          </AmenityWrapper>
         </div>
-        <h3 className="mb-2 mt-4 text-lg font-semibold">{t('HotelDetails.heading.location')}</h3>
-        <p className="mb-2 text-primary/90">{hotel.address.details}</p>
-        <h3 className="mb-2 mt-4 text-lg font-semibold">{t('HotelDetails.heading.about')}</h3>
-        <p className="mb-2 text-primary/90">{hotel.description}</p>
-        <h3 className="mb-2 mt-4 text-lg font-semibold">{t('HotelDetails.heading.amenities')}</h3>
-        <div className="grid grid-cols-2 content-start gap-4 text-sm md:grid-cols-3">
-          {hotel.swimmingPool && (
-            <AmenityItem>
-              <FaSwimmer size={18} />
-              {t('HotelDetails.info.swimmingPool')}
-            </AmenityItem>
-          )}
-          {hotel.gym && (
-            <AmenityItem>
-              <Dumbbell size={18} />
-              {t('HotelDetails.info.gym')}
-            </AmenityItem>
-          )}
-          {hotel.spa && (
-            <AmenityItem>
-              <FaSpa size={18} />
-              {t('HotelDetails.info.spa')}
-            </AmenityItem>
-          )}
-          {hotel.bar && (
-            <AmenityItem>
-              <Wine size={18} />
-              {t('HotelDetails.info.bar')}
-            </AmenityItem>
-          )}
-          {hotel.laundry && (
-            <AmenityItem>
-              <MdDryCleaning size={18} />
-              {t('HotelDetails.info.laundry')}
-            </AmenityItem>
-          )}
-          {hotel.restaurant && (
-            <AmenityItem>
-              <Utensils size={18} />
-              {t('HotelDetails.info.restaurant')}
-            </AmenityItem>
-          )}
-          {hotel.shopping && (
-            <AmenityItem>
-              <ShoppingBasket size={18} />
-              {t('HotelDetails.info.shopping')}
-            </AmenityItem>
-          )}
-          {hotel.freeParking && (
-            <AmenityItem>
-              <Car size={18} />
-              {t('HotelDetails.info.freeParking')}
-            </AmenityItem>
-          )}
-          {hotel.movieNight && (
-            <AmenityItem>
-              <Clapperboard size={18} />
-              {t('HotelDetails.info.movieNight')}
-            </AmenityItem>
-          )}
-          {hotel.coffeeShop && (
-            <AmenityItem>
-              <Wine size={18} />
-              {t('HotelDetails.info.coffeeShop')}
-            </AmenityItem>
-          )}
+
+        {/* About Section */}
+        <div>
+          <h4 className="text-lg font-semibold">{t('HotelDetails.heading.about')}</h4>
+          <p className="text-primary/90">{hotel.description}</p>
         </div>
+
+        {/* Amenities Section */}
+        <div>
+          <h4 className="mb-2 mt-4 text-lg font-semibold">{t('HotelDetails.heading.amenities')}</h4>
+          <div className="grid grid-cols-2 content-start gap-4 text-sm md:grid-cols-3">
+            {hotel.swimmingPool && (
+              <AmenityWrapper>
+                <FaSwimmer size={18} />
+                {t('HotelDetails.info.swimmingPool')}
+              </AmenityWrapper>
+            )}
+            {hotel.gym && (
+              <AmenityWrapper>
+                <Dumbbell size={18} />
+                {t('HotelDetails.info.gym')}
+              </AmenityWrapper>
+            )}
+            {hotel.spa && (
+              <AmenityWrapper>
+                <FaSpa size={18} />
+                {t('HotelDetails.info.spa')}
+              </AmenityWrapper>
+            )}
+            {hotel.bar && (
+              <AmenityWrapper>
+                <Wine size={18} />
+                {t('HotelDetails.info.bar')}
+              </AmenityWrapper>
+            )}
+            {hotel.laundry && (
+              <AmenityWrapper>
+                <MdDryCleaning size={18} />
+                {t('HotelDetails.info.laundry')}
+              </AmenityWrapper>
+            )}
+            {hotel.restaurant && (
+              <AmenityWrapper>
+                <Utensils size={18} />
+                {t('HotelDetails.info.restaurant')}
+              </AmenityWrapper>
+            )}
+            {hotel.shopping && (
+              <AmenityWrapper>
+                <ShoppingBasket size={18} />
+                {t('HotelDetails.info.shopping')}
+              </AmenityWrapper>
+            )}
+            {hotel.freeParking && (
+              <AmenityWrapper>
+                <Car size={18} />
+                {t('HotelDetails.info.freeParking')}
+              </AmenityWrapper>
+            )}
+            {hotel.movieNight && (
+              <AmenityWrapper>
+                <Clapperboard size={18} />
+                {t('HotelDetails.info.movieNight')}
+              </AmenityWrapper>
+            )}
+            {hotel.coffeeShop && (
+              <AmenityWrapper>
+                <Wine size={18} />
+                {t('HotelDetails.info.coffeeShop')}
+              </AmenityWrapper>
+            )}
+          </div>
+        </div>
+
+        {/* Gallery Section */}
+        <ScrollArea className="h-[250px] w-full">
+          <Gallery data={hotel.gallery} />
+          {/* <ScrollBar /> */}
+        </ScrollArea>
       </div>
 
       {/* Rooms */}

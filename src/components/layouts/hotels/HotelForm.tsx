@@ -257,6 +257,7 @@ export default function HotelForm({ hotel, mutateHotel, viewOnly = false }: Hote
                       <Textarea
                         placeholder={t('HotelForm.placeholder.description')}
                         disabled={isLoading}
+                        rows={10}
                         {...field}
                         readOnly={viewOnly}
                       />

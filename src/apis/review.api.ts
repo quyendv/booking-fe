@@ -1,6 +1,6 @@
 import { axiosPrivateInstance } from './instances/axios.instance';
 
-const reviewEndpoints = {
+export const reviewEndpoints = {
   create: '/reviews',
   get: '/reviews',
   listByCustomer: '/reviews/customers',

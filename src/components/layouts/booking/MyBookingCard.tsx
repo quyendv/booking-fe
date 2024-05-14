@@ -29,7 +29,7 @@ import { useAuth } from '~/contexts/auth.context';
 import useBookRoom from '~/hooks/useBookRoom';
 import { useIRouter } from '~/locales/i18nNavigation';
 import { convertPriceToString, splitNumber } from '~/utils/common.util';
-import AmenityItem from '../amenities/AmenityItem';
+import AmenityWrapper from '../amenities/AmenityWrapper';
 import ChangeBookingStatus from './ChangeBookingStatus';
 import ReviewModal from './ReviewModal';
 
@@ -91,13 +91,13 @@ export default function MyBookingCard({ booking, isCustomer = false }: MyBooking
       <CardHeader>
         <CardTitle>{hotel.name}</CardTitle>
         <div className="text-sm font-medium text-muted-foreground">
-          <AmenityItem>
+          <AmenityWrapper>
             <MapPin size={16} />
             {hotel.address.country}, {hotel.address.province}
             {hotel.address.district ? ', ' + hotel.address.district : ''}
             {hotel.address.ward ? ', ' + hotel.address.ward : ''}
             {hotel.address.details ? ', ' + hotel.address.details : ''}
-          </AmenityItem>
+          </AmenityWrapper>
         </div>
 
         <CardTitle>{room.title}</CardTitle>
@@ -111,86 +111,86 @@ export default function MyBookingCard({ booking, isCustomer = false }: MyBooking
 
         {/* Amenities */}
         <div className="grid grid-cols-2 content-start gap-4 text-sm">
-          <AmenityItem>
+          <AmenityWrapper>
             <Bed className="size-4" /> {room.bedCount} {t('RoomCard.amenities.bed')}
-          </AmenityItem>
-          <AmenityItem>
+          </AmenityWrapper>
+          <AmenityWrapper>
             <Users className="size-4" /> {room.guestCount} {t('RoomCard.amenities.guest')}
-          </AmenityItem>
-          <AmenityItem>
+          </AmenityWrapper>
+          <AmenityWrapper>
             <Bath className="size-4" /> {room.bathroomCount} {t('RoomCard.amenities.bathroom')}
-          </AmenityItem>
+          </AmenityWrapper>
           {room.kingBed > 0 && (
-            <AmenityItem>
+            <AmenityWrapper>
               <BedDouble className="size-4" />
               {room.kingBed} {t('RoomCard.amenities.kingBed')}
-            </AmenityItem>
+            </AmenityWrapper>
           )}
           {room.queenBed > 0 && (
-            <AmenityItem>
+            <AmenityWrapper>
               <Bed className="size-4" />
               {room.queenBed} {t('RoomCard.amenities.queenBed')}
-            </AmenityItem>
+            </AmenityWrapper>
           )}
           {room.roomService && (
-            <AmenityItem>
+            <AmenityWrapper>
               <UtensilsCrossed className="size-4" />
               {t('RoomCard.amenities.roomService')}
-            </AmenityItem>
+            </AmenityWrapper>
           )}
           {room.tv && (
-            <AmenityItem>
+            <AmenityWrapper>
               <Tv className="size-4" />
               {t('RoomCard.amenities.tv')}
-            </AmenityItem>
+            </AmenityWrapper>
           )}
           {room.balcony && (
-            <AmenityItem>
+            <AmenityWrapper>
               <Home className="size-4" />
               {t('RoomCard.amenities.balcony')}
-            </AmenityItem>
+            </AmenityWrapper>
           )}
           {room.freeWifi && (
-            <AmenityItem>
+            <AmenityWrapper>
               <Wifi className="size-4" />
               {t('RoomCard.amenities.freeWifi')}
-            </AmenityItem>
+            </AmenityWrapper>
           )}
           {room.cityView && (
-            <AmenityItem>
+            <AmenityWrapper>
               <Castle className="size-4" />
               {t('RoomCard.amenities.cityView')}
-            </AmenityItem>
+            </AmenityWrapper>
           )}
           {room.oceanView && (
-            <AmenityItem>
+            <AmenityWrapper>
               <Ship className="size-4" />
               {t('RoomCard.amenities.oceanView')}
-            </AmenityItem>
+            </AmenityWrapper>
           )}
           {room.forestView && (
-            <AmenityItem>
+            <AmenityWrapper>
               <Trees className="size-4" />
               {t('RoomCard.amenities.forestView')}
-            </AmenityItem>
+            </AmenityWrapper>
           )}
           {room.mountainView && (
-            <AmenityItem>
+            <AmenityWrapper>
               <MountainSnow className="size-4" />
               {t('RoomCard.amenities.mountainView')}
-            </AmenityItem>
+            </AmenityWrapper>
           )}
           {room.airCondition && (
-            <AmenityItem>
+            <AmenityWrapper>
               <AirVent className="size-4" />
               {t('RoomCard.amenities.airCondition')}
-            </AmenityItem>
+            </AmenityWrapper>
           )}
           {room.soundProofed && (
-            <AmenityItem>
+            <AmenityWrapper>
               <VolumeX className="size-4" />
               {t('RoomCard.amenities.soundProofed')}
-            </AmenityItem>
+            </AmenityWrapper>
           )}
         </div>
 
