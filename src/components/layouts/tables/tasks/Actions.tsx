@@ -19,13 +19,13 @@ import {
 } from '~/components/ui/dropdown-menu';
 
 import { labels } from './data';
-import { taskSchema } from '~/app/[locale]/system/admin/customers/schema';
+import { taskSchema } from '~/components/layouts/tables/tasks/schema';
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>;
 }
 
-export function DataTableRowActions<TData>({ row }: DataTableRowActionsProps<TData>) {
+export function TaskDataTableRowActions<TData>({ row }: DataTableRowActionsProps<TData>) {
   const task = taskSchema.parse(row.original);
 
   return (

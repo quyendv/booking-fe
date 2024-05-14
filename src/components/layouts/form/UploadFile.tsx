@@ -1,4 +1,5 @@
 import { LoaderIcon } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import React, { useState } from 'react';
 import { StorageApi } from '~/apis/storage.api';
 import { Button } from '~/components/ui/button';
@@ -40,14 +41,15 @@ const UploadFile = ({ folder = 'default', onUploadComplete, onUploadError }: Pro
   const [uploadResult, setUploadResult] = useState<StorageResult | null>();
   const [loading, setLoading] = useState(false);
 
+  const t = useTranslations('Shared.upload');
+
   const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files?.[0];
 
     if (selectedFile) {
       setLoading(true);
       if (uploadResult) {
-        // delete old file
-        await StorageApi.deleteFile(uploadResult.key);
+        // await StorageApi.deleteFile(uploadResult.key); // TODO: uncomment this line
       }
 
       // upload new file
@@ -63,7 +65,10 @@ const UploadFile = ({ folder = 'default', onUploadComplete, onUploadError }: Pro
   };
 
   return !loading ? (
-    <Input id="file" type="file" onChange={handleFileChange} />
+    <Button variant="outline" className="relative flex items-center">
+      <Input id="file" type="file" onChange={handleFileChange} className="opacity-0" />
+      <span className="absolute left-0 right-0">{t('title')}</span>
+    </Button>
   ) : (
     <Button variant="outline" size="icon" disabled>
       <LoaderIcon className="size-4 animate-spin" />

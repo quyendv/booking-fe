@@ -17,17 +17,17 @@ import {
 } from '@tanstack/react-table';
 import { useState } from 'react';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '~/components/ui/table';
-import { DataTablePagination } from './DataTablePagination';
-import { DataTableToolbar } from './DataTableToolBar';
+import { DataTablePagination } from '../DataTablePagination';
+import { TaskDataTableToolbar } from './Toolbar';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
 }
 
-export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData, TValue>) {
+export function TaskDataTable<TData, TValue>({ columns, data }: DataTableProps<TData, TValue>) {
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
-  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({}); // init hidden columns here
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [sorting, setSorting] = useState<SortingState>([]);
 
@@ -50,7 +50,7 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
 
   return (
     <div className="relative space-y-4">
-      <DataTableToolbar table={table} />
+      <TaskDataTableToolbar table={table} />
       <div className="rounded-md border">
         <Table className="relative">
           <TableHeader>

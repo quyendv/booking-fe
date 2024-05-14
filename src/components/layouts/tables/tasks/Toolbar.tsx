@@ -4,15 +4,15 @@ import { Cross2Icon } from '@radix-ui/react-icons';
 import { Table } from '@tanstack/react-table';
 import { Button } from '~/components/ui/button';
 import { Input } from '~/components/ui/input';
-import { DataTableFacetedFilter } from './DataTableFacetedFilter';
-import { DataTableViewOptions } from './DataTableViewOptions';
+import { DataTableFacetedFilter } from '../DataTableFacetedFilter';
+import { DataTableViewOptions } from '../DataTableViewOptions';
 import { priorities, statuses } from './data';
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>;
 }
 
-export function DataTableToolbar<TData>({ table }: DataTableToolbarProps<TData>) {
+export function TaskDataTableToolbar<TData>({ table }: DataTableToolbarProps<TData>) {
   const isFiltered = table.getState().columnFilters.length > 0;
 
   return (
@@ -20,7 +20,7 @@ export function DataTableToolbar<TData>({ table }: DataTableToolbarProps<TData>)
       <div className="flex flex-1 items-center space-x-2">
         <Input
           placeholder="Filter tasks..."
-          value={(table.getColumn('title')?.getFilterValue() as string) ?? ''}
+          value={(table.getColumn('title')?.getFilterValue() as string) ?? ''} // getColumn('column-id') - not accessorKey
           onChange={(event) => table.getColumn('title')?.setFilterValue(event.target.value)}
           className="h-8 w-[150px] lg:w-[250px]"
         />

@@ -34,6 +34,7 @@ import TimeSelect from '../form/TimeSelect';
 import UploadFile from '../form/UploadFile';
 import RoomCard from '../rooms/RoomCard';
 import RoomForm from '../rooms/RoomForm';
+import UploadMultipleFiles from '../form/UploadMultipleFile';
 
 interface HotelFormProps {
   hotel?: HotelSchema;
@@ -48,7 +49,7 @@ export default function HotelForm({ hotel, mutateHotel, viewOnly = false }: Hote
 
   const gallerySchema = z.object({
     url: z.string().url({ message: t('HotelForm.error.galleryUrl') }),
-    key: z.string().optional(),
+    key: z.string().nullable().optional(),
   });
 
   const formSchema = z.object({
@@ -98,8 +99,8 @@ export default function HotelForm({ hotel, mutateHotel, viewOnly = false }: Hote
             address: hotel.address.details,
             country: hotel.address.country,
             province: hotel.address.province,
-            district: hotel.address?.district,
-            ward: hotel.address?.ward,
+            district: hotel.address?.district ?? undefined,
+            ward: hotel.address?.ward ?? undefined,
           }),
           imageKey: hotel.imageKey ?? undefined,
         }
@@ -130,8 +131,8 @@ export default function HotelForm({ hotel, mutateHotel, viewOnly = false }: Hote
           allowSmoking: false,
           timeRules: {
             timezone: 7,
-            checkIn: { start: undefined, end: undefined },
-            checkOut: { start: undefined, end: undefined },
+            checkIn: { start: '', end: '' },
+            checkOut: { start: '', end: '' },
           },
         },
   });
@@ -223,6 +224,7 @@ export default function HotelForm({ hotel, mutateHotel, viewOnly = false }: Hote
       <h3 className="text-lg font-semibold">{t(!hotel ? 'HotelForm.title.create' : 'HotelForm.title.edit')}</h3>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
+          {/* Hotel Info */}
           <div className="flex flex-col gap-6 md:flex-row">
             {/* Part 1: left */}
             <div className="flex flex-1 flex-col gap-6">
@@ -452,7 +454,7 @@ export default function HotelForm({ hotel, mutateHotel, viewOnly = false }: Hote
               </div>
 
               {/* Rules */}
-              <div className="space-y-3">
+              <div className="space-y-2.5">
                 <FormLabel>{t('HotelForm.label.rules')}</FormLabel>
 
                 {/* Common Rules */}
@@ -493,7 +495,7 @@ export default function HotelForm({ hotel, mutateHotel, viewOnly = false }: Hote
 
                 {/* Check In Time */}
                 <div>
-                  <span className="text-sm font-medium">{t('HotelForm.label.checkIn')}</span>
+                  <span className="text-sm">{t('HotelForm.label.checkIn')}</span>
                   <div className="flex w-full items-start gap-4">
                     <FormField
                       control={form.control}
@@ -519,26 +521,26 @@ export default function HotelForm({ hotel, mutateHotel, viewOnly = false }: Hote
                         </FormItem>
                       )}
                     />
-                    <Button
-                      size="icon"
-                      variant="ghost"
-                      className="font-base"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        // form.resetField('timeRules.checkIn.start');
-                        // form.resetField('timeRules.checkIn.end');
-                        form.setValue('timeRules.checkIn.start', undefined);
-                        form.setValue('timeRules.checkIn.end', undefined);
-                      }}
-                    >
-                      <XIcon size={14} />
-                    </Button>
+                    {(form.getValues('timeRules.checkIn.start') || form.getValues('timeRules.checkIn.end')) && (
+                      <Button
+                        size="icon"
+                        variant="ghost"
+                        className="font-base"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          form.resetField('timeRules.checkIn.start', { defaultValue: '' });
+                          form.resetField('timeRules.checkIn.end', { defaultValue: '' });
+                        }}
+                      >
+                        <XIcon size={14} />
+                      </Button>
+                    )}
                   </div>
                 </div>
 
                 {/* Check Out Time */}
                 <div>
-                  <span className="text-sm font-medium">{t('HotelForm.label.checkOut')}</span>
+                  <span className="text-sm">{t('HotelForm.label.checkOut')}</span>
                   <div className="flex w-full items-start gap-4">
                     <FormField
                       control={form.control}
@@ -564,20 +566,20 @@ export default function HotelForm({ hotel, mutateHotel, viewOnly = false }: Hote
                         </FormItem>
                       )}
                     />
-                    <Button
-                      size="icon"
-                      variant="ghost"
-                      className="font-base"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        // form.resetField('timeRules.checkOut.start');
-                        // form.resetField('timeRules.checkOut.end');
-                        form.setValue('timeRules.checkOut.start', undefined);
-                        form.setValue('timeRules.checkOut.end', undefined);
-                      }}
-                    >
-                      <XIcon size={14} />
-                    </Button>
+                    {(form.getValues('timeRules.checkOut.start') || form.getValues('timeRules.checkOut.end')) && (
+                      <Button
+                        size="icon"
+                        variant="ghost"
+                        className="font-base"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          form.resetField('timeRules.checkOut.start', { defaultValue: '' });
+                          form.resetField('timeRules.checkOut.end', { defaultValue: '' });
+                        }}
+                      >
+                        <XIcon size={14} />
+                      </Button>
+                    )}
                   </div>
                 </div>
               </div>
@@ -616,7 +618,7 @@ export default function HotelForm({ hotel, mutateHotel, viewOnly = false }: Hote
                                 toast({ variant: 'success', description: t('HotelForm.toast.uploadSuccess') });
                               }}
                               onUploadError={() => {
-                                toast({ variant: 'destructive', description: t('HotelForm.toast.uploadFailed') });
+                                toast({ variant: 'destructive', description: t('HotelForm.toast.uploadFailure') });
                               }}
                             />
                           </div>
@@ -752,6 +754,52 @@ export default function HotelForm({ hotel, mutateHotel, viewOnly = false }: Hote
                 )}
               />
 
+              <FormField
+                control={form.control}
+                name="gallery"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>{t('HotelForm.label.gallery')}</FormLabel>
+                    <FormDescription>{t('HotelForm.desc.gallery')}</FormDescription>
+                    <FormControl>
+                      <UploadMultipleFiles
+                        initialFiles={field.value}
+                        onUploadSuccess={(result) => {
+                          toast({
+                            variant: 'success',
+                            description: t('HotelForm.toast.uploadSuccess'),
+                          });
+                          console.log('onUploadSuccess', result);
+                          // field.value = result;
+                          form.setValue('gallery', result);
+                        }}
+                        onUploadError={(_error) => {
+                          toast({
+                            variant: 'destructive',
+                            description: t('HotelForm.toast.uploadFailure'),
+                          });
+                        }}
+                        onRemoveSuccess={(result) => {
+                          toast({
+                            variant: 'success',
+                            description: t('HotelForm.toast.removeSuccess'),
+                          });
+                          console.log('onRemoveSuccess', result);
+                          // field.value = result;
+                          form.setValue('gallery', result);
+                        }}
+                        onRemoveError={(_error) => {
+                          toast({
+                            variant: 'destructive',
+                            description: t('HotelForm.toast.removeFailure'),
+                          });
+                        }}
+                      />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+
               {/* Create Room Alert */}
               {hotel && !hotel.rooms.length && (
                 <Alert className="bg-indigo-600 text-white">
@@ -764,8 +812,10 @@ export default function HotelForm({ hotel, mutateHotel, viewOnly = false }: Hote
                 </Alert>
               )}
 
-              {/* Button */}
-              <div className="flex flex-wrap justify-between gap-2">
+              {/* Button Group */}
+              <div className="mt-5 flex flex-wrap justify-between gap-2">
+                <Separator className="bg-primary/10" />
+
                 {/* Action Form Button */}
                 <Button type="submit" className="max-w-[150px]" disabled={isLoading || viewOnly}>
                   {isLoading ? (
@@ -812,27 +862,27 @@ export default function HotelForm({ hotel, mutateHotel, viewOnly = false }: Hote
                   </Dialog>
                 )}
               </div>
-
-              {/* RoomCard */}
-              {hotel && hotel.rooms.length > 0 && mutateHotel && (
-                <div>
-                  <Separator className="bg-primary/10" />
-                  <h3 className="my-4 text-lg font-semibold">Hotel Rooms</h3>
-                  <div className="grid grid-cols-1 gap-6 2xl:grid-cols-2">
-                    {hotel.rooms.map((room, index) => (
-                      <RoomCard
-                        key={index}
-                        room={room}
-                        hotel={hotel}
-                        mutateHotel={mutateHotel as any}
-                        canManage={!viewOnly}
-                      />
-                    ))}
-                  </div>
-                </div>
-              )}
             </div>
           </div>
+
+          {/* RoomCard */}
+          {hotel && hotel.rooms.length > 0 && mutateHotel && (
+            <div className="mt-10">
+              {/* <Separator className="bg-primary/10" /> */}
+              <h3 className="my-4 text-lg font-semibold">{t('HotelForm.label.rooms')}</h3>
+              <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+                {hotel.rooms.map((room, index) => (
+                  <RoomCard
+                    key={index}
+                    room={room}
+                    hotel={hotel}
+                    mutateHotel={mutateHotel as any}
+                    canManage={!viewOnly}
+                  />
+                ))}
+              </div>
+            </div>
+          )}
         </form>
       </Form>
     </div>

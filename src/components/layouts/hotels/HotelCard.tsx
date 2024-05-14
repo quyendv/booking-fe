@@ -47,7 +47,7 @@ export default function HotelCard({ hotel }: HotelCardProps) {
       setIsFavorite(true);
       addFavoriteHotel(hotel);
     } else {
-      toast({ variant: 'destructive', description: t('Favorites.toast.addFailed') });
+      toast({ variant: 'destructive', description: t('Favorites.toast.addFailure') });
     }
   };
 
@@ -58,7 +58,7 @@ export default function HotelCard({ hotel }: HotelCardProps) {
       setIsFavorite(false);
       removeFavoriteHotel(hotel);
     } else {
-      toast({ variant: 'destructive', description: t('Favorites.toast.removeFailed') });
+      toast({ variant: 'destructive', description: t('Favorites.toast.removeFailure') });
     }
   };
 

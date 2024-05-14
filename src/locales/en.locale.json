@@ -7,6 +7,20 @@
   "Shared": {
     "datePicker": {
       "title": "Pick a date"
+    },
+    "upload": {
+      "title": "Upload an image",
+      "button": "Choose an image",
+      "dropzone": "Drag 'n' drop an image here, or click to select an image"
+    },
+    "uploadMultiple": {
+      "title": "Upload images",
+      "button": "Choose images",
+      "dropzone": "Drag 'n' drop images here, or click to select images",
+      "clear": "Clear all images",
+      "noImage": "No image uploaded yet",
+      "uploading": "Uploading images ...",
+      "handling": "Handling images ..."
     }
   },
   "Header": {
@@ -77,7 +91,7 @@
     "overview": "Overview",
     "customers": "Customers",
     "hotels": "Hotels",
-    "rooms": "rooms",
+    "rooms": "Rooms",
     "receptionists": "Receptionists",
     "my_hotel": "My Hotel",
     "bookings": "Bookings",
@@ -143,7 +157,9 @@
       "allowPets": "Allow Pets",
       "checkIn": "Check In (GMT+7)",
       "checkOut": "Check Out (GMT+7)",
-      "vn": "Viet Nam"
+      "vn": "Viet Nam",
+      "gallery": "Hotel Gallery",
+      "rooms": "Hotel Rooms"
     },
     "desc": {
       "name": "Provide your hotel name",
@@ -155,7 +171,8 @@
       "province": "In which province/city is your property located?",
       "district": "In which district is your property located?",
       "ward": "In which ward is your property located?",
-      "address": "Provide a detailed location description of your hotel"
+      "address": "Provide a detailed location description of your hotel",
+      "gallery": "Choose images that will show-case your hotel nicely!"
     },
     "toast": {
       "uploadSuccess": "🎉 Upload Completed!",
