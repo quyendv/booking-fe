@@ -25,6 +25,7 @@ export type ReviewSchema = {
   id: string;
   customerName: string;
   customerImage: string | undefined | null;
+  customerEmail: string;
   hotelOwnerEmail: string;
   staffRating: number;
   facilityRating: number;
@@ -36,8 +37,8 @@ export type ReviewSchema = {
   bookingId: string;
   roomId: number;
   hotelId: number;
-  customerEmail: string;
   total: number;
+  createdAt: string;
 };
 
 export const ReviewApi = {

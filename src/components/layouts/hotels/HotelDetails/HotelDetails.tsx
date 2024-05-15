@@ -8,9 +8,10 @@ import { MdDryCleaning } from 'react-icons/md';
 import { HotelSchemaWithBookings } from '~/apis/hotel.api';
 import { ReviewSchema } from '~/apis/review.api';
 import { ScrollArea } from '~/components/ui/scroll-area';
-import AmenityWrapper from '../amenities/AmenityWrapper';
-import RoomCard from '../rooms/RoomCard';
-import Gallery from './Gallery';
+import AmenityWrapper from '../../amenities/AmenityWrapper';
+import RoomCard from '../../rooms/RoomCard';
+import Gallery from '../Gallery';
+import HotelDetailReviews from './HotelDetailReviews';
 
 interface HotelDetailsProps {
   hotel: HotelSchemaWithBookings;
@@ -115,10 +116,21 @@ export default function HotelDetails({ hotel, reviews }: HotelDetailsProps) {
         </div>
 
         {/* Gallery Section */}
-        <ScrollArea className="h-[250px] w-full">
-          <Gallery data={hotel.gallery} />
-          {/* <ScrollBar /> */}
-        </ScrollArea>
+        {hotel.gallery.length > 0 && (
+          <div>
+            <h4 className="text-lg font-semibold">{t('HotelDetails.heading.gallery')}</h4>
+            <ScrollArea className="mt-2 h-[350px] w-full">
+              <Gallery data={hotel.gallery} />
+            </ScrollArea>
+          </div>
+        )}
+
+        {reviews.length > 0 && (
+          <div>
+            <h4 className="text-lg font-semibold">{t('HotelDetails.heading.reviews')}</h4>
+            <HotelDetailReviews reviews={reviews} />
+          </div>
+        )}
       </div>
 
       {/* Rooms */}

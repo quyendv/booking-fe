@@ -1,6 +1,6 @@
 'use client';
 
-import HotelDetails from '~/components/layouts/hotels/HotelDetails';
+import HotelDetails from '~/components/layouts/hotels/HotelDetails/HotelDetails';
 import useHotel from '~/hooks/useHotel';
 import useHotelReviews from '~/hooks/useHotelReviews';
 

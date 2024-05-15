@@ -214,8 +214,11 @@
       "location": "Thông tin vị trí",
       "about": "Về khách sạn này",
       "amenities": "Tiện nghi phổ biến",
-      "rooms": "Danh sách phòng"
+      "rooms": "Danh sách phòng",
+      "gallery": "Thư viện ảnh",
+      "reviews": "Đánh giá của khách hàng"
     },
+    "reviews": {},
     "info": {
       "swimmingPool": "Bể bơi",
       "gym": "Phòng gym",

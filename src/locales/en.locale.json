@@ -214,7 +214,9 @@
       "location": "Location Details",
       "about": "About this hotel",
       "amenities": "Popular Amenities",
-      "rooms": "Hotel Rooms"
+      "rooms": "Hotel Rooms",
+      "gallery": "Gallery",
+      "reviews": "Customer Reviews"
     },
     "info": {
       "swimmingPool": "Pool",

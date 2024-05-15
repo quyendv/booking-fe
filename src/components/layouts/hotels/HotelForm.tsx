@@ -521,20 +521,21 @@ export default function HotelForm({ hotel, mutateHotel, viewOnly = false }: Hote
                         </FormItem>
                       )}
                     />
-                    {(form.getValues('timeRules.checkIn.start') || form.getValues('timeRules.checkIn.end')) && (
-                      <Button
-                        size="icon"
-                        variant="ghost"
-                        className="font-base"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          form.resetField('timeRules.checkIn.start', { defaultValue: '' });
-                          form.resetField('timeRules.checkIn.end', { defaultValue: '' });
-                        }}
-                      >
-                        <XIcon size={14} />
-                      </Button>
-                    )}
+                    {!viewOnly &&
+                      (form.getValues('timeRules.checkIn.start') || form.getValues('timeRules.checkIn.end')) && (
+                        <Button
+                          size="icon"
+                          variant="ghost"
+                          className="font-base"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            form.resetField('timeRules.checkIn.start', { defaultValue: '' });
+                            form.resetField('timeRules.checkIn.end', { defaultValue: '' });
+                          }}
+                        >
+                          <XIcon size={14} />
+                        </Button>
+                      )}
                   </div>
                 </div>
 
@@ -566,20 +567,21 @@ export default function HotelForm({ hotel, mutateHotel, viewOnly = false }: Hote
                         </FormItem>
                       )}
                     />
-                    {(form.getValues('timeRules.checkOut.start') || form.getValues('timeRules.checkOut.end')) && (
-                      <Button
-                        size="icon"
-                        variant="ghost"
-                        className="font-base"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          form.resetField('timeRules.checkOut.start', { defaultValue: '' });
-                          form.resetField('timeRules.checkOut.end', { defaultValue: '' });
-                        }}
-                      >
-                        <XIcon size={14} />
-                      </Button>
-                    )}
+                    {!viewOnly &&
+                      (form.getValues('timeRules.checkOut.start') || form.getValues('timeRules.checkOut.end')) && (
+                        <Button
+                          size="icon"
+                          variant="ghost"
+                          className="font-base"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            form.resetField('timeRules.checkOut.start', { defaultValue: '' });
+                            form.resetField('timeRules.checkOut.end', { defaultValue: '' });
+                          }}
+                        >
+                          <XIcon size={14} />
+                        </Button>
+                      )}
                   </div>
                 </div>
               </div>
