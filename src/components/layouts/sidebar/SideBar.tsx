@@ -35,7 +35,7 @@ export default function SideBar({ className }: SideBarProps) {
         onClick={handleToggle}
       />
 
-      <SideBarNav isOpen={isOpen} isAdmin={user?.role === UserRole.ADMIN} />
+      <SideBarNav isOpen={isOpen} role={user?.role} />
     </div>
   );
 }

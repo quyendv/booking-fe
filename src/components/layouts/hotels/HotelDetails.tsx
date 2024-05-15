@@ -125,7 +125,7 @@ export default function HotelDetails({ hotel, reviews }: HotelDetailsProps) {
       <div>
         {hotel.rooms.length > 0 && (
           <div>
-            <h3 className="my-4 text-lg font-semibold">Hotel Rooms</h3>
+            <h3 className="my-4 text-lg font-semibold">{t('HotelDetails.heading.rooms')}</h3>
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
               {hotel.rooms.map((room) => (
                 <RoomCard key={room.id} hotel={hotel} room={room} bookings={hotel.bookings} canBook />

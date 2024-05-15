@@ -213,7 +213,8 @@
     "heading": {
       "location": "Location Details",
       "about": "About this hotel",
-      "amenities": "Popular Amenities"
+      "amenities": "Popular Amenities",
+      "rooms": "Hotel Rooms"
     },
     "info": {
       "swimmingPool": "Pool",
@@ -407,6 +408,9 @@
       "noBooking": "No booking found!"
     },
     "title": "Complete payment to reserve this room!",
+    "payment": {
+      "title": "Select your payment method"
+    },
     "summary": {
       "heading": "Your Booking Summary",
       "checkIn": "You will check-in on {date} at {hour}",

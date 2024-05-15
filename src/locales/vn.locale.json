@@ -213,7 +213,8 @@
     "heading": {
       "location": "Thông tin vị trí",
       "about": "Về khách sạn này",
-      "amenities": "Tiện nghi phổ biến"
+      "amenities": "Tiện nghi phổ biến",
+      "rooms": "Danh sách phòng"
     },
     "info": {
       "swimmingPool": "Bể bơi",
@@ -408,6 +409,9 @@
       "noBooking": "Không tìm thấy phòng đã đặt!"
     },
     "title": "Hoàn tất thanh toán đặt phòng này!",
+    "payment": {
+      "title": "Lựa chọn phương thức thanh toán phù hợp"
+    },
     "summary": {
       "heading": "Thông tin chi tiết",
       "checkIn": "Bạn sẽ nhận phòng vào ngày {date} lúc {hour}",

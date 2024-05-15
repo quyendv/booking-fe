@@ -4,19 +4,33 @@ import { useTranslations } from 'next-intl';
 import { usePathname } from 'next/navigation';
 import { buttonVariants } from '~/components/ui/button';
 import { Tooltip, TooltipContent, TooltipTrigger } from '~/components/ui/tooltip';
-import { adminSidebarItems, hotelSidebarItems } from '~/configs/sidebar.config';
+import { UserRole } from '~/configs/role.config';
+import { adminSidebarItems, hotelSidebarItems, receptionistsSidebarItems } from '~/configs/sidebar.config';
 import { ILink } from '~/locales/i18nNavigation';
 import { cn } from '~/utils/ui.util';
 
 interface SideBarNavProps {
   isOpen: boolean;
-  isAdmin: boolean;
+  role?: UserRole | null;
 }
 
-export function SideBarNav({ isOpen, isAdmin }: SideBarNavProps) {
+const getSidebarItems = (role: SideBarNavProps['role']) => {
+  switch (role) {
+    case UserRole.ADMIN:
+      return adminSidebarItems;
+    case UserRole.HOTEL_MANAGER:
+      return hotelSidebarItems;
+    case UserRole.RECEPTIONIST:
+      return receptionistsSidebarItems;
+    default:
+      return [];
+  }
+};
+
+export function SideBarNav({ isOpen, role }: SideBarNavProps) {
   const t = useTranslations('Sidebar');
 
-  const items = isAdmin ? adminSidebarItems : hotelSidebarItems;
+  const items = getSidebarItems(role);
   const pathname = usePathname(); // /en/system/admin/overview
 
   return (

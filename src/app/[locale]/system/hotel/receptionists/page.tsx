@@ -2,6 +2,8 @@
 
 import Receptionists from '~/components/layouts/system/receptionist/Receptionists';
 
-export default function ReceptionistsPage() {
+interface MyReceptionistProps {}
+
+export default function MyReceptionist({}: MyReceptionistProps) {
   return <Receptionists />;
 }

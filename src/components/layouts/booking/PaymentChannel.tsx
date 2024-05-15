@@ -1,3 +1,4 @@
+import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { Dispatch, SetStateAction } from 'react';
 import { Label } from '~/components/ui/label';
@@ -37,9 +38,11 @@ interface PaymentChannelProps {
 }
 
 export default function PaymentChannel({ channel, setChannel }: PaymentChannelProps) {
+  const t = useTranslations('BookRoom.payment');
+
   return (
     <div>
-      <h3 className="mb-6 text-xl font-semibold">Select your payment method</h3>
+      <h3 className="mb-6 text-xl font-semibold">{t('title')}</h3>
       <RadioGroup defaultValue={channel} className="grid grid-cols-1 gap-4 md:grid-cols-2">
         {paymentChannels.map((channel) => (
           <Tooltip key={channel.id}>
