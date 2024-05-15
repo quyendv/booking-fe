@@ -1,5 +1,4 @@
 import RoleGuard from '~/components/guards/role.guard';
-import Container from '~/components/common/Container';
 import { UserRole } from '~/configs/role.config';
 
 interface HotelLayoutProps {
@@ -7,10 +6,5 @@ interface HotelLayoutProps {
 }
 
 export default function HotelLayout({ children }: HotelLayoutProps) {
-  // return <RoleGuard allowedRoles={[UserRole.HOTEL_MANAGER, UserRole.RECEPTIONIST]}>{children}</RoleGuard>;
-  return (
-    <RoleGuard allowedRoles={[UserRole.HOTEL_MANAGER, UserRole.RECEPTIONIST]}>
-      <Container>{children}</Container>
-    </RoleGuard>
-  );
+  return <RoleGuard allowedRoles={[UserRole.HOTEL_MANAGER, UserRole.RECEPTIONIST]}>{children}</RoleGuard>;
 }

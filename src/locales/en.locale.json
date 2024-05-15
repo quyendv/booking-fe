@@ -5,6 +5,10 @@
     "signUp": "Sign Up"
   },
   "Shared": {
+    "button": {
+      "create": "Create New",
+      "searchHotel": "Search Hotels..."
+    },
     "datePicker": {
       "title": "Pick a date"
     },
@@ -106,6 +110,7 @@
     }
   },
   "HotelForm": {
+    "noRating": "New",
     "title": {
       "create": "Describe new hotel",
       "edit": "Update your hotel"
@@ -208,7 +213,10 @@
     "heading": {
       "location": "Location Details",
       "about": "About this hotel",
-      "amenities": "Popular Amenities"
+      "amenities": "Popular Amenities",
+      "rooms": "Hotel Rooms",
+      "gallery": "Gallery",
+      "reviews": "Customer Reviews"
     },
     "info": {
       "swimmingPool": "Pool",
@@ -402,6 +410,9 @@
       "noBooking": "No booking found!"
     },
     "title": "Complete payment to reserve this room!",
+    "payment": {
+      "title": "Select your payment method"
+    },
     "summary": {
       "heading": "Your Booking Summary",
       "checkIn": "You will check-in on {date} at {hour}",

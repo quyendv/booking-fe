@@ -5,6 +5,10 @@
     "signUp": "Đăng ký"
   },
   "Shared": {
+    "button": {
+      "create": "Tạo mới",
+      "searchHotel": "Tìm kiếm khách sạn"
+    },
     "datePicker": {
       "title": "Chọn ngày"
     },
@@ -106,6 +110,7 @@
     }
   },
   "HotelForm": {
+    "noRating": "Mới",
     "title": {
       "create": "Mô tả khách sạn mới",
       "edit": "Cập nhật thông tin khách sạn"
@@ -208,8 +213,12 @@
     "heading": {
       "location": "Thông tin vị trí",
       "about": "Về khách sạn này",
-      "amenities": "Tiện nghi phổ biến"
+      "amenities": "Tiện nghi phổ biến",
+      "rooms": "Danh sách phòng",
+      "gallery": "Thư viện ảnh",
+      "reviews": "Đánh giá của khách hàng"
     },
+    "reviews": {},
     "info": {
       "swimmingPool": "Bể bơi",
       "gym": "Phòng gym",
@@ -403,6 +412,9 @@
       "noBooking": "Không tìm thấy phòng đã đặt!"
     },
     "title": "Hoàn tất thanh toán đặt phòng này!",
+    "payment": {
+      "title": "Lựa chọn phương thức thanh toán phù hợp"
+    },
     "summary": {
       "heading": "Thông tin chi tiết",
       "checkIn": "Bạn sẽ nhận phòng vào ngày {date} lúc {hour}",

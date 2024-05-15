@@ -16,8 +16,9 @@ const config: Config = {
     },
     extend: {
       spacing: {
-        header: `68px`,
-        excludeHeader: `calc(100vh - 68px)`,
+        header: `var(--header-height)`,
+        // 'exclude-header': `calc(100vh-68px)`, // not working?
+        'exclude-header': `var(--exclude-header)`,
       },
       fontFamily: {
         inter: ['var(--font-inter)'],

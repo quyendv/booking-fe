@@ -10,31 +10,31 @@ import { Checkbox } from '~/components/ui/checkbox';
 
 export const customerColumns: ColumnDef<CustomerInfo>[] = [
   // Checkbox
-  {
-    id: 'select',
-    header: ({ table }) => (
-      <Checkbox
-        checked={table.getIsAllPageRowsSelected() || (table.getIsSomePageRowsSelected() && 'indeterminate')}
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
-        className="translate-y-[2px]"
-      />
-    ),
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
-        className="translate-y-[2px]"
-      />
-    ),
-    enableSorting: false,
-    enableHiding: false,
-  },
+  // {
+  //   id: 'select',
+  //   header: ({ table }) => (
+  //     <Checkbox
+  //       checked={table.getIsAllPageRowsSelected() || (table.getIsSomePageRowsSelected() && 'indeterminate')}
+  //       onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+  //       aria-label="Select all"
+  //       className="translate-y-[2px]"
+  //     />
+  //   ),
+  //   cell: ({ row }) => (
+  //     <Checkbox
+  //       checked={row.getIsSelected()}
+  //       onCheckedChange={(value) => row.toggleSelected(!!value)}
+  //       aria-label="Select row"
+  //       className="translate-y-[2px]"
+  //     />
+  //   ),
+  //   enableSorting: false,
+  //   enableHiding: false,
+  // },
   // Data
   {
     id: 'customer', // id default is accessorKey -> row.getValue(id) // not accessorKey
-    accessorKey: 'id', // key in object type
+    accessorKey: 'name', // key in object type
     header: ({ column }) => <DataTableColumnHeader column={column} title="Customer" />,
     cell: ({ row }) => {
       return (
@@ -45,7 +45,7 @@ export const customerColumns: ColumnDef<CustomerInfo>[] = [
           </Avatar>
           <div className="flex flex-col gap-2">
             <span className="font-medium capitalize">{row.original.name}</span>
-            <span className="max-w-[500px] truncate font-medium text-muted-foreground">{row.getValue('customer')}</span>
+            <span className="max-w-[500px] truncate font-medium text-muted-foreground">{row.original.id}</span>
           </div>
         </div>
       );

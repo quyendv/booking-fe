@@ -29,11 +29,11 @@ export const adminSidebarItems: NavProps[] = [
     link: routeConfig.A_MANAGE_RECEPTIONISTS,
     icon: UsersRound,
   },
-  {
-    title: 'rooms',
-    link: routeConfig.A_MANAGE_ROOMS,
-    icon: Bed,
-  },
+  // {
+  //   title: 'rooms',
+  //   link: routeConfig.A_MANAGE_ROOMS,
+  //   icon: Bed,
+  // },
   {
     title: 'settings',
     link: routeConfig.SETTINGS,
@@ -57,11 +57,44 @@ export const hotelSidebarItems: NavProps[] = [
     link: routeConfig.H_MANAGE_RECEPTIONISTS,
     icon: UsersRound,
   },
+  // {
+  //   title: 'rooms',
+  //   link: routeConfig.H_MANAGE_ROOMS,
+  //   icon: Bed,
+  // },
+  // {
+  //   title: 'bookings',
+  //   link: routeConfig.MY_BOOKINGS,
+  //   icon: TicketCheck,
+  // },
   {
-    title: 'rooms',
-    link: routeConfig.H_MANAGE_ROOMS,
-    icon: Bed,
+    title: 'settings',
+    link: routeConfig.SETTINGS,
+    icon: Settings,
   },
+];
+
+export const receptionistsSidebarItems: NavProps[] = [
+  {
+    title: 'overview',
+    link: routeConfig.H_OVERVIEW,
+    icon: PanelsTopLeft,
+  },
+  {
+    title: 'my_hotel',
+    link: routeConfig.MY_HOTEL,
+    icon: Hotel,
+  },
+  // {
+  //   title: 'receptionists',
+  //   link: routeConfig.H_MANAGE_RECEPTIONISTS,
+  //   icon: UsersRound,
+  // },
+  // {
+  //   title: 'rooms',
+  //   link: routeConfig.H_MANAGE_ROOMS,
+  //   icon: Bed,
+  // },
   // {
   //   title: 'bookings',
   //   link: routeConfig.MY_BOOKINGS,

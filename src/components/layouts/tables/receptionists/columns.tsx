@@ -38,7 +38,7 @@ export const getHotelReceptionistColumns = (
     // Data
     {
       id: 'receptionist',
-      accessorKey: 'id',
+      accessorKey: 'name',
       header: ({ column }) => <DataTableColumnHeader column={column} title="Receptionist" />,
       cell: ({ row }) => {
         return (
@@ -49,9 +49,7 @@ export const getHotelReceptionistColumns = (
             </Avatar>
             <div className="flex flex-col gap-2">
               <span className="font-medium capitalize">{row.original.name}</span>
-              <span className="max-w-[500px] truncate font-medium text-muted-foreground">
-                {row.getValue('receptionist')}
-              </span>
+              <span className="max-w-[500px] truncate font-medium text-muted-foreground">{row.original.id}</span>
             </div>
           </div>
         );
