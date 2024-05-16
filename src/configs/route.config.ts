@@ -1,6 +1,7 @@
 export const routeConfig = {
   // Common
-  HOME: '/',
+  // HOME: '/',
+  HOME: '/hotels',
   ABOUT: '/about',
   SIGN_IN: '/sign-in',
   SIGN_UP: '/sign-up',

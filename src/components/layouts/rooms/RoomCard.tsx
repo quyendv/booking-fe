@@ -162,7 +162,7 @@ export default function RoomCard({
       return toast({ variant: 'destructive', description: t('toast.verifyRequired') });
     }
 
-    if (date?.from && date.to) {
+    if (date?.from && date.to && days > 0) {
       const isTimeRangeOverlap = checkTimeRangeOverlap(
         date.from,
         date.to,
@@ -197,6 +197,7 @@ export default function RoomCard({
           room,
           hotel,
           bookingId: data.id,
+          timeRules: hotel.timeRules,
         });
         setPaymentIntentId(data.paymentId);
         router.push(routeConfig.BOOK_ROOM);

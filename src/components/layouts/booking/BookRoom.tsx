@@ -17,7 +17,7 @@ export default function BookRoom({}: BookRoomProps) {
   const { bookingRoomData } = useBookRoom();
   const [channel, setChannel] = useState('vn_pay');
   const [isLoading, setIsLoading] = useState(false);
-  const t = useTranslations('BookRoom');
+  const t = useTranslations();
   const { toast } = useToast();
 
   async function handlePayment() {
@@ -27,7 +27,7 @@ export default function BookRoom({}: BookRoomProps) {
         const { isSuccess, data } = await BookingApi.createVnpayPaymentUrl(bookingRoomData.bookingId);
         if (isSuccess) {
           toast({
-            description: t('toast.redirecting'),
+            description: t('BookRoom.toast.redirecting'),
             variant: 'success',
           });
           // window.open(data.data, '_blank');
@@ -35,14 +35,14 @@ export default function BookRoom({}: BookRoomProps) {
           // window.location.href = data.data;
         } else {
           toast({
-            description: t('toast.redirectFailed'),
+            description: t('BookRoom.toast.redirectFailed'),
             variant: 'destructive',
           });
         }
       } else {
         toast({
           // title: 'Payment Method',
-          description: t('toast.methodNotSupported'),
+          description: t('BookRoom.toast.methodNotSupported'),
           variant: 'destructive',
         });
         setIsLoading(false);
@@ -50,7 +50,7 @@ export default function BookRoom({}: BookRoomProps) {
     } else {
       toast({
         // title: 'Booking Error',
-        description: t('toast.noBooking'),
+        description: t('BookRoom.toast.noBooking'),
         variant: 'destructive',
       });
     }
@@ -60,7 +60,7 @@ export default function BookRoom({}: BookRoomProps) {
     <div className="mx-auto max-w-[700px] p-8">
       {bookingRoomData ? (
         <>
-          <h3 className="mb-6 text-2xl font-semibold">{t('title')}</h3>
+          <h3 className="mb-6 text-2xl font-semibold">{t('BookRoom.title')}</h3>
           <div className="mb-6">
             <RoomCard room={bookingRoomData.room} hotel={bookingRoomData.hotel} />
           </div>
@@ -69,22 +69,52 @@ export default function BookRoom({}: BookRoomProps) {
 
           <div className="mt-8 flex flex-col gap-4">
             <div className="space-y-1">
-              <h3 className="mb-1 text-xl font-semibold">{t('summary.heading')}</h3>
-              <div>{t('summary.checkIn', { date: format(bookingRoomData.startDate, 'yyyy-MM-dd'), hour: '9AM' })}</div>
-              <div>{t('summary.checkOut', { date: format(bookingRoomData.endDate, 'yyyy-MM-dd'), hour: '9AM' })}</div>
-              {bookingRoomData.breakfastIncluded && <div>{t('summary.breakfast', { hour: '8AM' })}</div>}
+              <h3 className="mb-1 text-xl font-semibold">{t('BookRoom.summary.heading')}</h3>
+              <p>
+                {bookingRoomData.timeRules.checkIn.start
+                  ? bookingRoomData.timeRules.checkIn.end
+                    ? t('RoomCard.bookingDetails.checkInBetween', {
+                        date: format(new Date(bookingRoomData.startDate), 'dd/MM/yyyy'),
+                        start: bookingRoomData.timeRules.checkIn.start,
+                        end: bookingRoomData.timeRules.checkIn.end,
+                      })
+                    : t('RoomCard.bookingDetails.checkInAfter', {
+                        date: format(new Date(bookingRoomData.startDate), 'dd/MM/yyyy'),
+                        hour: bookingRoomData.timeRules.checkIn.start,
+                      })
+                  : t('RoomCard.bookingDetails.checkIn', {
+                      date: format(new Date(bookingRoomData.startDate), 'dd/MM/yyyy'),
+                    })}
+              </p>
+              <p>
+                {bookingRoomData.timeRules.checkOut.end
+                  ? bookingRoomData.timeRules.checkOut.start
+                    ? t('RoomCard.bookingDetails.checkOutBetween', {
+                        date: format(new Date(bookingRoomData.endDate), 'dd/MM/yyyy'),
+                        start: bookingRoomData.timeRules.checkOut.start,
+                        end: bookingRoomData.timeRules.checkOut.end,
+                      })
+                    : t('RoomCard.bookingDetails.checkOutBefore', {
+                        date: format(new Date(bookingRoomData.endDate), 'dd/MM/yyyy'),
+                        end: bookingRoomData.timeRules.checkOut.end,
+                      })
+                  : t('RoomCard.bookingDetails.checkOut', {
+                      date: format(new Date(bookingRoomData.endDate), 'dd/MM/yyyy'),
+                    })}
+              </p>
+              {bookingRoomData.breakfastIncluded && <div>{t('BookRoom.summary.breakfast', { hour: '8AM' })}</div>}
             </div>
             <div className="text-lg font-bold">
-              {t('summary.total')}: {splitNumber(bookingRoomData.totalPrice)} VND
+              {t('BookRoom.summary.total')}: {splitNumber(bookingRoomData.totalPrice)} VND
             </div>
           </div>
 
           <Button onClick={handlePayment} disabled={isLoading} className="mt-4">
-            {isLoading ? t('summary.processPayment') : t('summary.payNow')}
+            {isLoading ? t('BookRoom.summary.processPayment') : t('BookRoom.summary.payNow')}
           </Button>
         </>
       ) : (
-        <div>{t('toast.noBooking')}</div>
+        <div>{t('BookRoom.toast.noBooking')}</div>
       )}
     </div>
   );

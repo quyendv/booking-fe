@@ -109,6 +109,33 @@
       "removeFailure": "Remove hotel from favorites failed!"
     }
   },
+  "HotelFilters": {
+    "trigger": "Filters",
+    "title": "Filter Hotels",
+    "description": "Find the perfect hotel for your trip",
+    "form": {
+      "priceRange": {
+        "title": "Price Range",
+        "description": "Select the nightly price range for your hotels (VND)",
+        "required": "Price range is required",
+        "lengthRequired": "Price range must have 2 values",
+        "min": "Min",
+        "max": "Max"
+      },
+      "rating": {
+        "title": "Rating"
+      },
+      "amenities": {
+        "title": "Amenities",
+        "description": "Select the amenities you want to have in your hotel"
+      },
+      "rules": {
+        "title": "Hotel Rules"
+      },
+      "reset": "Reset",
+      "apply": "Show Results"
+    }
+  },
   "HotelForm": {
     "noRating": "New",
     "title": {
@@ -218,6 +245,19 @@
       "gallery": "Gallery",
       "reviews": "Customer Reviews"
     },
+    "rules": {
+      "heading": "Common Rules",
+      "checkInTitle": "Check In",
+      "checkOutTitle": "Check Out",
+      "smoking": "Smoking",
+      "pets": "Pets",
+      "checkIn": "<highline>Any time</highline> during the day",
+      "checkInAfter": "After <highline>{start}</highline> each day",
+      "checkInBetween": "From <highline>{start}</highline> to <highline>{end}</highline> each day",
+      "checkOut": "<highline>Any time</highline> during the day",
+      "checkOutBefore": "Before <highline>{end}</highline> each day",
+      "checkOutBetween": "From <highline>{start}</highline> to <highline>{end}</highline> each day"
+    },
     "info": {
       "swimmingPool": "Pool",
       "gym": "Gym",
@@ -228,7 +268,8 @@
       "shopping": "Shopping",
       "freeParking": "Free Parking",
       "movieNight": "Movie Night",
-      "coffeeShop": "Coffee Shop"
+      "coffeeShop": "Coffee Shop",
+      "bikeRental": "Bike Rental"
     }
   },
   "MyBookings": {
@@ -411,12 +452,11 @@
     },
     "title": "Complete payment to reserve this room!",
     "payment": {
-      "title": "Select your payment method"
+      "title": "Select your payment method",
+      "pending": "Not available yet"
     },
     "summary": {
       "heading": "Your Booking Summary",
-      "checkIn": "You will check-in on {date} at {hour}",
-      "checkOut": "You will check-out on {date} at {hour}",
       "breakfast": "You will be served breakfast each day at {hour}",
       "total": "Total Price",
       "payNow": "Pay Now",

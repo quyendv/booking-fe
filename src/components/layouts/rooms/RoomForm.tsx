@@ -29,7 +29,7 @@ function RoomForm({ hotel, room, handleToggleDialog, mutateHotel }: RoomFormProp
 
   const gallerySchema = z.object({
     url: z.string().url({ message: t('HotelForm.error.galleryUrl') }),
-    key: z.string().optional(),
+    key: z.string().nullable().optional(),
   });
 
   const formSchema = z.object({
@@ -38,7 +38,7 @@ function RoomForm({ hotel, room, handleToggleDialog, mutateHotel }: RoomFormProp
     imageUrl: z.string().url({ message: t('RoomForm.error.imageUrl') }),
     imageKey: z.string().optional(),
     gallery: z.array(gallerySchema).optional(),
-    bedCount: z.coerce.number().min(1, { message: t('RoomForm.error.bedCount') }), // NOTE: coerce for number
+    bedCount: z.coerce.number().min(1, { message: t('RoomForm.error.bedCount') }), // NOTE: coerce for number, or using onChange={(event) => field.onChange(+event.target.value)}
     guestCount: z.coerce.number().min(1, { message: t('RoomForm.error.guestCount') }),
     bathroomCount: z.coerce.number().min(1, { message: t('RoomForm.error.bathroomCount') }),
     kingBed: z.coerce.number().min(0),

@@ -4,6 +4,5 @@ import { FetchInstance } from '~/apis/instances/fetch.instance';
 
 export default function useHotels() {
   const fetcher = (url: string) => new FetchInstance<HotelOverview[]>().fetcher(url, 'GET');
-  const { isLoading, data, error, mutate } = useSWR(hotelEndpoints.list, fetcher);
-  return { isLoading, data, error, mutate };
+  return useSWR(hotelEndpoints.list, fetcher);
 }

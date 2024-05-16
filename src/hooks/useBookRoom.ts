@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { HotelSchema, RoomSchema } from '~/apis/hotel.api';
+import { HotelSchema, RoomSchema, TimeRules } from '~/apis/hotel.api';
 import { persist } from 'zustand/middleware';
 
 interface BookingRoomData {
@@ -20,6 +20,7 @@ type RoomDataType = {
   startDate: Date;
   endDate: Date;
   bookingId: string;
+  timeRules: TimeRules;
 };
 
 const useBookRoom = create<BookingRoomData>()(
