@@ -1,16 +1,19 @@
 import { create } from 'zustand';
 import { HotelOverview } from '~/apis/hotel.api';
 import { HotelFilterSchema } from '~/components/layouts/hotels/Filters/HotelFilterModal';
-import { HotelSearchBar } from '~/components/layouts/hotels/Filters/SearchBar/HotelSearchBar';
+import { HotelSearchBarSchema } from '~/components/layouts/hotels/Filters/SearchBar/HotelSearchBar';
+import { getFilteredHotels } from '~/utils/hotel.util';
 
-type HookSchema = {
+type HotelFilterHookSchema = {
   filters: HotelFilterSchema;
-  searchBar: HotelSearchBar;
+  searchBar: HotelSearchBarSchema;
   hotels: HotelOverview[];
+  filteredHotels: HotelOverview[];
+  setHotels: (value: HotelOverview[]) => void;
   setFilters: (value: HotelFilterSchema) => void;
+  setSearchBar: (value: HotelSearchBarSchema) => void;
   resetFilters: (onReset?: (value: HotelFilterSchema) => void) => void;
-  setSearchBar: (value: HotelSearchBar) => void;
-  resetSearchBar: (onReset?: (value: HotelSearchBar) => void) => void;
+  resetSearchBar: (onReset?: (value: HotelSearchBarSchema) => void) => void;
 };
 
 const defaultFilterValue: HotelFilterSchema = {
@@ -31,29 +34,51 @@ const defaultFilterValue: HotelFilterSchema = {
   allowSmoking: false,
 };
 
-const defaultSearchBarValue: HotelSearchBar = {
+const defaultSearchBarValue: HotelSearchBarSchema = {
   location: undefined,
   timeRange: undefined,
-  people: {
-    guest: 0,
-  },
+  people: { guest: 0 },
 };
 
-const useHotelFilters = create<HookSchema>((set) => ({
+const useHotelFilters = create<HotelFilterHookSchema>((set) => ({
   filters: defaultFilterValue,
   searchBar: defaultSearchBarValue,
   hotels: [],
-  setFilters: (value: HotelFilterSchema) => set({ filters: value }),
+  filteredHotels: [],
+
+  setHotels: (value: HotelOverview[]) => {
+    set((state) => ({
+      hotels: value,
+      filteredHotels: getFilteredHotels(value, state.filters, state.searchBar),
+    }));
+  },
+
+  setFilters: (value: HotelFilterSchema) => {
+    set((state) => ({ filters: value, filteredHotels: getFilteredHotels(state.hotels, value, state.searchBar) }));
+  },
+
+  setSearchBar: (value: HotelSearchBarSchema) => {
+    set((state) => ({
+      searchBar: value,
+      filteredHotels: getFilteredHotels(state.hotels, state.filters, value),
+    }));
+  },
+
   resetFilters: (onReset) => {
-    set({ filters: defaultFilterValue });
+    set((state) => ({
+      filters: defaultFilterValue,
+      filteredHotels: getFilteredHotels(state.hotels, defaultFilterValue, state.searchBar),
+    }));
     onReset && onReset(defaultFilterValue);
   },
-  setSearchBar: (value: HotelSearchBar) => set({ searchBar: value }),
+
   resetSearchBar: (onReset) => {
-    set({ searchBar: defaultSearchBarValue });
+    set((state) => ({
+      searchBar: defaultSearchBarValue,
+      filteredHotels: getFilteredHotels(state.hotels, state.filters, defaultSearchBarValue),
+    }));
     onReset && onReset(defaultSearchBarValue);
   },
-  setHotelList: (value: HotelOverview[]) => set({ hotels: value }),
 }));
 
 export default useHotelFilters;

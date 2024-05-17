@@ -5,30 +5,9 @@ import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '~/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '~/components/ui/popover';
+import { ScrollArea } from '~/components/ui/scroll-area';
+import { getVNCities } from '~/constants/location.constant';
 import { cn } from '~/utils/ui.util';
-
-const cities = [
-  {
-    value: 'hanoi',
-    label: 'Hà Nội',
-  },
-  {
-    value: 'danang',
-    label: 'Đà Nẵng',
-  },
-  {
-    value: 'hue',
-    label: 'Huế',
-  },
-  {
-    value: 'tp.hcm',
-    label: 'TP Hồ Chí Minh',
-  },
-  {
-    value: 'vinhphuc',
-    label: 'Vĩnh Phúc',
-  },
-];
 
 interface HotelSearchLocationProps {
   value: string | undefined;
@@ -39,6 +18,7 @@ export default function HotelSearchLocation({ value = '', setValue }: HotelSearc
   const [open, setOpen] = useState(false);
   // const [value, setValue] = useState('');
   const t = useTranslations('HotelFilters.searchBar.location');
+  const cities = getVNCities();
 
   return (
     <div aria-label="search-bar-location">
@@ -47,7 +27,7 @@ export default function HotelSearchLocation({ value = '', setValue }: HotelSearc
           <div className="line-clamp-1 flex w-[150px] flex-col justify-between font-semibold">
             <span className="text-xs">{t('label')}</span>
             <span className={cn('text-sm', !value && 'font-normal text-muted-foreground')}>
-              {value ? cities.find((city) => city.value === value)?.label : t('placeholder')}
+              {value ? value : t('placeholder')}
             </span>
           </div>
         </PopoverTrigger>
@@ -57,19 +37,21 @@ export default function HotelSearchLocation({ value = '', setValue }: HotelSearc
             <CommandEmpty>{t('notFound')}</CommandEmpty>
             <CommandGroup>
               <CommandList>
-                {cities.map((city) => (
-                  <CommandItem
-                    key={city.value}
-                    value={city.value}
-                    onSelect={(currentValue) => {
-                      setValue(currentValue === value ? '' : currentValue);
-                      setOpen(false);
-                    }}
-                  >
-                    {city.label}
-                    <CheckIcon className={cn('ml-auto h-4 w-4', value === city.value ? 'opacity-100' : 'opacity-0')} />
-                  </CommandItem>
-                ))}
+                <ScrollArea className="h-[300px]">
+                  {cities.map((city) => (
+                    <CommandItem
+                      key={city.code}
+                      value={city.name}
+                      onSelect={(currentValue) => {
+                        setValue(currentValue === value ? '' : currentValue);
+                        setOpen(false);
+                      }}
+                    >
+                      {city.name}
+                      <CheckIcon className={cn('ml-auto h-4 w-4', value === city.name ? 'opacity-100' : 'opacity-0')} />
+                    </CommandItem>
+                  ))}
+                </ScrollArea>
               </CommandList>
             </CommandGroup>
           </Command>

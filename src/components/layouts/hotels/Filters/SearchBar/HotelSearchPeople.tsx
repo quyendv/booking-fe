@@ -51,6 +51,12 @@ export default function HotelSearchPeople({ guest = 0, setGuest }: HotelSearchPe
             </div>
           </div>
           {/* Adults, Children, ... */}
+          {/* Reset */}
+          <div className="mt-2 flex justify-end border-t pt-2">
+            <Button variant="ghost" size="sm" onClick={() => setGuest(0)}>
+              {t('reset')}
+            </Button>
+          </div>
         </PopoverContent>
       </Popover>
     </div>

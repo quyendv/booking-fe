@@ -25,6 +25,7 @@ import RoomCard from '../../rooms/RoomCard';
 import Gallery from './Gallery';
 import HotelDetailReviews from './HotelDetailReviews';
 import { Switch } from '~/components/ui/switch';
+import { cn } from '~/utils/ui.util';
 
 interface HotelDetailsProps {
   hotel: HotelSchemaWithBookings;
@@ -138,7 +139,7 @@ export default function HotelDetails({ hotel, reviews }: HotelDetailsProps) {
         {hotel.gallery.length > 0 && (
           <div aria-label="gallery">
             <h4 className="mb-2 mt-4 text-xl font-semibold">{t('HotelDetails.heading.gallery')}</h4>
-            <ScrollArea className="mt-2 h-[350px] w-full">
+            <ScrollArea className={cn('mt-2 h-[350px] w-full', hotel.gallery.length < 5 && 'h-[180px]')}>
               <Gallery data={hotel.gallery} />
             </ScrollArea>
           </div>
@@ -151,6 +152,7 @@ export default function HotelDetails({ hotel, reviews }: HotelDetailsProps) {
             <HotelDetailReviews reviews={reviews} />
           </div>
         )}
+
         {/* Rules Section */}
         <div aria-label="rules">
           <h4 className="mb-2 mt-4 text-xl font-semibold">{t('HotelDetails.rules.heading')}</h4>

@@ -1,9 +1,9 @@
 'use client';
 
-import { format } from 'date-fns';
-import { DateRange } from 'react-day-picker';
+import { addDays, differenceInCalendarDays, format } from 'date-fns';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
+import { DateRange } from 'react-day-picker';
 import { Calendar } from '~/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '~/components/ui/popover';
 import { cn } from '~/utils/ui.util';
@@ -16,10 +16,22 @@ interface HotelSearchTimeRangeProps {
 export default function HotelSearchTimeRange({ date, setDate }: HotelSearchTimeRangeProps) {
   // const [date, setDate] = useState<DateRange | undefined>(undefined);
   const t = useTranslations('HotelFilters.searchBar.time');
+  const [open, setOpen] = useState(false);
 
   return (
     <div aria-label="hotel-filter-time">
-      <Popover>
+      <Popover
+        open={open}
+        onOpenChange={(value) => {
+          // NOTE: Handle missing or invalid end date (minimum 1 day difference) before close modal
+          if (value === false && date?.from && (!date?.to || differenceInCalendarDays(date.to, date.from) < 1)) {
+            const from = date.from;
+            const to = addDays(from, 1);
+            setDate({ from, to });
+          }
+          setOpen(value);
+        }}
+      >
         <PopoverTrigger asChild>
           <div className="flex min-w-[200px] cursor-pointer divide-x-2 font-normal">
             <div className="flex flex-1 flex-col pr-4 text-sm font-semibold">

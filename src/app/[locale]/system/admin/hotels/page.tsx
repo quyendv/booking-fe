@@ -4,6 +4,7 @@ import { MapPin, PlusCircle, SearchCode, Star } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
+import EmptyResource from '~/components/common/EmptyResource';
 import { Icons } from '~/components/common/Icons';
 import AmenityWrapper from '~/components/layouts/amenities/AmenityWrapper';
 import { Button } from '~/components/ui/button';
@@ -60,74 +61,59 @@ export default function ListHotel({}: ListHotelProps) {
         </Button>
       </div>
 
-      <div className="mt-8 grid grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
-        {filteredData.map((hotel, index) => (
-          <div
-            onClick={() => router.push(routeConfig.A_MANAGE_HOTEL_DETAILS(hotel.id))}
-            className={cn('relative z-0 col-span-1 transition hover:scale-105 hover:cursor-pointer')}
-            key={index}
-          >
-            {/* <div className="flex flex-col gap-2 rounded-lg border border-primary/10 bg-background/50">
-              <div className="relative aspect-square h-[210px] w-full flex-1 overflow-hidden rounded-s-lg">
-                <Image fill src={hotel.imageUrl} alt={hotel.name} className="h-full w-full object-cover" />
-              </div>
-              <div className="flex h-[210px] flex-1 flex-col justify-between gap-1 px-1 py-2 text-sm">
-                <h3 className="text-xl font-semibold">{hotel.name}</h3>
-                <div className="text-primary/90">{hotel.description.slice(0, 45)}...</div>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-1">
-                    {hotel.rooms.length > 0 && (
-                      <>
-                        <span className="text-base font-semibold">{convertPriceToString(hotel.rooms[0].roomPrice)}</span>{' '}
-                        <span className="text-sm text-primary/70">VND/per night</span>
-                      </>
-                    )}
+      {filteredData.length ? (
+        <div className="mt-8 grid grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+          {filteredData.map((hotel, index) => (
+            <div
+              onClick={() => router.push(routeConfig.A_MANAGE_HOTEL_DETAILS(hotel.id))}
+              className={cn('relative z-0 col-span-1 transition hover:scale-105 hover:cursor-pointer')}
+              key={index}
+            >
+              <div className="space-y-3 rounded-lg bg-background/50">
+                {/* Cover */}
+                <div className="relative aspect-[4/3] h-auto w-full overflow-hidden">
+                  <Image fill src={hotel.imageUrl} alt={hotel.name} className="h-auto w-full rounded-lg object-cover" />
+                </div>
+
+                {/* Info */}
+                <div className="space-y-1 text-sm">
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-lg font-medium">{hotel.name}</h3>
+                    <p className="flex items-center gap-0.5 font-medium">
+                      <Star className="size-4 fill-yellow-500 stroke-yellow-500" />
+                      {hotel.overview.reviews.total === 0
+                        ? t('HotelForm.noRating')
+                        : hotel.overview.reviews.average.toFixed(1)}
+                    </p>
                   </div>
-                </div>
-              </div>
-            </div> */}
-            <div className="space-y-3 rounded-lg bg-background/50">
-              {/* Cover */}
-              <div className="relative aspect-[4/3] h-auto w-full overflow-hidden">
-                <Image fill src={hotel.imageUrl} alt={hotel.name} className="h-auto w-full rounded-lg object-cover" />
-              </div>
+                  <div className="line-clamp-1 text-primary/90">{hotel.description}</div>
 
-              {/* Info */}
-              <div className="space-y-1 text-sm">
-                <div className="flex items-center justify-between">
-                  <h3 className="text-lg font-medium">{hotel.name}</h3>
-                  <p className="flex items-center gap-0.5 font-medium">
-                    <Star className="size-4 fill-yellow-500 stroke-yellow-500" />
-                    {hotel.overview.reviews.total === 0
-                      ? t('HotelForm.noRating')
-                      : hotel.overview.reviews.average.toFixed(1)}
-                  </p>
-                </div>
-                <div className="line-clamp-1 text-primary/90">{hotel.description}</div>
+                  <div className="text-primary/90">
+                    <AmenityWrapper className="text-muted-foreground">
+                      <MapPin className="size-4" /> {hotel.address.country}, {hotel.address.province}
+                    </AmenityWrapper>
+                  </div>
 
-                <div className="text-primary/90">
-                  <AmenityWrapper className="text-muted-foreground">
-                    <MapPin className="size-4" /> {hotel.address.country}, {hotel.address.province}
-                  </AmenityWrapper>
-                </div>
-
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center justify-between gap-1">
-                    {hotel.overview.rooms.minPrice && (
-                      <>
-                        <span className="text-base font-semibold">
-                          {convertPriceToString(hotel.overview.rooms.minPrice)}
-                        </span>{' '}
-                        <span className="text-sm text-primary/70">VND/{t('HotelForm.pricePerNight')}</span>
-                      </>
-                    )}
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center justify-between gap-1">
+                      {hotel.overview.rooms.minPrice && (
+                        <>
+                          <span className="text-base font-semibold">
+                            {convertPriceToString(hotel.overview.rooms.minPrice)}
+                          </span>{' '}
+                          <span className="text-sm text-primary/70">VND/{t('HotelForm.pricePerNight')}</span>
+                        </>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      ) : (
+        <EmptyResource />
+      )}
     </div>
   );
 }

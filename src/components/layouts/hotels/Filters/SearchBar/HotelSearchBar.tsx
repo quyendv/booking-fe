@@ -13,8 +13,6 @@ import HotelSearchLocation from './HotelSearchLocation';
 import HotelSearchPeople from './HotelSearchPeople';
 import HotelSearchTimeRange from './HotelSearchTimeRange';
 
-interface HotelSearchBarProps {}
-
 const formSchema = z.object({
   location: z.string().optional(),
   timeRange: z
@@ -22,34 +20,34 @@ const formSchema = z.object({
     .transform((o) => ({ ...o, from: o.from }))
     .optional(),
   people: z.object({
-    guest: z.number().optional(),
+    guest: z.number().default(0),
     // adult: z.number().optional(),
     // children: z.number().optional(),
     // infant: z.number().optional(),
   }),
 });
 
-export type HotelSearchBar = z.infer<typeof formSchema>;
+export type HotelSearchBarSchema = z.infer<typeof formSchema>;
 
-export default function HotelSearchBar({}: HotelSearchBarProps) {
+export default function HotelSearchBar() {
   const t = useTranslations();
-  const { searchBar, setSearchBar, resetSearchBar } = useHotelFilters();
+  const { searchBar, setSearchBar } = useHotelFilters();
 
-  const form = useForm<HotelSearchBar>({
+  const form = useForm<HotelSearchBarSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: searchBar,
   });
 
-  function onSubmit(values: HotelSearchBar) {
-    toast({
-      title: 'You submitted the following values:',
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(values, null, 2)}</code>
-        </pre>
-      ),
-    });
-    // setSearchBar(values);
+  function onSubmit(values: HotelSearchBarSchema) {
+    // toast({
+    //   title: 'You submitted the following values:',
+    //   description: (
+    //     <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+    //       <code className="text-white">{JSON.stringify(values, null, 2)}</code>
+    //     </pre>
+    //   ),
+    // });
+    setSearchBar(values);
   }
 
   return (

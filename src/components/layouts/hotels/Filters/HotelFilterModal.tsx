@@ -33,20 +33,20 @@ const formSchema = z.object({
   priceRange: z.array(z.coerce.number()).length(2, {
     message: 'Price range must have 2 numbers.',
   }),
-  rating: z.number().min(0).max(5).optional(),
-  gym: z.boolean().optional(),
-  bar: z.boolean().optional(),
-  restaurant: z.boolean().optional(),
-  freeParking: z.boolean().optional(),
-  movieNight: z.boolean().optional(),
-  coffeeShop: z.boolean().optional(),
-  spa: z.boolean().optional(),
-  laundry: z.boolean().optional(),
-  shopping: z.boolean().optional(),
-  bikeRental: z.boolean().optional(),
-  swimmingPool: z.boolean().optional(),
-  allowPets: z.boolean().optional(),
-  allowSmoking: z.boolean().optional(),
+  rating: z.number().min(0).max(5).default(0),
+  gym: z.boolean().default(false),
+  bar: z.boolean().default(false),
+  restaurant: z.boolean().default(false),
+  freeParking: z.boolean().default(false),
+  movieNight: z.boolean().default(false),
+  coffeeShop: z.boolean().default(false),
+  spa: z.boolean().default(false),
+  laundry: z.boolean().default(false),
+  shopping: z.boolean().default(false),
+  bikeRental: z.boolean().default(false),
+  swimmingPool: z.boolean().default(false),
+  allowPets: z.boolean().default(false),
+  allowSmoking: z.boolean().default(false),
 });
 
 export type HotelFilterSchema = z.infer<typeof formSchema>;
@@ -62,14 +62,14 @@ export default function HotelFilterModal({ className }: HotelFilterModalProps) {
   });
 
   function onSubmit(values: HotelFilterSchema) {
-    toast({
-      title: 'You submitted the following values:',
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(values, null, 2)}</code>
-        </pre>
-      ),
-    });
+    // toast({
+    //   title: 'You submitted the following values:',
+    //   description: (
+    //     <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+    //       <code className="text-white">{JSON.stringify(values, null, 2)}</code>
+    //     </pre>
+    //   ),
+    // });
     setFilters(values);
     setIsOpen(false);
   }

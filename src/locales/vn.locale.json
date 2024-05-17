@@ -25,6 +25,10 @@
       "noImage": "Không có hình ảnh nào được chọn",
       "uploading": "Đang tải lên...",
       "handling": "Đang xử lý..."
+    },
+    "emptyResult": {
+      "title": "Không tìm thấy!",
+      "description": "Vui lòng thử lại với bộ lọc khác."
     }
   },
   "Header": {
@@ -154,7 +158,8 @@
         "guest": "Khách",
         "guestDesc": "Có bao nhiêu người sẽ lưu trú?",
         "adult": "Người lớn",
-        "child": "Trẻ em"
+        "child": "Trẻ em",
+        "reset": "Đặt lại"
       }
     }
   },

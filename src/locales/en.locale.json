@@ -25,6 +25,10 @@
       "noImage": "No image uploaded yet",
       "uploading": "Uploading images ...",
       "handling": "Handling images ..."
+    },
+    "emptyResult": {
+      "title": "No resource found!",
+      "description": "Try different filters or remove some filters to see results."
     }
   },
   "Header": {
@@ -154,7 +158,8 @@
         "guest": "Guests",
         "guestDesc": "How many people will be staying?",
         "adult": "Adults",
-        "child": "Children"
+        "child": "Children",
+        "reset": "Reset"
       }
     }
   },
