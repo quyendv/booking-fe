@@ -26,6 +26,8 @@ import Gallery from './Gallery';
 import HotelDetailReviews from './HotelDetailReviews';
 import { Switch } from '~/components/ui/switch';
 import { cn } from '~/utils/ui.util';
+import { useAuth } from '~/contexts/auth.context';
+import { UserRole } from '~/configs/role.config';
 
 interface HotelDetailsProps {
   hotel: HotelSchemaWithBookings;
@@ -33,6 +35,7 @@ interface HotelDetailsProps {
 }
 
 export default function HotelDetails({ hotel, reviews }: HotelDetailsProps) {
+  const { user } = useAuth();
   const t = useTranslations();
 
   return (
@@ -139,7 +142,7 @@ export default function HotelDetails({ hotel, reviews }: HotelDetailsProps) {
         {hotel.gallery.length > 0 && (
           <div aria-label="gallery">
             <h4 className="mb-2 mt-4 text-xl font-semibold">{t('HotelDetails.heading.gallery')}</h4>
-            <ScrollArea className={cn('mt-2 h-[350px] w-full', hotel.gallery.length < 5 && 'h-[180px]')}>
+            <ScrollArea className={cn('mt-2 h-[350px] w-full', hotel.gallery.length <= 5 && 'h-[180px]')}>
               <Gallery data={hotel.gallery} />
             </ScrollArea>
           </div>
@@ -223,7 +226,13 @@ export default function HotelDetails({ hotel, reviews }: HotelDetailsProps) {
           <h3 className="my-4 text-xl font-semibold">{t('HotelDetails.heading.rooms')}</h3>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
             {hotel.rooms.map((room) => (
-              <RoomCard key={room.id} hotel={hotel} room={room} bookings={hotel.bookings} canBook />
+              <RoomCard
+                key={room.id}
+                hotel={hotel}
+                room={room}
+                bookings={hotel.bookings}
+                canBook={!user || user.role === UserRole.CUSTOMER}
+              />
             ))}
           </div>
         </div>

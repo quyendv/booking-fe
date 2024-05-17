@@ -55,7 +55,11 @@ export default function HotelSearchTimeRange({ date, setDate }: HotelSearchTimeR
             fromDate={new Date()}
             defaultMonth={date?.from}
             selected={date}
-            onSelect={setDate}
+            onSelect={(range, _selected, _active, _event) => {
+              // setDate(range); // BUG: cannot reset / clear date range if range undefined?
+              if (!range) setDate({ from: undefined, to: undefined });
+              else setDate(range);
+            }}
             numberOfMonths={2}
           />
         </PopoverContent>

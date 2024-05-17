@@ -2,7 +2,7 @@ import { LoaderIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import React, { useState } from 'react';
 import { StorageApi } from '~/apis/storage.api';
-import { Button } from '~/components/ui/button';
+import { Button, buttonVariants } from '~/components/ui/button';
 import { Input } from '~/components/ui/input';
 
 export interface StorageResult {
@@ -65,10 +65,15 @@ const UploadFile = ({ folder = 'default', onUploadComplete, onUploadError }: Pro
   };
 
   return !loading ? (
-    <Button variant="outline" className="relative flex items-center">
-      <Input id="file" type="file" onChange={handleFileChange} className="opacity-0" />
-      <span className="absolute left-0 right-0">{t('title')}</span>
-    </Button>
+    <div
+      className={buttonVariants({
+        variant: 'outline',
+        className: 'flex-center relative z-0 !cursor-pointer',
+      })}
+    >
+      <Input id="file" type="file" onChange={handleFileChange} className="z-10 opacity-0" />
+      <span className="absolute inset-0 p-2 text-center align-middle">{t('title')}</span>
+    </div>
   ) : (
     <Button variant="outline" size="icon" disabled>
       <LoaderIcon className="size-4 animate-spin" />
