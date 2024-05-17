@@ -168,7 +168,7 @@ export default function HotelDetails({ hotel, reviews }: HotelDetailsProps) {
           </div>
           <div aria-label="time-rule" className="mt-2 space-y-1">
             <div className="flex items-center">
-              <p className="flex w-40 items-center font-semibold">
+              <p className="flex w-40 items-center font-medium">
                 <KeyRound size={18} className="mr-2" />
                 {t('HotelDetails.rules.checkInTitle')}
               </p>
@@ -190,7 +190,7 @@ export default function HotelDetails({ hotel, reviews }: HotelDetailsProps) {
               </p>
             </div>
             <div className="flex items-center">
-              <p className="flex w-40 items-center font-semibold">
+              <p className="flex w-40 items-center font-medium">
                 <KeyRound size={18} className="mr-2" />
                 {t('HotelDetails.rules.checkOutTitle')}
               </p>
@@ -212,38 +212,6 @@ export default function HotelDetails({ hotel, reviews }: HotelDetailsProps) {
               </p>
             </div>
           </div>
-          {/* <p>
-                {hotel.timeRules.checkIn.start
-                  ? hotel.timeRules.checkIn.end
-                    ? t('RoomCard.bookingDetails.checkInBetween', {
-                        date: format(new Date(hotel.startDate), 'dd/MM/yyyy'),
-                        start: hotel.timeRules.checkIn.start,
-                        end: hotel.timeRules.checkIn.end,
-                      })
-                    : t('RoomCard.bookingDetails.checkInAfter', {
-                        date: format(new Date(hotel.startDate), 'dd/MM/yyyy'),
-                        hour: hotel.timeRules.checkIn.start,
-                      })
-                  : t('RoomCard.bookingDetails.checkIn', {
-                      date: format(new Date(hotel.startDate), 'dd/MM/yyyy'),
-                    })}
-              </p>
-              <p>
-                {hotel.timeRules.checkOut.end
-                  ? hotel.timeRules.checkOut.start
-                    ? t('RoomCard.bookingDetails.checkOutBetween', {
-                        date: format(new Date(hotel.endDate), 'dd/MM/yyyy'),
-                        start: hotel.timeRules.checkOut.start,
-                        end: hotel.timeRules.checkOut.end,
-                      })
-                    : t('RoomCard.bookingDetails.checkOutBefore', {
-                        date: format(new Date(hotel.endDate), 'dd/MM/yyyy'),
-                        end: hotel.timeRules.checkOut.end,
-                      })
-                  : t('RoomCard.bookingDetails.checkOut', {
-                      date: format(new Date(hotel.endDate), 'dd/MM/yyyy'),
-                    })}
-              </p> */}
         </div>
       </div>
 

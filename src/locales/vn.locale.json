@@ -134,6 +134,28 @@
       },
       "reset": "Đặt lại",
       "apply": "Hiển thị kết quả"
+    },
+    "searchBar": {
+      "location": {
+        "label": "Địa điểm",
+        "placeholder": "Tìm kiếm điểm đến...",
+        "inputPlaceholder": "Tìm thành phố...",
+        "notFound": "Không tìm thấy thành phố."
+      },
+      "time": {
+        "checkIn": "Nhận phòng",
+        "checkOut": "Trả phòng",
+        "placeholder": "Chọn ngày"
+      },
+      "people": {
+        "label": "Người",
+        "placeholder": "Thêm khách",
+        "data": "{guest, plural, =1 {1 khách} other {# khách}}",
+        "guest": "Khách",
+        "guestDesc": "Có bao nhiêu người sẽ lưu trú?",
+        "adult": "Người lớn",
+        "child": "Trẻ em"
+      }
     }
   },
   "HotelForm": {

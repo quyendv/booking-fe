@@ -75,7 +75,8 @@ export default function HotelDetailReviews({ reviews }: HotelDetailReviewsProps)
             {/* Reviews */}
             <div className="space-y-2">
               <p className="flex size-4 items-center">
-                <Rating value={review.total} precision={0.1} readOnly size="small" /> ({review.total})
+                <Rating value={review.total} precision={0.1} readOnly size="small" className="mr-1" />
+                {review.total.toFixed(1)}
               </p>
               <p>{review.comment}</p>
             </div>

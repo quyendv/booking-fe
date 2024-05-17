@@ -134,6 +134,28 @@
       },
       "reset": "Reset",
       "apply": "Show Results"
+    },
+    "searchBar": {
+      "location": {
+        "label": "Where",
+        "placeholder": "Search destination...",
+        "inputPlaceholder": "Search city...",
+        "notFound": "No city founded."
+      },
+      "time": {
+        "checkIn": "Check in",
+        "checkOut": "Check out",
+        "placeholder": "Add dates"
+      },
+      "people": {
+        "label": "People",
+        "placeholder": "Add guests",
+        "data": "{guest, plural, =1 {1 guest} other {# guests}}",
+        "guest": "Guests",
+        "guestDesc": "How many people will be staying?",
+        "adult": "Adults",
+        "child": "Children"
+      }
     }
   },
   "HotelForm": {
