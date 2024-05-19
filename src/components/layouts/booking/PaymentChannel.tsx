@@ -4,6 +4,7 @@ import { Dispatch, SetStateAction } from 'react';
 import { Label } from '~/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '~/components/ui/radio-group';
 import { Tooltip, TooltipContent, TooltipTrigger } from '~/components/ui/tooltip';
+import { cn } from '~/utils/ui.util';
 
 const paymentChannels = [
   {
@@ -47,7 +48,7 @@ export default function PaymentChannel({ channel, setChannel }: PaymentChannelPr
         {paymentChannels.map((channel) => (
           <Tooltip key={channel.id}>
             <TooltipTrigger asChild>
-              <div className="curser-pointer flex-center space-x-5 rounded-md border border-transparent p-2 hover:border-primary/30 has-[button[data-state=checked]]:border-indigo-500 has-[button:disabled]:opacity-50">
+              <div className="curser-pointer flex-center relative space-x-5 rounded-md border border-transparent p-2 hover:border-primary/30 has-[button[data-state=checked]]:border-indigo-500 has-[button:disabled]:opacity-50">
                 <RadioGroupItem
                   value={channel.id}
                   id={channel.id}
@@ -55,8 +56,8 @@ export default function PaymentChannel({ channel, setChannel }: PaymentChannelPr
                   disabled={!channel.isEnabled}
                   onChange={() => setChannel(channel.id)}
                 />
-                <Label htmlFor={channel.id} className="flex-center !m-0">
-                  <div className="relative aspect-square h-44 overflow-hidden">
+                <Label htmlFor={channel.id} className="flex-center relative !m-0 flex-col">
+                  <div className="aspect-square h-44 overflow-hidden">
                     <Image
                       src={channel.image}
                       alt={channel.name}
@@ -64,10 +65,19 @@ export default function PaymentChannel({ channel, setChannel }: PaymentChannelPr
                       fill
                       className="cursor-pointer object-contain"
                     />
-                    {/* <img src={channel.image} alt={channel.name} className="cursor-pointer object-contain" /> */}
                   </div>
-                  {/* <div className="text-lg font-semibold">{channel.name}</div> */}
+
+                  {/* <div className={cn('text-lg font-semibold')}>
+                    {channel.name}
+                    {!channel.isEnabled && <span className="text-sm text-muted-foreground"> ({t('pending')})</span>}
+                  </div> */}
                 </Label>
+                <span
+                  className={cn(
+                    'absolute right-2 top-2 size-2 rounded-full bg-green-500',
+                    !channel.isEnabled && 'bg-red-500',
+                  )}
+                ></span>
               </div>
             </TooltipTrigger>
             <TooltipContent>{channel.name}</TooltipContent>

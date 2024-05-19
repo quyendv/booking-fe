@@ -70,6 +70,7 @@ export default function MyBookingCard({ booking, isCustomer = false }: MyBooking
       room,
       hotel,
       bookingId: booking.id,
+      timeRules: booking.timeRules,
     });
     setPaymentIntentId(booking.paymentId);
     router.push(routeConfig.BOOK_ROOM);

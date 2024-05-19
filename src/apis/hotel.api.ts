@@ -24,7 +24,6 @@ export type RoomSchema = {
   imageUrl: string;
   imageKey?: string;
   gallery: GalleryItem[];
-  // hotel: HotelEntity;
   bedCount: number;
   guestCount: number;
   bathroomCount: number;
@@ -42,6 +41,7 @@ export type RoomSchema = {
   mountainView: boolean;
   airCondition: boolean;
   soundProofed: boolean;
+  occupiedTimes: [string, string][];
 };
 
 export type HotelSchema = {
@@ -115,6 +115,7 @@ type CreateReceptionistDto = {
 
 export type HotelOverview = HotelSchema & {
   address: AddressSchema;
+  rooms: RoomSchema[];
   overview: {
     rooms: { total: number; minPrice: number | null };
     reviews: { total: number; average: number };

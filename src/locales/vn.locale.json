@@ -25,6 +25,10 @@
       "noImage": "Không có hình ảnh nào được chọn",
       "uploading": "Đang tải lên...",
       "handling": "Đang xử lý..."
+    },
+    "emptyResult": {
+      "title": "Không tìm thấy!",
+      "description": "Vui lòng thử lại với bộ lọc khác."
     }
   },
   "Header": {
@@ -107,6 +111,56 @@
       "addFailure": "Thêm vào danh sách yêu thích thất bại!",
       "removeSuccess": "Đã xóa khỏi danh sách yêu thích!",
       "removeFailure": "Xóa khỏi danh sách yêu thích thất bại!"
+    }
+  },
+  "HotelFilters": {
+    "trigger": "Bộ lọc",
+    "title": "Lọc khách sạn",
+    "description": "Tìm khách sạn hoàn hảo cho chuyến đi của bạn",
+    "form": {
+      "priceRange": {
+        "title": "Khoảng giá",
+        "description": "Chọn khoảng giá theo đêm cho khách sạn của bạn (VND)",
+        "required": "Yêu cầu khoảng giá",
+        "lengthRequired": "Khoảng giá phải có 2 giá trị",
+        "min": "Tối thiểu",
+        "max": "Tối đa"
+      },
+      "rating": {
+        "title": "Đánh giá"
+      },
+      "amenities": {
+        "title": "Tiện nghi",
+        "description": "Chọn các tiện nghi bạn muốn có trong khách sạn của bạn"
+      },
+      "rules": {
+        "title": "Quy định khách sạn"
+      },
+      "reset": "Đặt lại",
+      "apply": "Hiển thị kết quả"
+    },
+    "searchBar": {
+      "location": {
+        "label": "Địa điểm",
+        "placeholder": "Tìm kiếm điểm đến...",
+        "inputPlaceholder": "Tìm thành phố...",
+        "notFound": "Không tìm thấy thành phố."
+      },
+      "time": {
+        "checkIn": "Nhận phòng",
+        "checkOut": "Trả phòng",
+        "placeholder": "Chọn ngày"
+      },
+      "people": {
+        "label": "Người",
+        "placeholder": "Thêm khách",
+        "data": "{guest, plural, =1 {1 khách} other {# khách}}",
+        "guest": "Khách",
+        "guestDesc": "Có bao nhiêu người sẽ lưu trú?",
+        "adult": "Người lớn",
+        "child": "Trẻ em",
+        "reset": "Đặt lại"
+      }
     }
   },
   "HotelForm": {
@@ -218,7 +272,19 @@
       "gallery": "Thư viện ảnh",
       "reviews": "Đánh giá của khách hàng"
     },
-    "reviews": {},
+    "rules": {
+      "heading": "Quy định chung",
+      "checkInTitle": "Nhận phòng",
+      "checkOutTitle": "Trả phòng",
+      "smoking": "Hút thuốc",
+      "pets": "Thú cưng",
+      "checkIn": "<highline>Bất kỳ lúc nào</highline> trong ngày",
+      "checkInAfter": "Sau <highline>{start}</highline> mỗi ngày",
+      "checkInBetween": "Từ <highline>{start}</highline> đến <highline>{end}</highline> mỗi ngày",
+      "checkOut": "<highline>Bất kỳ lúc nào</highline> trong ngày",
+      "checkOutBefore": "Trước <highline>{end}</highline> mỗi ngày",
+      "checkOutBetween": "Từ <highline>{start}</highline> đến <highline>{end}</highline> mỗi ngày"
+    },
     "info": {
       "swimmingPool": "Bể bơi",
       "gym": "Phòng gym",
@@ -229,7 +295,8 @@
       "shopping": "Mua sắm",
       "freeParking": "Bãi đỗ xe miễn phí",
       "movieNight": "Buổi chiếu phim",
-      "coffeeShop": "Quán cà phê"
+      "coffeeShop": "Quán cà phê",
+      "bikeRental": "Cho thuê xe đạp"
     }
   },
   "MyBookings": {
@@ -385,7 +452,6 @@
       "bookingDialogDesc": "Bạn muốn đặt phòng này cho các ngày đã chọn?",
       "bookingDialogCancel": "Hủy",
       "bookingDialogAction": "Tiếp tục",
-      "detailPage": "Chi tiết khách sạn",
       "delete": "Xóa",
       "deleting": "Đang xóa...",
       "editTrigger": "Chỉnh sửa phòng",
@@ -413,12 +479,11 @@
     },
     "title": "Hoàn tất thanh toán đặt phòng này!",
     "payment": {
-      "title": "Lựa chọn phương thức thanh toán phù hợp"
+      "title": "Lựa chọn phương thức thanh toán phù hợp",
+      "pending": "Đang cập nhật"
     },
     "summary": {
       "heading": "Thông tin chi tiết",
-      "checkIn": "Bạn sẽ nhận phòng vào ngày {date} lúc {hour}",
-      "checkOut": "Bạn sẽ trả phòng vào ngày {date} lúc {hour}",
       "breakfast": "Bạn sẽ được phục vụ bữa sáng hàng ngày lúc {hour}",
       "total": "Tổng giá",
       "payNow": "Thanh toán ngay",
