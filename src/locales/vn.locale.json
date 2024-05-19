@@ -530,5 +530,48 @@
       "excellent": "Xuất sắc",
       "excellent+": "Xuất sắc+"
     }
+  },
+  "Contact": {
+    "toast": {
+      "success": "🎉 Gửi tin nhắn thành công",
+      "successDesc": "Cảm ơn bạn đã gửi phản hồi. Chúng tôi sẽ phản hồi lại bạn sớm nhất có thể.",
+      "failure": "Gửi tin nhắn thất bại!",
+      "failureDesc": "Đã xảy ra lỗi khi gửi tin nhắn của bạn. Vui lòng thử lại."
+    },
+    "summary": {
+      "title": "Hãy thoải mái phản hồi",
+      "description": "Chúng tôi đánh giá cao phản hồi và yêu cầu của bạn. Nếu bạn có bất kỳ câu hỏi hoặc cần hỗ trợ, vui lòng liên hệ với chúng tôi. Chúng tôi sẽ phản hồi lại bạn trong thời gian sớm nhất có thể. Vui lòng liên hệ với chúng tôi qua các phương thức sau",
+      "info": {
+        "heading": "Thông tin liên hệ",
+        "address": "Địa chỉ",
+        "addressValue": "Cầu Giấy, Hà Nội, Việt Nam",
+        "phone": "Điện thoại",
+        "email": "Email"
+      },
+      "business": {
+        "heading": "Giờ làm việc",
+        "mondayToFriday": "Thứ Hai - Sáu",
+        "saturday": "Thứ Bảy",
+        "sunday": "Chủ Nhật",
+        "closed": "Đóng cửa"
+      }
+    },
+    "register": {
+      "title": "Đăng ký Khách sạn của bạn",
+      "email": "Email",
+      "phone": "Số điện thoại",
+      "name": "Tên",
+      "gender": {
+        "label": "Giới tính",
+        "private": "Riêng tư",
+        "male": "Nam",
+        "female": "Nữ"
+      },
+      "hotelName": "Tên Khách sạn",
+      "hotelAddress": "Địa chỉ Khách sạn",
+      "content": "Nội dung",
+      "contentPlaceholder": "Tôi muốn đăng ký khách sạn của tôi với dịch vụ của bạn...",
+      "submit": "Gửi"
+    }
   }
 }
