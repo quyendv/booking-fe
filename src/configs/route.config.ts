@@ -6,6 +6,7 @@ export const routeConfig = {
   SIGN_IN: '/sign-in',
   SIGN_UP: '/sign-up',
   VERIFY_EMAIL: '/verify-email',
+  CONTACT: '/contact',
   SETTINGS: '/settings',
 
   HOTELS: '/hotels',

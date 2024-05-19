@@ -42,7 +42,10 @@
     "customerBookings": "Đặt chỗ của khách hàng",
     "signIn": "Đăng nhập",
     "signUp": "Đăng ký",
-    "signOut": "Đăng xuất"
+    "signOut": "Đăng xuất",
+    "home": "Trang chủ",
+    "contact": "Liên hệ",
+    "discovery": "Khám phá"
   },
   "SignIn": {
     "title": "Đăng nhập",
@@ -572,6 +575,27 @@
       "content": "Nội dung",
       "contentPlaceholder": "Tôi muốn đăng ký khách sạn của tôi với dịch vụ của bạn...",
       "submit": "Gửi"
+    }
+  },
+  "Footer": {
+    "about": {
+      "title": "Về chúng tôi",
+      "description": "Chúng tôi cam kết mang đến cho khách hàng trải nghiệm đặt phòng tuyệt vời và những kỳ nghỉ đáng nhớ tại những khách sạn tốt nhất."
+    },
+    "general": {
+      "title": "Chung",
+      "home": "Trang chủ",
+      "discovery": "Khám phá",
+      "p&s": "Quyền riêng tư & Bảo mật",
+      "faqs": "Câu hỏi thường gặp"
+    },
+    "contact": {
+      "title": "Liên hệ",
+      "address": "Cầu Giấy, Hà Nội, Việt Nam"
+    },
+    "social": {
+      "title": "Mạng xã hội",
+      "description": "Theo dõi chúng tôi trên mạng xã hội để cập nhật tin tức và khuyến mãi mới nhất."
     }
   }
 }

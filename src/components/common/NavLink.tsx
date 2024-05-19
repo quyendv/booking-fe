@@ -3,8 +3,13 @@
 import { useSelectedLayoutSegment } from 'next/navigation';
 import { ComponentProps } from 'react';
 import { ILink } from '~/locales/i18nNavigation';
+import { cn } from '~/utils/ui.util';
 
-export default function NavLink({ href, ...rest }: ComponentProps<typeof ILink>) {
+interface NavLinkProps extends ComponentProps<typeof ILink> {
+  className?: string;
+}
+
+export default function NavLink({ href, className = '', ...rest }: NavLinkProps) {
   const selectedLayoutSegment = useSelectedLayoutSegment();
   const pathname = selectedLayoutSegment ? `/${selectedLayoutSegment}` : '/';
   // const pathname = usePathname(); -> pathname.includes(href)
@@ -14,8 +19,7 @@ export default function NavLink({ href, ...rest }: ComponentProps<typeof ILink>)
     <ILink
       aria-current={isActive ? 'page' : undefined}
       href={href}
-      // style={{ fontWeight: isActive ? 'bold' : 'normal' }}
-      className={isActive ? 'font-bold text-red-500' : 'font-normal'}
+      className={cn(isActive && 'font-bold text-red-500', className)}
       {...rest}
     />
   );

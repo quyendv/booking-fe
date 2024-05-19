@@ -42,7 +42,10 @@
     "customerBookings": "Customer Bookings",
     "signIn": "Sign In",
     "signUp": "Sign Up",
-    "signOut": "Sign out"
+    "signOut": "Sign out",
+    "home": "Home",
+    "contact": "Contact",
+    "discovery": "Discovery"
   },
   "SignIn": {
     "title": "Sign in",
@@ -572,6 +575,27 @@
       "content": "Content",
       "contentPlaceholder": "I want to register my hotel with your service...",
       "submit": "Submit"
+    }
+  },
+  "Footer": {
+    "about": {
+      "title": "About",
+      "description": "We are committed to providing our guests with an exceptional booking experience and unforgettable stays at the best hotels."
+    },
+    "general": {
+      "title": "General",
+      "home": "Home",
+      "discovery": "Discovery",
+      "p&s": "Privacy & Security",
+      "faqs": "Frequently Asked Questions"
+    },
+    "contact": {
+      "title": "Contact",
+      "address": "Cau Giay, Ha Noi, Viet Nam"
+    },
+    "social": {
+      "title": "Social",
+      "description": "Follow us on social media to stay up-to-date with the latest news and promotions."
     }
   }
 }

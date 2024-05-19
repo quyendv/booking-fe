@@ -6,6 +6,7 @@ import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+import Footer from '~/components/layouts/footer/Footer';
 import { Button } from '~/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '~/components/ui/form';
 import { Input } from '~/components/ui/input';
@@ -24,9 +25,7 @@ const FormSchema = z.object({
   content: z.string().min(10, 'Message is too short.'),
 });
 
-interface ContactPageProps {}
-
-export default function ContactPage({}: ContactPageProps) {
+export default function ContactPage() {
   const t = useTranslations('Contact');
 
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -91,7 +90,7 @@ export default function ContactPage({}: ContactPageProps) {
         objectFit="cover"
         className="rounded-md"
       />
-      <div className="mt-10 flex flex-col gap-10 lg:flex-row lg:gap-4 [&>*]:flex-1">
+      <div className="my-10 flex flex-col gap-12 lg:flex-row lg:gap-4 [&>*]:flex-1">
         {/* Contact Summary */}
         <div aria-label="contact-summary">
           {/* Description */}
@@ -101,7 +100,7 @@ export default function ContactPage({}: ContactPageProps) {
           </div>
 
           {/* Contact Info */}
-          <div aria-label="contact-info" className="mt-8 space-y-2">
+          <div aria-label="contact-info" className="mt-8 space-y-2 lg:mt-12">
             <h1 className="font-cormorant text-xl font-semibold">{t('summary.info.heading')}</h1>
             <ul className="space-y-1.5 text-sm">
               <li>
@@ -130,7 +129,7 @@ export default function ContactPage({}: ContactPageProps) {
           </div>
 
           {/* Business Hours */}
-          <div aria-label="contact-hours" className="mt-8 space-y-2">
+          <div aria-label="contact-hours" className="mt-8 space-y-2 lg:mt-12">
             <h1 className="font-cormorant text-xl font-semibold">{t('summary.business.heading')}</h1>
             <ul className="space-y-1.5 text-sm">
               <li>
@@ -285,6 +284,8 @@ export default function ContactPage({}: ContactPageProps) {
           </form>
         </Form>
       </div>
+
+      <Footer />
     </>
   );
 }
