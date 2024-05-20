@@ -23,6 +23,7 @@ const config: Config = {
       fontFamily: {
         inter: ['var(--font-inter)'],
         roboto: ['var(--font-roboto-mono)'],
+        cormorant: ['var(--font-cormorant-garamond)'],
       },
       colors: {
         border: 'hsl(var(--border))',

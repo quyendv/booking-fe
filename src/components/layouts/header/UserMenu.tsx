@@ -55,16 +55,8 @@ export function UserMenu({}: UserMenuProps) {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Avatar className="size-8 cursor-pointer rounded-full">
-          {/* {user.avatar ? (
-            <>
-              <AvatarImage src={user.avatar} alt="avatar" />
-              <AvatarFallback>{user.name[0].toUpperCase()}</AvatarFallback>
-            </>
-          ) : (
-            <AvatarFallback>{user.name[0].toUpperCase()}</AvatarFallback>
-          )} */}
           <AvatarImage src={user.avatar ?? ''} alt="avatar" />
-          <AvatarFallback>{user.name[0].toUpperCase()}</AvatarFallback>
+          <AvatarFallback>{user.name.slice(0, 2).toUpperCase()}</AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="[&>*]:cursor-pointer">

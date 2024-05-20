@@ -35,7 +35,7 @@ export default function LocaleSwitcher() {
       <DropdownMenuContent className="w-max min-w-fit" align="end">
         {LocaleConfig.localeFlags.map((locale) => (
           <DropdownMenuItem key={locale.code} onClick={() => handleChange(locale.code)} className="gap-1">
-            <locale.flag className="h-4 w-4" />
+            <locale.flag className="mr-0.5 h-4 w-4" />
             {locale.code.toLocaleUpperCase()}
           </DropdownMenuItem>
         ))}

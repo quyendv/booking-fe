@@ -42,7 +42,10 @@
     "customerBookings": "Customer Bookings",
     "signIn": "Sign In",
     "signUp": "Sign Up",
-    "signOut": "Sign out"
+    "signOut": "Sign out",
+    "home": "Home",
+    "contact": "Contact",
+    "discovery": "Discovery"
   },
   "SignIn": {
     "title": "Sign in",
@@ -529,6 +532,70 @@
       "good+": "Good+",
       "excellent": "Excellent",
       "excellent+": "Excellent+"
+    }
+  },
+  "Contact": {
+    "toast": {
+      "success": "🎉 Message sent successfully",
+      "successDesc": "Thank you for your feedback. We will get back to you as soon as possible.",
+      "failure": "Message sending failed!",
+      "failureDesc": "An error occurred while sending your message. Please try again."
+    },
+    "summary": {
+      "title": "Feel free to feedback",
+      "description": "We value your feedback and inquiries. If you have any questions or need assistance, please contact us. We will get back to you as soon as possible. Please reach out to us through the following methods",
+      "info": {
+        "heading": "Contact Information",
+        "address": "Address",
+        "addressValue": "Cau Giay, Ha Noi, Viet Nam",
+        "phone": "Phone",
+        "email": "Email"
+      },
+      "business": {
+        "heading": "Business Hours",
+        "mondayToFriday": "Monday - Friday",
+        "saturday": "Saturday",
+        "sunday": "Sunday",
+        "closed": "Closed"
+      }
+    },
+    "register": {
+      "title": "Register Your Hotel",
+      "email": "Email",
+      "phone": "Phone",
+      "name": "Name",
+      "gender": {
+        "label": "Gender",
+        "private": "Private",
+        "male": "Male",
+        "female": "Female"
+      },
+      "hotelName": "Hotel Name",
+      "hotelAddress": "Hotel Address",
+      "content": "Content",
+      "contentPlaceholder": "I want to register my hotel with your service...",
+      "submit": "Submit"
+    }
+  },
+  "Footer": {
+    "about": {
+      "title": "About",
+      "description": "We are committed to providing our guests with an exceptional booking experience and unforgettable stays at the best hotels."
+    },
+    "general": {
+      "title": "General",
+      "home": "Home",
+      "discovery": "Discovery",
+      "p&s": "Privacy & Security",
+      "faqs": "Frequently Asked Questions"
+    },
+    "contact": {
+      "title": "Contact",
+      "address": "Cau Giay, Ha Noi, Viet Nam"
+    },
+    "social": {
+      "title": "Social",
+      "description": "Follow us on social media to stay up-to-date with the latest news and promotions."
     }
   }
 }
