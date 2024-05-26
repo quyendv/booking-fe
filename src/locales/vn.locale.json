@@ -200,6 +200,11 @@
       "addFailure": "Thêm vào danh sách yêu thích thất bại!",
       "removeSuccess": "Đã xóa khỏi danh sách yêu thích!",
       "removeFailure": "Xóa khỏi danh sách yêu thích thất bại!"
+    },
+    "empty": {
+      "title": "Bạn chưa lưu bất kỳ khách sạn nào.",
+      "description": "Bạn có thể lưu lại những khách sạn mà bạn thích và muốn ghé thăm sau này.",
+      "discovery": "Khám phá ngay"
     }
   },
   "HotelFilters": {

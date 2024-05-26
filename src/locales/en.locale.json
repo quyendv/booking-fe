@@ -200,6 +200,11 @@
       "addFailure": "Add hotel to favorites failed!",
       "removeSuccess": "Hotel removed from favorites",
       "removeFailure": "Remove hotel from favorites failed!"
+    },
+    "empty": {
+      "title": "You haven't saved any hotels yet.",
+      "description": "You can save hotels that you like and want to visit later.",
+      "discovery": "Discovery Now"
     }
   },
   "HotelFilters": {
