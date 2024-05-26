@@ -20,6 +20,7 @@ import { Separator } from '~/components/ui/separator';
 import { toast } from '~/components/ui/use-toast';
 import { cn } from '~/utils/ui.util';
 import ProfileAvatar from './Avatar';
+import CustomDatePickerPopover from '~/components/common/CustomDatePickerPopover';
 
 interface ProfileProps {
   data: ProfileInfo;
@@ -227,8 +228,11 @@ export default function Profile({ data, role, mutate }: ProfileProps) {
                 <FormItem>
                   <FormLabel>{t('form.birthday.label')}</FormLabel>
                   <FormDescription>{t('form.birthday.description')}</FormDescription>
-                  <Popover>
-                    <PopoverTrigger asChild>
+                  <CustomDatePickerPopover
+                    selected={field.value ?? undefined}
+                    onSelect={field.onChange}
+                    disabled={(date) => date > new Date() || date < new Date('1900-01-01')}
+                    trigger={
                       <FormControl>
                         <Button
                           variant={'outline'}
@@ -237,21 +241,12 @@ export default function Profile({ data, role, mutate }: ProfileProps) {
                             !field.value && 'text-muted-foreground',
                           )}
                         >
-                          {field.value ? format(field.value, 'yyyy-MM-dd') : <span>Pick a date</span>}
+                          {field.value ? format(field.value, 'yyyy-MM-dd') : <span>{t('form.birthday.select')}</span>}
                           <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                         </Button>
                       </FormControl>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0" align="start">
-                      <Calendar
-                        mode="single"
-                        selected={field.value ?? undefined}
-                        onSelect={field.onChange}
-                        disabled={(date) => date > new Date() || date < new Date('1900-01-01')}
-                        initialFocus
-                      />
-                    </PopoverContent>
-                  </Popover>
+                    }
+                  />
                   <FormMessage />
                 </FormItem>
               )}

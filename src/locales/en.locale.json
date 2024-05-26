@@ -10,7 +10,9 @@
       "searchHotel": "Search Hotels..."
     },
     "datePicker": {
-      "title": "Pick a date"
+      "title": "Pick a date",
+      "selectYear": "Select Year",
+      "selectMonth": "Select Month"
     },
     "upload": {
       "title": "Upload an image",
@@ -39,6 +41,7 @@
     "dashboard": "Dashboard",
     "manageCustomers": "Manage Customers",
     "manageHotels": "Manage Hotels",
+    "manageReceptionists": "Manage Receptionists",
     "myHotel": "My Hotel",
     "customerBookings": "Customer Bookings",
     "signIn": "Sign In",
@@ -129,7 +132,8 @@
         },
         "birthday": {
           "label": "Birthday",
-          "description": "Provide your date of birth."
+          "description": "Provide your date of birth.",
+          "select": "Pick a date"
         },
         "address": {
           "country": {

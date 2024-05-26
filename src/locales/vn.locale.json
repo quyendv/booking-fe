@@ -10,7 +10,9 @@
       "searchHotel": "Tìm kiếm khách sạn"
     },
     "datePicker": {
-      "title": "Chọn ngày"
+      "title": "Chọn ngày",
+      "selectYear": "Chọn năm",
+      "selectMonth": "Chọn tháng"
     },
     "upload": {
       "title": "Tải lên hình ảnh",
@@ -40,6 +42,7 @@
     "manageCustomers": "Quản lý khách hàng",
     "manageHotels": "Quản lý khách sạn",
     "myHotel": "Khách sạn của tôi",
+    "manageReceptionists": "Quản lý lễ tân",
     "customerBookings": "Đặt chỗ của khách hàng",
     "signIn": "Đăng nhập",
     "signUp": "Đăng ký",
@@ -129,7 +132,8 @@
         },
         "birthday": {
           "label": "Ngày sinh",
-          "description": "Cung cấp ngày sinh của bạn."
+          "description": "Cung cấp ngày sinh của bạn.",
+          "select": "Chọn ngày"
         },
         "address": {
           "country": {

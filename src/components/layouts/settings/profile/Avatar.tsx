@@ -58,7 +58,7 @@ export default function ProfileAvatar({ data, onUploadSuccess, onUploadError }: 
         onClick={resetPreviewAvatar}
         className={cn(
           'absolute right-0 top-0 z-20 cursor-pointer rounded-full bg-background/50 fill-foreground/50 p-0.5 invert',
-          previewAvatar === data.avatar ? 'hidden' : 'block',
+          !previewAvatar || previewAvatar === data.avatar ? 'hidden' : 'block',
         )}
       />
       {loading && (
