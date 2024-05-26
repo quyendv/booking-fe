@@ -1,14 +1,18 @@
 export const routeConfig = {
   // Common
-  // HOME: '/',
-  HOME: '/hotels',
-  ABOUT: '/about',
+  HOME: '/hotels', // '/'
+  // ABOUT: '/about',
   SIGN_IN: '/sign-in',
   SIGN_UP: '/sign-up',
   VERIFY_EMAIL: '/verify-email',
-  CONTACT: '/contact',
-  SETTINGS: '/settings',
 
+  SETTINGS: '/settings',
+  SETTINGS_ACCOUNT: '/settings/account',
+  SETTINGS_APPEARANCE: '/settings/appearance',
+  SETTINGS_NOTIFICATIONS: '/settings/notifications',
+  SETTINGS_DISPLAY: '/settings/display',
+
+  CONTACT: '/contact',
   HOTELS: '/hotels',
   HOTEL_DETAILS: (hotelId: number) => `/hotels/${hotelId}`,
   BOOK_ROOM: '/book-room',
@@ -16,7 +20,7 @@ export const routeConfig = {
   // Customer
   MANAGE_ACCOUNT: '/personal',
   MY_BOOKINGS: '/my-bookings',
-  MY_TRIPS: '/my-trips',
+  // MY_TRIPS: '/my-trips',
   SAVED: '/saved',
 
   // Admin

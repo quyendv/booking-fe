@@ -25,8 +25,13 @@ export default function RoleGuard({ children, allowedRoles, notAllowedRoles }: R
   const t = useTranslations('Guard');
 
   const userRole = user?.role as UserRole; // ensure user is not null (RoleGuard in AuthGuard)
+  // const userRole = user?.role;
+  // if (!userRole) {
+  //   return <GuardDeny title={t('unauthorized')} link={routeConfig.SIGN_IN} linkText={t('signIn')} />;
+  // }
+
   const isAllowed =
-    (allowedRoles && allowedRoles.includes(userRole)) || (notAllowedRoles && notAllowedRoles.includes(userRole));
+    (allowedRoles && allowedRoles.includes(userRole)) || (notAllowedRoles && !notAllowedRoles.includes(userRole));
 
   if (!isAllowed) {
     return <GuardDeny title={t('notEnoughPermission')} link={routeConfig.HOME} linkText={t('goHome')} />;

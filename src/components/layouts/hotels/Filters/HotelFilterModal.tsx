@@ -76,7 +76,7 @@ export default function HotelFilterModal({ className }: HotelFilterModalProps) {
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger>
+      <DialogTrigger asChild>
         <Button variant="outline" className={cn('text-sm', className)}>
           <SlidersHorizontal className="mr-2 size-4" /> {t('HotelFilters.trigger')}
         </Button>

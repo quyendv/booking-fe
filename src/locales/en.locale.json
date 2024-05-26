@@ -10,7 +10,9 @@
       "searchHotel": "Search Hotels..."
     },
     "datePicker": {
-      "title": "Pick a date"
+      "title": "Pick a date",
+      "selectYear": "Select Year",
+      "selectMonth": "Select Month"
     },
     "upload": {
       "title": "Upload an image",
@@ -35,9 +37,11 @@
     "manageAccount": "Manage account",
     "myBookings": "Bookings & Trips",
     "saved": "Saved",
+    "settings": "Settings",
     "dashboard": "Dashboard",
     "manageCustomers": "Manage Customers",
     "manageHotels": "Manage Hotels",
+    "manageReceptionists": "Manage Receptionists",
     "myHotel": "My Hotel",
     "customerBookings": "Customer Bookings",
     "signIn": "Sign In",
@@ -86,11 +90,93 @@
     "emailSentTo": "We've sent a verification link to email <bold>{email}</bold>.",
     "success": "You're all set!",
     "successDescription": "Thank you for verifying your email.",
-    "successNextStep": "Sign in",
+    "successNextStep": "{isAuthenticated, select , true {Go Back} other {Sign In}}",
     "verifying": "Verifying...",
     "verifyingDescription": "This won't take long.",
     "failed": "There was a problem",
     "failedDescription": "This token is not valid or might be expired. Please try again."
+  },
+  "Settings": {
+    "title": "Settings",
+    "description": "Manage your account settings and set e-mail preferences.",
+    "nav": {
+      "profile": "Profile",
+      "account": "Account",
+      "appearance": "Appearance",
+      "notifications": "Notifications",
+      "display": "Display"
+    },
+    "profile": {
+      "title": "Profile",
+      "description": "This is how others will see you on the site.",
+      "form": {
+        "name": {
+          "require": "Name must be at least 3 characters long",
+          "label": "Name",
+          "description": "Your name will be displayed on the site. It can be your real name or a pseudonym."
+        },
+        "email": {
+          "label": "Email",
+          "description": "Your email address will not be displayed publicly. We will use it to send you important information about your account."
+        },
+        "gender": {
+          "label": "Gender",
+          "description": "Select your gender.",
+          "private": "Private",
+          "male": "Male",
+          "female": "Female"
+        },
+        "phone": {
+          "label": "Phone",
+          "description": "Hotel can use it to contact with you."
+        },
+        "birthday": {
+          "label": "Birthday",
+          "description": "Provide your date of birth.",
+          "select": "Pick a date"
+        },
+        "address": {
+          "country": {
+            "label": "Country",
+            "placeholder": "Enter your country."
+          },
+          "province": {
+            "label": "City",
+            "placeholder": "Enter your city."
+          },
+          "district": {
+            "label": "District",
+            "placeholder": "Enter your district."
+          },
+          "ward": {
+            "label": "Ward",
+            "placeholder": "Enter your ward."
+          },
+          "details": {
+            "label": "Address",
+            "placeholder": "Enter your address.",
+            "description": "Provide your detailed address."
+          }
+        },
+        "submit": {
+          "update": "Update Profile",
+          "updating": "Updating..."
+        }
+      },
+      "verification": {
+        "tooltip": "{verified, select, true {Verified} other {Not verified, verify now}}"
+      },
+      "toast": {
+        "successTitle": "🎉 Profile updated",
+        "successDesc": "Your profile has been updated successfully!",
+        "failureTitle": "Profile update failed!",
+        "failureDesc": "An error occurred while updating your profile. Please try again.",
+        "verification": {
+          "success": "🎉 Email verification sent",
+          "failure": "Email verification failed! Please try again."
+        }
+      }
+    }
   },
   "Guard": {
     "unauthorized": "You are not authorized to access this page.",
@@ -114,6 +200,11 @@
       "addFailure": "Add hotel to favorites failed!",
       "removeSuccess": "Hotel removed from favorites",
       "removeFailure": "Remove hotel from favorites failed!"
+    },
+    "empty": {
+      "title": "You haven't saved any hotels yet.",
+      "description": "You can save hotels that you like and want to visit later.",
+      "discovery": "Discovery Now"
     }
   },
   "HotelFilters": {

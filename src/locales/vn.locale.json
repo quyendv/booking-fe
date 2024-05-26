@@ -10,7 +10,9 @@
       "searchHotel": "Tìm kiếm khách sạn"
     },
     "datePicker": {
-      "title": "Chọn ngày"
+      "title": "Chọn ngày",
+      "selectYear": "Chọn năm",
+      "selectMonth": "Chọn tháng"
     },
     "upload": {
       "title": "Tải lên hình ảnh",
@@ -35,10 +37,12 @@
     "manageAccount": "Quản lý tài khoản",
     "myBookings": "Đặt chỗ & chuyến đi",
     "saved": "Đã lưu",
+    "settings": "Cài đặt",
     "dashboard": "Quản lý chung",
     "manageCustomers": "Quản lý khách hàng",
     "manageHotels": "Quản lý khách sạn",
     "myHotel": "Khách sạn của tôi",
+    "manageReceptionists": "Quản lý lễ tân",
     "customerBookings": "Đặt chỗ của khách hàng",
     "signIn": "Đăng nhập",
     "signUp": "Đăng ký",
@@ -86,11 +90,93 @@
     "emailSentTo": "Link xác thực đã được gửi tới email <bold>{email}</bold>.",
     "success": "Bạn đã hoàn tất!",
     "successDescription": "Cảm ơn bạn đã xác thực email.",
-    "successNextStep": "Đăng nhập",
+    "successNextStep": "{isAuthenticated, select , true {Quay lại} other {Đăng nhập}}",
     "verifying": "Đang xác thực...",
     "verifyingDescription": "Việc này sẽ không mất nhiều thời gian.",
     "failed": "Có lỗi xảy ra",
     "failedDescription": "Mã thông báo này không hợp lệ hoặc có thể đã hết hạn. Vui lòng thử lại"
+  },
+  "Settings": {
+    "title": "Cài đặt",
+    "description": "Quản lý cài đặt tài khoản và thiết lập email.",
+    "nav": {
+      "profile": "Hồ sơ",
+      "account": "Tài khoản",
+      "appearance": "Giao diện",
+      "notifications": "Thông báo",
+      "display": "Hiển thị"
+    },
+    "profile": {
+      "title": "Hồ sơ",
+      "description": "Đây là cách mà người khác nhìn thấy bạn trên trang web.",
+      "form": {
+        "name": {
+          "require": "Tên phải có ít nhất 3 ký tự",
+          "label": "Tên",
+          "description": "Tên của bạn sẽ được hiển thị trên trang web. Nó có thể là tên thật của bạn hoặc một bút danh."
+        },
+        "email": {
+          "label": "Email",
+          "description": "Địa chỉ email của bạn sẽ không được hiển thị công khai. Chúng tôi sẽ sử dụng nó để gửi thông tin quan trọng về tài khoản của bạn."
+        },
+        "gender": {
+          "label": "Giới tính",
+          "description": "Chọn giới tính của bạn.",
+          "private": "Riêng tư",
+          "male": "Nam",
+          "female": "Nữ"
+        },
+        "phone": {
+          "label": "Số điện thoại",
+          "description": "Số điện thoại hệ với bạn."
+        },
+        "birthday": {
+          "label": "Ngày sinh",
+          "description": "Cung cấp ngày sinh của bạn.",
+          "select": "Chọn ngày"
+        },
+        "address": {
+          "country": {
+            "label": "Quốc gia",
+            "placeholder": "Nhập quốc gia của bạn."
+          },
+          "province": {
+            "label": "Thành phố",
+            "placeholder": "Nhập thành phố của bạn."
+          },
+          "district": {
+            "label": "Quận",
+            "placeholder": "Nhập quận của bạn."
+          },
+          "ward": {
+            "label": "Phường",
+            "placeholder": "Nhập phường của bạn."
+          },
+          "details": {
+            "label": "Địa chỉ",
+            "placeholder": "Nhập địa chỉ của bạn.",
+            "description": "Cung cấp địa chỉ chi tiết của bạn."
+          }
+        },
+        "submit": {
+          "update": "Cập nhật hồ sơ",
+          "updating": "Đang cập nhật..."
+        }
+      },
+      "verification": {
+        "tooltip": "{verified, select, true {Đã xác minh} other {Chưa xác minh, xác thực ngay}}"
+      },
+      "toast": {
+        "successTitle": "🎉 Cập nhật hồ sơ thành công",
+        "successDesc": "Hồ sơ của bạn đã được cập nhật thành công!",
+        "failureTitle": "Cập nhật hồ sơ thất bại!",
+        "failureDesc": "Đã xảy ra lỗi khi cập nhật hồ sơ của bạn. Vui lòng thử lại.",
+        "verification": {
+          "success": "🎉 Email xác minh đã được gửi",
+          "failure": "Xác minh email thất bại! Vui lòng thử lại."
+        }
+      }
+    }
   },
   "Guard": {
     "unauthorized": "Bạn cần đăng nhập để truy cập trang này.",
@@ -114,6 +200,11 @@
       "addFailure": "Thêm vào danh sách yêu thích thất bại!",
       "removeSuccess": "Đã xóa khỏi danh sách yêu thích!",
       "removeFailure": "Xóa khỏi danh sách yêu thích thất bại!"
+    },
+    "empty": {
+      "title": "Bạn chưa lưu bất kỳ khách sạn nào.",
+      "description": "Bạn có thể lưu lại những khách sạn mà bạn thích và muốn ghé thăm sau này.",
+      "discovery": "Khám phá ngay"
     }
   },
   "HotelFilters": {

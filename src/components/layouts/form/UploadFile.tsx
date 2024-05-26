@@ -1,18 +1,13 @@
 import { LoaderIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import React, { useState } from 'react';
-import { StorageApi } from '~/apis/storage.api';
+import { StorageApi, StorageUploadResponse } from '~/apis/storage.api';
 import { Button, buttonVariants } from '~/components/ui/button';
 import { Input } from '~/components/ui/input';
 
-export interface StorageResult {
-  url: string;
-  key: string;
-}
-
 interface Props {
   folder?: string;
-  onUploadComplete?: (_file: StorageResult) => void;
+  onUploadComplete?: (_file: StorageUploadResponse) => void;
   onUploadError?: (_error: any) => void;
 }
 
@@ -38,7 +33,7 @@ const UploadFile = ({ folder = 'default', onUploadComplete, onUploadError }: Pro
   //   // console.log('Uploading file:', file);
   // };
 
-  const [uploadResult, setUploadResult] = useState<StorageResult | null>();
+  const [uploadResult, setUploadResult] = useState<StorageUploadResponse | null>();
   const [loading, setLoading] = useState(false);
 
   const t = useTranslations('Shared.upload');

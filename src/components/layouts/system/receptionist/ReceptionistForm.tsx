@@ -16,6 +16,7 @@ import { toast } from '~/components/ui/use-toast';
 import { cn } from '~/utils/ui.util';
 import { Loader2Icon, PencilLineIcon } from 'lucide-react';
 import { useState } from 'react';
+import CustomDatePickerPopover from '~/components/common/CustomDatePickerPopover';
 
 interface ReceptionistFormProps {
   data?: ReceptionistInfo;
@@ -218,8 +219,11 @@ export default function ReceptionistForm({ data, hotels, onFilter, setClose }: R
                   <FormItem className="flex flex-col">
                     <FormLabel>Date of birth</FormLabel>
                     <FormDescription>Provide the receptionist birthday</FormDescription>
-                    <Popover>
-                      <PopoverTrigger asChild>
+                    <CustomDatePickerPopover
+                      selected={field.value}
+                      onSelect={field.onChange}
+                      disabled={(date) => date > new Date() || date < new Date('1900-01-01')}
+                      trigger={
                         <FormControl>
                           <Button
                             variant={'outline'}
@@ -232,17 +236,8 @@ export default function ReceptionistForm({ data, hotels, onFilter, setClose }: R
                             <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                           </Button>
                         </FormControl>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-auto p-0" align="start">
-                        <Calendar
-                          mode="single"
-                          selected={field.value}
-                          onSelect={field.onChange}
-                          disabled={(date) => date > new Date() || date < new Date('1900-01-01')}
-                          initialFocus
-                        />
-                      </PopoverContent>
-                    </Popover>
+                      }
+                    />
                     <FormMessage />
                   </FormItem>
                 )}

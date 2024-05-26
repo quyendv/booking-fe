@@ -1,11 +1,13 @@
 import useSWRImmutable from 'swr/immutable';
 import { FetchInstance } from './instances/fetch.instance';
 import { UserRole } from '~/configs/role.config';
+import { axiosPrivateInstance } from './instances/axios.instance';
 
 const AuthApiEndPoint = {
   SIGN_IN: '/auth/sign-in',
   SIGN_UP: '/auth/sign-up',
   VERIFY_EMAIL: '/auth/verify-email',
+  RESEND_VERIFICATION_EMAIL: '/auth/verify-email/resend',
 };
 
 type VerifyEmailResponse = {
@@ -41,6 +43,10 @@ export const AuthApi = {
       headers: { Authorization: `Bearer ${token}` },
       next: { revalidate: false },
     });
+  },
+
+  resendVerificationEmail() {
+    return axiosPrivateInstance.post(AuthApiEndPoint.RESEND_VERIFICATION_EMAIL);
   },
 
   useVerifyEmail(verifyToken: string): VerifyEmailResponse {
