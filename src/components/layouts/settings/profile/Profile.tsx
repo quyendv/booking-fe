@@ -3,7 +3,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { CalendarIcon } from '@radix-ui/react-icons';
 import { format } from 'date-fns';
-import { Loader, Pencil } from 'lucide-react';
+import { Loader, Pencil, ShieldAlert, ShieldCheck } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -21,6 +21,10 @@ import { toast } from '~/components/ui/use-toast';
 import { cn } from '~/utils/ui.util';
 import ProfileAvatar from './Avatar';
 import CustomDatePickerPopover from '~/components/common/CustomDatePickerPopover';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '~/components/ui/tooltip';
+import { AuthApi } from '~/apis/auth.api';
+import { useIRouter } from '~/locales/i18nNavigation';
+import { routeConfig } from '~/configs/route.config';
 
 interface ProfileProps {
   data: ProfileInfo;
@@ -31,6 +35,7 @@ interface ProfileProps {
 export default function Profile({ data, role, mutate }: ProfileProps) {
   const t = useTranslations('Settings.profile');
   const [isLoading, setIsLoading] = useState(false);
+  const router = useIRouter();
 
   const formSchema = z.object({
     id: z.string().email(),
@@ -111,6 +116,18 @@ export default function Profile({ data, role, mutate }: ProfileProps) {
     setIsLoading(false);
   }
 
+  async function handleResendVerificationEmail() {
+    setIsLoading(true);
+    const response = await AuthApi.resendVerificationEmail();
+    if (response.isSuccess) {
+      toast({ variant: 'success', title: t('toast.verification.success') });
+      router.push(`${routeConfig.VERIFY_EMAIL}?to=${data.id}`);
+    } else {
+      toast({ variant: 'destructive', title: t('toast.verification.failure') });
+    }
+    setIsLoading(false);
+  }
+
   return (
     <div className="space-y-6">
       <div>
@@ -141,7 +158,24 @@ export default function Profile({ data, role, mutate }: ProfileProps) {
               disabled={isLoading}
               render={({ field }) => (
                 <FormItem className="flex-1">
-                  <FormLabel>{t('form.email.label')}</FormLabel>
+                  <FormLabel className="flex items-center gap-2">
+                    <span>{t('form.email.label')}</span>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        {data.isVerified ? (
+                          <ShieldCheck className="text-green-500" />
+                        ) : (
+                          <ShieldAlert
+                            className="text-yellow-500 hover:cursor-pointer"
+                            onClick={handleResendVerificationEmail}
+                          />
+                        )}
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>{t('verification.tooltip', { verified: data.isVerified })}</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </FormLabel>
                   <FormControl>
                     <Input placeholder="abc@gmail.com" readOnly {...field} />
                   </FormControl>

@@ -9,11 +9,11 @@ interface LayoutProps {
 
 export default function AuthLayout({ children }: LayoutProps) {
   return (
-    <GuestGuard>
-      <main className="z-0 flex min-h-screen flex-col">
-        <Header disableUserMenu />
-        <section className="flex-center flex-grow">{children}</section>
-      </main>
-    </GuestGuard>
+    // <GuestGuard>
+    <main className="z-0 flex min-h-screen flex-col">
+      <Header disableUserMenu />
+      <section className="flex-center flex-grow">{children}</section>
+    </main>
+    // </GuestGuard>
   );
 }

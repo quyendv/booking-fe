@@ -90,7 +90,7 @@
     "emailSentTo": "We've sent a verification link to email <bold>{email}</bold>.",
     "success": "You're all set!",
     "successDescription": "Thank you for verifying your email.",
-    "successNextStep": "Sign in",
+    "successNextStep": "{isAuthenticated, select , true {Go Back} other {Sign In}}",
     "verifying": "Verifying...",
     "verifyingDescription": "This won't take long.",
     "failed": "There was a problem",
@@ -163,11 +163,18 @@
           "updating": "Updating..."
         }
       },
+      "verification": {
+        "tooltip": "{verified, select, true {Verified} other {Not verified, verify now}}"
+      },
       "toast": {
         "successTitle": "🎉 Profile updated",
         "successDesc": "Your profile has been updated successfully!",
         "failureTitle": "Profile update failed!",
-        "failureDesc": "An error occurred while updating your profile. Please try again."
+        "failureDesc": "An error occurred while updating your profile. Please try again.",
+        "verification": {
+          "success": "🎉 Email verification sent",
+          "failure": "Email verification failed! Please try again."
+        }
       }
     }
   },

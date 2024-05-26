@@ -90,7 +90,7 @@
     "emailSentTo": "Link xác thực đã được gửi tới email <bold>{email}</bold>.",
     "success": "Bạn đã hoàn tất!",
     "successDescription": "Cảm ơn bạn đã xác thực email.",
-    "successNextStep": "Đăng nhập",
+    "successNextStep": "{isAuthenticated, select , true {Quay lại} other {Đăng nhập}}",
     "verifying": "Đang xác thực...",
     "verifyingDescription": "Việc này sẽ không mất nhiều thời gian.",
     "failed": "Có lỗi xảy ra",
@@ -163,11 +163,18 @@
           "updating": "Đang cập nhật..."
         }
       },
+      "verification": {
+        "tooltip": "{verified, select, true {Đã xác minh} other {Chưa xác minh, xác thực ngay}}"
+      },
       "toast": {
         "successTitle": "🎉 Cập nhật hồ sơ thành công",
         "successDesc": "Hồ sơ của bạn đã được cập nhật thành công!",
         "failureTitle": "Cập nhật hồ sơ thất bại!",
-        "failureDesc": "Đã xảy ra lỗi khi cập nhật hồ sơ của bạn. Vui lòng thử lại."
+        "failureDesc": "Đã xảy ra lỗi khi cập nhật hồ sơ của bạn. Vui lòng thử lại.",
+        "verification": {
+          "success": "🎉 Email xác minh đã được gửi",
+          "failure": "Xác minh email thất bại! Vui lòng thử lại."
+        }
       }
     }
   },

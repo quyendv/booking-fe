@@ -7,6 +7,7 @@ import { AuthApi } from '~/apis/auth.api';
 import { Icons } from '~/components/common/Icons';
 import { buttonVariants } from '~/components/ui/button';
 import { routeConfig } from '~/configs/route.config';
+import { useAuth } from '~/contexts/auth.context';
 import { ILink } from '~/locales/i18nNavigation';
 
 interface VerifyEmailProps {
@@ -15,6 +16,7 @@ interface VerifyEmailProps {
 
 const VerifyEmail = ({ token }: VerifyEmailProps) => {
   const t = useTranslations('VerifyEmail');
+  const { isAuthenticated } = useAuth();
   const { data, isLoading, isError } = AuthApi.useVerifyEmail(token);
 
   if (isError) {
@@ -36,8 +38,11 @@ const VerifyEmail = ({ token }: VerifyEmailProps) => {
 
         <h3 className="text-2xl font-semibold">{t('success')}</h3>
         <p className="mt-1 text-center text-muted-foreground">{t('successDescription')}</p>
-        <ILink className={buttonVariants({ className: 'mt-4' })} href={routeConfig.SIGN_IN}>
-          {t('successNextStep')}
+        <ILink
+          className={buttonVariants({ className: 'mt-4' })}
+          href={isAuthenticated ? routeConfig.SETTINGS : routeConfig.SIGN_IN}
+        >
+          {t('successNextStep', { isAuthenticated })}
         </ILink>
       </div>
     );
