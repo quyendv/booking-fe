@@ -7,7 +7,7 @@ const StorageApiEndpoint = {
   delete: (key: string) => `/storage/${key}`,
 };
 
-type StorageUploadResponse = {
+export type StorageUploadResponse = {
   url: string;
   key: string;
 };

@@ -19,6 +19,7 @@ import { RadioGroup, RadioGroupItem } from '~/components/ui/radio-group';
 import { Separator } from '~/components/ui/separator';
 import { toast } from '~/components/ui/use-toast';
 import { cn } from '~/utils/ui.util';
+import ProfileAvatar from './Avatar';
 
 interface ProfileProps {
   data: ProfileInfo;
@@ -42,21 +43,22 @@ export default function Profile({ data, role, mutate }: ProfileProps) {
     phone: z.string().optional(),
     gender: z.enum(['private', 'male', 'female']),
     address: z.object({
-      details: z.string().optional(),
-      ward: z.string().optional(),
-      district: z.string().optional(),
-      province: z.string().optional(),
-      country: z.string().optional(),
+      details: z.string(),
+      ward: z.string(),
+      district: z.string(),
+      province: z.string(),
+      country: z.string(),
     }),
   });
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      id: data.id,
-      name: data.name,
-      avatar: data.avatar,
-      avatarKey: data.avatarKey,
+      ...data,
+      // id: data.id,
+      // name: data.name,
+      // avatar: data.avatar,
+      // avatarKey: data.avatarKey,
       birthday: data.birthday ? new Date(data.birthday) : undefined,
       gender: (data.gender as any) ?? 'private',
       phone: data.phone ?? undefined,
@@ -88,19 +90,20 @@ export default function Profile({ data, role, mutate }: ProfileProps) {
     //   ),
     // });
     const transformedData = {
+      ...data,
       ...values,
       email: values.id,
       birthday: values.birthday ? format(values.birthday, 'yyyy-MM-dd') : null,
       address:
         values.address && values.address.country && values.address.province && values.address.details
-          ? data.address
+          ? { ...(data.address && data.address), ...values.address }
           : undefined,
     };
     setIsLoading(true);
     const response = await ProfileApi.updateProfile(role, transformedData);
     if (response.isSuccess) {
       toast({ variant: 'success', title: t('toast.successTitle'), description: t('toast.successDesc') });
-      mutate({ ...data, ...transformedData }, false);
+      mutate();
     } else {
       toast({ variant: 'destructive', title: t('toast.failureTitle'), description: t('toast.failureDesc') });
     }
@@ -116,21 +119,37 @@ export default function Profile({ data, role, mutate }: ProfileProps) {
       <Separator />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          <FormField
-            control={form.control}
-            name="id"
-            disabled={isLoading}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t('form.email.label')}</FormLabel>
-                <FormControl>
-                  <Input placeholder="abc@gmail.com" readOnly {...field} />
-                </FormControl>
-                <FormDescription>{t('form.email.description')}</FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          <div className="flex gap-8">
+            <ProfileAvatar
+              data={data}
+              onUploadSuccess={(value) => {
+                form.setValue('avatar', value.url);
+                form.setValue('avatarKey', value.key);
+              }}
+              // onUploadError={(error) => {
+              //   toast({
+              //     variant: 'destructive',
+              //     title: t('toast.avatarFailureTitle'),
+              //     description: t('toast.avatarFailureDesc'),
+              //   });
+              // }}
+            />
+            <FormField
+              control={form.control}
+              name="id"
+              disabled={isLoading}
+              render={({ field }) => (
+                <FormItem className="flex-1">
+                  <FormLabel>{t('form.email.label')}</FormLabel>
+                  <FormControl>
+                    <Input placeholder="abc@gmail.com" readOnly {...field} />
+                  </FormControl>
+                  <FormDescription>{t('form.email.description')}</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
           <FormField
             control={form.control}
             name="name"

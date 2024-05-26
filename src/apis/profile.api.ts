@@ -19,6 +19,10 @@ export type ProfileInfo = ProfileSchema & {
   address: AddressSchema | null | undefined;
 };
 
+type UpdateProfileDto = Partial<ProfileSchema> & { email: string } & {
+  address?: AddressSchema | Omit<AddressSchema, 'id'>;
+};
+
 export const ProfileApiEndpoints = {
   get: (role: string) => {
     switch (role) {
@@ -52,7 +56,7 @@ export const ProfileApi = {
     return axiosPrivateInstance.get<ProfileInfo>(ProfileApiEndpoints.get(role));
   },
 
-  async updateProfile(role: string, data: Partial<ProfileSchema> & { email: string }) {
+  async updateProfile(role: string, data: UpdateProfileDto) {
     return axiosPrivateInstance.patch<ProfileInfo>(ProfileApiEndpoints.update(role), data);
   },
 };
