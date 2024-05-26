@@ -8,6 +8,10 @@ export const routeConfig = {
   VERIFY_EMAIL: '/verify-email',
   CONTACT: '/contact',
   SETTINGS: '/settings',
+  SETTINGS_ACCOUNT: '/settings/account',
+  SETTINGS_APPEARANCE: '/settings/appearance',
+  SETTINGS_NOTIFICATIONS: '/settings/notifications',
+  SETTINGS_DISPLAY: '/settings/display',
 
   HOTELS: '/hotels',
   HOTEL_DETAILS: (hotelId: number) => `/hotels/${hotelId}`,

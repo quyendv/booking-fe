@@ -92,6 +92,80 @@
     "failed": "There was a problem",
     "failedDescription": "This token is not valid or might be expired. Please try again."
   },
+  "Settings": {
+    "title": "Settings",
+    "description": "Manage your account settings and set e-mail preferences.",
+    "nav": {
+      "profile": "Profile",
+      "account": "Account",
+      "appearance": "Appearance",
+      "notifications": "Notifications",
+      "display": "Display"
+    },
+    "profile": {
+      "title": "Profile",
+      "description": "This is how others will see you on the site.",
+      "form": {
+        "name": {
+          "require": "Name must be at least 3 characters long",
+          "label": "Name",
+          "description": "Your name will be displayed on the site. It can be your real name or a pseudonym."
+        },
+        "email": {
+          "label": "Email",
+          "description": "Your email address will not be displayed publicly. We will use it to send you important information about your account."
+        },
+        "gender": {
+          "label": "Gender",
+          "description": "Select your gender.",
+          "private": "Private",
+          "male": "Male",
+          "female": "Female"
+        },
+        "phone": {
+          "label": "Phone",
+          "description": "Hotel can use it to contact with you."
+        },
+        "birthday": {
+          "label": "Birthday",
+          "description": "Provide your date of birth."
+        },
+        "address": {
+          "country": {
+            "label": "Country",
+            "placeholder": "Enter your country."
+          },
+          "province": {
+            "label": "City",
+            "placeholder": "Enter your city."
+          },
+          "district": {
+            "label": "District",
+            "placeholder": "Enter your district."
+          },
+          "ward": {
+            "label": "Ward",
+            "placeholder": "Enter your ward."
+          },
+          "details": {
+            "label": "Address",
+            "placeholder": "Enter your address.",
+            "description": "Provide your detailed address."
+          }
+        },
+        "submit": {
+          "update": "Update Profile",
+          "updating": "Updating..."
+        }
+      },
+      "toast": {
+        "successTitle": "🎉 Profile updated",
+        "successDesc": "Your profile has been updated successfully!",
+        "failureTitle": "Profile update failed!",
+        "failureDesc": "An error occurred while updating your profile. Please try again."
+      }
+    }
+  },
   "Guard": {
     "unauthorized": "You are not authorized to access this page.",
     "notEnoughPermission": "You do not have enough permission to access this page.",
