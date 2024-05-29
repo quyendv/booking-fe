@@ -102,7 +102,8 @@ export const customerColumns: ColumnDef<CustomerInfo>[] = [
   {
     id: 'address',
     accessorFn: (row) => {
-      let address = row.address.country;
+      if (!row.address) return '';
+      let address = row.address.country ?? '';
       if (row.address.province) {
         address = `${row.address.province}, ${row.address.country}`;
       }

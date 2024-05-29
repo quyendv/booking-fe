@@ -17,20 +17,22 @@ import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { FaSpa, FaSwimmer } from 'react-icons/fa';
 import { MdDryCleaning } from 'react-icons/md';
-import { HotelSchemaWithBookings } from '~/apis/hotel.api';
 import { ReviewSchema } from '~/apis/review.api';
 import { ScrollArea } from '~/components/ui/scroll-area';
+import { Switch } from '~/components/ui/switch';
+import { UserRole } from '~/configs/role.config';
+import { useAuth } from '~/contexts/auth.context';
+import { cn } from '~/utils/ui.util';
 import AmenityWrapper from '../../amenities/AmenityWrapper';
-import RoomCard from '../../rooms/RoomCard';
 import Gallery from './Gallery';
 import HotelDetailReviews from './HotelDetailReviews';
-import { Switch } from '~/components/ui/switch';
-import { cn } from '~/utils/ui.util';
-import { useAuth } from '~/contexts/auth.context';
-import { UserRole } from '~/configs/role.config';
+import RoomBookingCard from './RoomBookingCard';
+import { HotelSchema } from '~/apis/hotel.api';
+import HotelDetailRules from './HotelDetailRules';
+import Recommendation from './Recommendation/Recommendation';
 
 interface HotelDetailsProps {
-  hotel: HotelSchemaWithBookings;
+  hotel: HotelSchema;
   reviews: ReviewSchema[];
 }
 
@@ -159,64 +161,7 @@ export default function HotelDetails({ hotel, reviews }: HotelDetailsProps) {
         {/* Rules Section */}
         <div aria-label="rules">
           <h4 className="mb-2 mt-4 text-xl font-semibold">{t('HotelDetails.rules.heading')}</h4>
-          <div aria-label="allow-rules" className="grid grid-cols-2 gap-x-20 gap-y-10">
-            <div className="flex h-10 items-center">
-              <PawPrint className="mr-2" size={18} />
-              <span>{t('HotelDetails.rules.pets')}</span>
-              <Switch id="pets" checked={hotel.allowPets} className="ml-auto" />
-            </div>
-            <div className="flex h-10 items-center">
-              <Cigarette className="mr-2" size={18} />
-              <span>{t('HotelDetails.rules.smoking')}</span>
-              <Switch id="smoking" checked={hotel.allowSmoking} className="ml-auto" />
-            </div>
-          </div>
-          <div aria-label="time-rule" className="mt-2 space-y-1">
-            <div className="flex items-center">
-              <p className="flex w-40 items-center font-medium">
-                <KeyRound size={18} className="mr-2" />
-                {t('HotelDetails.rules.checkInTitle')}
-              </p>
-              <p>
-                {hotel.timeRules.checkIn.start
-                  ? hotel.timeRules.checkIn.end
-                    ? t.rich('HotelDetails.rules.checkInBetween', {
-                        start: hotel.timeRules.checkIn.start,
-                        end: hotel.timeRules.checkIn.end,
-                        highline: (value) => <span className="font-medium italic underline">{value}</span>,
-                      })
-                    : t.rich('HotelDetails.rules.checkInAfter', {
-                        start: hotel.timeRules.checkIn.start,
-                        highline: (value) => <span className="font-medium italic underline">{value}</span>,
-                      })
-                  : t.rich('HotelDetails.rules.checkIn', {
-                      highline: (value) => <span className="font-medium italic underline">{value}</span>,
-                    })}
-              </p>
-            </div>
-            <div className="flex items-center">
-              <p className="flex w-40 items-center font-medium">
-                <KeyRound size={18} className="mr-2" />
-                {t('HotelDetails.rules.checkOutTitle')}
-              </p>
-              <p>
-                {hotel.timeRules.checkOut.end
-                  ? hotel.timeRules.checkOut.start
-                    ? t.rich('HotelDetails.rules.checkOutBetween', {
-                        start: hotel.timeRules.checkOut.start,
-                        end: hotel.timeRules.checkOut.end,
-                        highline: (value) => <span className="font-medium italic underline">{value}</span>,
-                      })
-                    : t.rich('HotelDetails.rules.checkOutBefore', {
-                        end: hotel.timeRules.checkOut.end,
-                        highline: (value) => <span className="font-medium italic underline">{value}</span>,
-                      })
-                  : t.rich('HotelDetails.rules.checkOut', {
-                      highline: (value) => <span className="font-medium italic underline">{value}</span>,
-                    })}
-              </p>
-            </div>
-          </div>
+          <HotelDetailRules hotel={hotel} />
         </div>
       </div>
 
@@ -226,17 +171,19 @@ export default function HotelDetails({ hotel, reviews }: HotelDetailsProps) {
           <h3 className="my-4 text-xl font-semibold">{t('HotelDetails.heading.rooms')}</h3>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
             {hotel.rooms.map((room) => (
-              <RoomCard
+              <RoomBookingCard
                 key={room.id}
                 hotel={hotel}
                 room={room}
-                bookings={hotel.bookings}
                 canBook={!user || user.role === UserRole.CUSTOMER}
               />
             ))}
           </div>
         </div>
       )}
+
+      {/* Recommend */}
+      <Recommendation hotel={hotel} />
     </div>
   );
 }

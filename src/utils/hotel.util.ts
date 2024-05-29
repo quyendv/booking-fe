@@ -1,11 +1,12 @@
-import { areIntervalsOverlapping } from 'date-fns';
+import { areIntervalsOverlapping, isAfter, max, min } from 'date-fns';
 import { DateRange } from 'react-day-picker';
 import { HotelOverview, RoomSchema } from '~/apis/hotel.api';
 import { HotelFilterSchema } from '~/components/layouts/hotels/Filters/HotelFilterModal';
 import { HotelSearchBarSchema } from '~/components/layouts/hotels/Filters/SearchBar/HotelSearchBar';
 import { normalizeString } from './common.util';
+import { DateUtils } from './date.util';
 
-export function getAvailableRooms(rooms: RoomSchema[], filteredTimeRange: DateRange | undefined, guestCount: number) {
+export function getAvailableRooms(rooms: RoomSchema[], filteredTimeRange: DateRange | undefined, guestCount?: number) {
   let result: RoomSchema[] = rooms;
 
   if (filteredTimeRange && filteredTimeRange.from && filteredTimeRange.to) {
@@ -80,4 +81,70 @@ export function getFilteredHotels(
     result.push(hotel);
   }
   return result;
+}
+
+export function getMergeRoomsWith(
+  rooms: RoomSchema[],
+  targetRoom: RoomSchema,
+  queryTimeRange: { start: string; end: string },
+) {
+  const result: { room: RoomSchema; time: { start: string; end: string } }[] = [];
+
+  const overlapOccupiedTimesWithQuery: { start: string; end: string }[] = [];
+  targetRoom.occupiedTimes.forEach(([start, end]) => {
+    const overlapRange = DateUtils.getOverlappingInterval(queryTimeRange, { start, end });
+    if (overlapRange) {
+      overlapOccupiedTimesWithQuery.push(overlapRange);
+    }
+  });
+  const combinedOccupiedTimes = DateUtils.combineDateRanges(overlapOccupiedTimesWithQuery);
+
+  console.log({
+    overlapOccupiedTimesWithQuery,
+    combinedOccupiedTimes,
+  });
+
+  if (combinedOccupiedTimes.length === 0) {
+    result.push({ room: targetRoom, time: queryTimeRange });
+    return result;
+  }
+
+  let canMerge = true;
+  if (DateUtils.isBefore(queryTimeRange.start, DateUtils.getYesterdayOf(combinedOccupiedTimes[0].start))) {
+    result.push({
+      room: targetRoom,
+      time: { start: queryTimeRange.start, end: DateUtils.getYesterdayOf(combinedOccupiedTimes[0].start) },
+    });
+  }
+
+  for (const timeRange of combinedOccupiedTimes) {
+    const availableRoomForTimeRange = rooms.find((room) =>
+      room.occupiedTimes.every(([start, end]) => {
+        return !areIntervalsOverlapping(
+          { start, end },
+          { start: timeRange.start, end: timeRange.end },
+          { inclusive: true },
+        );
+      }),
+    );
+
+    if (!availableRoomForTimeRange) {
+      canMerge = false;
+      break;
+    }
+    result.push({ room: availableRoomForTimeRange, time: timeRange });
+  }
+  if (canMerge) {
+    if (DateUtils.isAfter(queryTimeRange.end, combinedOccupiedTimes[combinedOccupiedTimes.length - 1].end)) {
+      result.push({
+        room: targetRoom,
+        time: {
+          start: DateUtils.getTomorrowOf(combinedOccupiedTimes[combinedOccupiedTimes.length - 1].end),
+          end: queryTimeRange.end,
+        },
+      });
+    }
+    return result;
+  }
+  return [];
 }

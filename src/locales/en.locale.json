@@ -364,7 +364,8 @@
       "amenities": "Popular Amenities",
       "rooms": "Hotel Rooms",
       "gallery": "Gallery",
-      "reviews": "Customer Reviews"
+      "reviews": "Customer Reviews",
+      "recommendation": "Recommended Rooms"
     },
     "rules": {
       "heading": "Common Rules",
@@ -391,6 +392,10 @@
       "movieNight": "Movie Night",
       "coffeeShop": "Coffee Shop",
       "bikeRental": "Bike Rental"
+    },
+    "recommendation": {
+      "timeRequired": "Select check-in and check-out date to see recommended rooms",
+      "empty": "No recommended rooms found"
     }
   },
   "MyBookings": {
@@ -530,7 +535,8 @@
       "paid": "Paid {price} VND",
       "notPaid": "Not Paid {price} VND",
       "viewHotel": "View Hotel",
-      "payNow": "Pay Now"
+      "payNow": "Pay Now",
+      "expired": "Expired"
     },
     "footer": {
       "selectDateDesc": "Select days that you will spend in this room",

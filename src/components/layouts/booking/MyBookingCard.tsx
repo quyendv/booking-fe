@@ -1,4 +1,4 @@
-import { differenceInCalendarDays, format } from 'date-fns';
+import { compareAsc, differenceInCalendarDays, format } from 'date-fns';
 import {
   AirVent,
   Bath,
@@ -32,6 +32,7 @@ import { convertPriceToString, splitNumber } from '~/utils/common.util';
 import AmenityWrapper from '../amenities/AmenityWrapper';
 import ChangeBookingStatus from './ChangeBookingStatus';
 import ReviewModal from './ReviewModal';
+import { UserRole } from '~/configs/role.config';
 
 interface MyBookingCardProps {
   booking: BookingDetails;
@@ -101,7 +102,7 @@ export default function MyBookingCard({ booking, isCustomer = false }: MyBooking
           </AmenityWrapper>
         </div>
 
-        <CardTitle>{room.title}</CardTitle>
+        <CardTitle className="!mt-4">{room.title}</CardTitle>
         <CardDescription>{room.description}</CardDescription>
       </CardHeader>
       <CardContent className="flex flex-col gap-4">
@@ -279,9 +280,13 @@ export default function MyBookingCard({ booking, isCustomer = false }: MyBooking
         >
           {t('RoomCard.bookingDetails.viewHotel')}
         </Button>
-        {!booking.isPaid && booking.customerEmail === user?.email && (
-          <Button onClick={handleBookingRoom}>{t('RoomCard.bookingDetails.payNow')}</Button>
-        )}
+        {!booking.isPaid &&
+          booking.customerEmail === user?.email &&
+          (compareAsc(new Date(booking.endDate), new Date()) > 0 ? (
+            <Button onClick={handleBookingRoom}>{t('RoomCard.bookingDetails.payNow')}</Button>
+          ) : (
+            <Button variant={'outline'}>{t('RoomCard.bookingDetails.expired')}</Button> // TODO: Tooltip description
+          ))}
         {bookingStatus === BookingStatus.CHECKED_OUT
           ? isCustomer && (
               <ReviewModal
@@ -305,7 +310,11 @@ export default function MyBookingCard({ booking, isCustomer = false }: MyBooking
                 />
               )
             : booking.isPaid && (
-                <ChangeBookingStatus currentStatus={bookingStatus} t={t} onStatusChange={handleChangeBookingStatus} />
+                <ChangeBookingStatus
+                  currentStatus={bookingStatus}
+                  onStatusChange={handleChangeBookingStatus}
+                  disabled={user?.role === UserRole.CUSTOMER}
+                />
               )}
       </CardFooter>
     </Card>

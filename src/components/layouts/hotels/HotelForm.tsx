@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { KeyedMutator } from 'swr';
 import * as z from 'zod';
-import { HotelApi, HotelSchema, HotelSchemaWithBookings } from '~/apis/hotel.api';
+import { HotelApi, HotelSchema } from '~/apis/hotel.api';
 import { StorageApi } from '~/apis/storage.api';
 import { Alert, AlertDescription, AlertTitle } from '~/components/ui/alert';
 import { Button, buttonVariants } from '~/components/ui/button';
@@ -32,13 +32,13 @@ import { useAuth } from '~/contexts/auth.context';
 import { ILink, useIRouter } from '~/locales/i18nNavigation';
 import TimeSelect from '../form/TimeSelect';
 import UploadFile from '../form/UploadFile';
+import UploadMultipleFiles from '../form/UploadMultipleFile';
 import RoomCard from '../rooms/RoomCard';
 import RoomForm from '../rooms/RoomForm';
-import UploadMultipleFiles from '../form/UploadMultipleFile';
 
 interface HotelFormProps {
   hotel?: HotelSchema;
-  mutateHotel?: KeyedMutator<HotelSchema | HotelSchemaWithBookings>;
+  mutateHotel?: KeyedMutator<HotelSchema>;
   viewOnly?: boolean;
 }
 
