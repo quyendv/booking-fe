@@ -364,7 +364,8 @@
       "amenities": "Tiện nghi phổ biến",
       "rooms": "Danh sách phòng",
       "gallery": "Thư viện ảnh",
-      "reviews": "Đánh giá của khách hàng"
+      "reviews": "Đánh giá của khách hàng",
+      "recommendation": "Đề xuất phòng"
     },
     "rules": {
       "heading": "Quy định chung",
@@ -391,6 +392,10 @@
       "movieNight": "Buổi chiếu phim",
       "coffeeShop": "Quán cà phê",
       "bikeRental": "Cho thuê xe đạp"
+    },
+    "recommendation": {
+      "timeRequired": "Vui lòng chọn ngày nhận phòng và trả phòng để xem các phòng được đề xuất",
+      "empty": "Không tìm thấy phòng được đề xuất"
     }
   },
   "MyBookings": {
