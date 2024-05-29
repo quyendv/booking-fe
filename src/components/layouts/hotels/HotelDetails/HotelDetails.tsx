@@ -17,20 +17,20 @@ import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { FaSpa, FaSwimmer } from 'react-icons/fa';
 import { MdDryCleaning } from 'react-icons/md';
-import { HotelSchemaWithBookings } from '~/apis/hotel.api';
 import { ReviewSchema } from '~/apis/review.api';
 import { ScrollArea } from '~/components/ui/scroll-area';
+import { Switch } from '~/components/ui/switch';
+import { UserRole } from '~/configs/role.config';
+import { useAuth } from '~/contexts/auth.context';
+import { cn } from '~/utils/ui.util';
 import AmenityWrapper from '../../amenities/AmenityWrapper';
-import RoomCard from '../../rooms/RoomCard';
 import Gallery from './Gallery';
 import HotelDetailReviews from './HotelDetailReviews';
-import { Switch } from '~/components/ui/switch';
-import { cn } from '~/utils/ui.util';
-import { useAuth } from '~/contexts/auth.context';
-import { UserRole } from '~/configs/role.config';
+import RoomBookingCard from './RoomBookingCard';
+import { HotelSchema } from '~/apis/hotel.api';
 
 interface HotelDetailsProps {
-  hotel: HotelSchemaWithBookings;
+  hotel: HotelSchema;
   reviews: ReviewSchema[];
 }
 
@@ -226,11 +226,10 @@ export default function HotelDetails({ hotel, reviews }: HotelDetailsProps) {
           <h3 className="my-4 text-xl font-semibold">{t('HotelDetails.heading.rooms')}</h3>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
             {hotel.rooms.map((room) => (
-              <RoomCard
+              <RoomBookingCard
                 key={room.id}
                 hotel={hotel}
                 room={room}
-                bookings={hotel.bookings}
                 canBook={!user || user.role === UserRole.CUSTOMER}
               />
             ))}

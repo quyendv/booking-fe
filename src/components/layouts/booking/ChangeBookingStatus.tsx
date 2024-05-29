@@ -1,4 +1,5 @@
 import { Loader } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { BookingStatus } from '~/apis/booking.api';
 import {
@@ -25,16 +26,21 @@ import { getNextBookingStatus } from '~/utils/booking.util';
 interface ChangeBookingStatusProps {
   currentStatus: BookingStatus;
   onStatusChange?: (_status: BookingStatus) => void;
-  t: Function;
+  disabled?: boolean;
 }
 
-export default function ChangeBookingStatus({ currentStatus, onStatusChange, t }: ChangeBookingStatusProps) {
+export default function ChangeBookingStatus({
+  currentStatus,
+  onStatusChange,
+  disabled = false,
+}: ChangeBookingStatusProps) {
   const nextStatus = getNextBookingStatus(currentStatus);
   const [value, setValue] = useState<BookingStatus>(nextStatus[0]); // ensure at least 1 status
   const [open, setOpen] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
   const [confirmingStatus, setConfirmingStatus] = useState<BookingStatus>(value);
   const [isLoading, setIsLoading] = useState(false);
+  const t = useTranslations();
 
   const handleConfirm = () => {
     setOpenAlert(false);
@@ -49,8 +55,8 @@ export default function ChangeBookingStatus({ currentStatus, onStatusChange, t }
 
   return (
     <>
-      <DropdownMenu open={open} onOpenChange={setOpen}>
-        <DropdownMenuTrigger asChild onClick={() => setOpen(true)}>
+      <DropdownMenu open={open} onOpenChange={(open) => !disabled && setOpen(open)}>
+        <DropdownMenuTrigger asChild>
           <Button variant="outline" disabled={isLoading}>
             {isLoading && <Loader className="mr-2 size-4 animate-spin" />}
             {t(`MyBookings.card.status.${currentStatus}`)}

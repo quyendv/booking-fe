@@ -114,14 +114,13 @@ type CreateReceptionistDto = {
 };
 
 export type HotelOverview = HotelSchema & {
-  address: AddressSchema;
-  rooms: RoomSchema[];
+  // address: AddressSchema;
+  // rooms: RoomSchema[];
   overview: {
     rooms: { total: number; minPrice: number | null };
     reviews: { total: number; average: number };
   };
 };
-
 export const hotelEndpoints = {
   list: '/hotels',
   getById: (id: number) => `/hotels/${id}`,

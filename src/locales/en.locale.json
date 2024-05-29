@@ -530,7 +530,8 @@
       "paid": "Paid {price} VND",
       "notPaid": "Not Paid {price} VND",
       "viewHotel": "View Hotel",
-      "payNow": "Pay Now"
+      "payNow": "Pay Now",
+      "expired": "Expired"
     },
     "footer": {
       "selectDateDesc": "Select days that you will spend in this room",

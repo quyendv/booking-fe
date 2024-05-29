@@ -18,7 +18,7 @@ const EditHotelPage = ({ params }: EditHotelPageProps) => {
   const { isLoading, data, error, mutate } = useHotel(+params.id);
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Hotel not found</div>;
-  return <HotelForm hotel={data} mutateHotel={mutate as any} />;
+  return <HotelForm hotel={data} mutateHotel={mutate} />;
 };
 
 // const EditHotelPage = ({ params }: EditHotelPageProps) => {
